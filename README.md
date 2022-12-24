@@ -1,6 +1,6 @@
 <p align="center">
-  <a href="https://github.com/daoseeder/interface/actions/workflows/build.yaml">
-    <img src="https://github.com/daoseeder/interface/actions/workflows/build.yaml/badge.svg?branch=main" alt="Build Status">
+  <a href="https://github.com/daoseeder/landing/actions/workflows/build.yaml">
+    <img src="https://github.com/daoseeder/landing/actions/workflows/build.yaml/badge.svg?branch=main" alt="Build Status">
   </a>
 </p>
 
