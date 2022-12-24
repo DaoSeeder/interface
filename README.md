@@ -1,3 +1,9 @@
+<p align="center">
+  <a href="https://github.com/daoseeder/interface/actions/workflows/build.yaml">
+    <img src="https://github.com/daoseeder/interface/actions/workflows/build.yaml/badge.svg?branch=main" alt="Build Status">
+  </a>
+</p>
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
