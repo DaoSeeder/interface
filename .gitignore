@@ -11,6 +11,9 @@
 # production
 /build
 
+#access tokens
+.npmrc
+
 # misc
 .DS_Store
 .env.local

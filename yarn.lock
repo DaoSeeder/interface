@@ -1190,6 +1190,11 @@
   resolved "https://registry.yarnpkg.com/@csstools/selector-specificity/-/selector-specificity-2.0.2.tgz#1bfafe4b7ed0f3e4105837e056e0a89b108ebe36"
   integrity sha512-IkpVW/ehM1hWKln4fCA3NzJU8KwD+kIOvPZA4cqxoJHtE21CCzjyp+Kxbu0i5I4tBNOlXPL9mjwnWlL0VEG4Fg==
 
+"@daoseeder/core@^0.0.2":
+  version "0.0.2"
+  resolved "https://npm.pkg.github.com/download/@daoseeder/core/0.0.2/d16f19ca70ec26448bd4bfe65f5a53ca59c54ae9#d16f19ca70ec26448bd4bfe65f5a53ca59c54ae9"
+  integrity sha512-7u6UWbhUYPbk4OW4zobWV2FQ9sMCn+MCrS3Griq/w2CHXyHfZHgTLQLTMiImTeeo4OUbynbMNREZYtPDDOlH2g==
+
 "@eslint/eslintrc@^1.4.0":
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/@eslint/eslintrc/-/eslintrc-1.4.0.tgz#8ec64e0df3e7a1971ee1ff5158da87389f167a63"
