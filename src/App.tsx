@@ -2,9 +2,7 @@ import React from "react";
 import "./App.css";
 import videoBg from "./assets/Galaxy.mp4";
 import Facebook from "./assets/facebook.png";
-// import Instagram from "./assets/instagram.png";
 import Twitter from "./assets/twitter.png";
-// import Telegram from "./assets/telegram.png";
 import Email from "./assets/email.png";
 import logo from "./assets/logo2.png";
 
@@ -34,14 +32,12 @@ function App() {
               );
             }}
           />
-          {/* <img src={Instagram} /> */}
           <img
             src={Twitter}
             onClick={() => {
               window.open("https://twitter.com/DaoSeederLabs");
             }}
           />
-          {/* <img src={Telegram} /> */}
           <a href="mailto:team@daoseeder.com">
             <img src={Email} />
           </a>
