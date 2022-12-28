@@ -23,13 +23,14 @@ video {
 }
 
 .content h1 {
-  font-size: 80px;
+  font-size: 112px;
+  margin-left: 30px;
 }
 
 .content p {
-  font-size: 30px;
+  font-size: 44px;
   font-weight: lighter;
-  margin: 20px auto;
+  margin: 20px auto 50px auto;
 }
 
 .content button {
@@ -41,10 +42,20 @@ video {
   border-radius: 16px;
   cursor: pointer;
 }
+
 .icons {
   margin-top: 20px;
 }
+
 .icons img {
   width: 40px;
   margin: 10px;
+  cursor: pointer;
+}
+
+.brand {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
 }
