@@ -15,13 +15,13 @@ function App() {
           <img src={logo} width={100} />
           <h1>DaoSeeder</h1>
         </div>
-        <p>A decentralized crowd-funding platform with trust</p>
+        <p>A Decentralized Crowd-Funding Platform With Trust</p>
         <button
           onClick={() => {
             window.open("https://form.typeform.com/to/GOOMPc2I");
           }}
         >
-          Get notified at launch
+          Get Notified At Launch
         </button>
         <div className="icons">
           <img
