@@ -5,6 +5,7 @@ import Facebook from "./assets/facebook.png";
 // import Instagram from "./assets/instagram.png";
 import Twitter from "./assets/twitter.png";
 // import Telegram from "./assets/telegram.png";
+import Email from "./assets/email.png";
 import logo from "./assets/logo2.png";
 
 function App() {
@@ -41,6 +42,9 @@ function App() {
             }}
           />
           {/* <img src={Telegram} /> */}
+          <a href="mailto:team@daoseeder.com">
+            <img src={Email} />
+          </a>
         </div>
       </div>
     </div>
