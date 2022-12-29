@@ -28,7 +28,7 @@ function App() {
           target={"_blank"}
           rel="noreferrer"
         >
-          Get notified at launch
+          Get Notified At Launch
         </a>
         <div className="icons">
           <img
