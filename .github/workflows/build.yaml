@@ -14,6 +14,8 @@ jobs:
         with:
           node-version: 16
       - run: yarn
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.DS_TOKEN }}
       - run: tsc
       - run: yarn build
         env:
