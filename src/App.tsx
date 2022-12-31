@@ -16,12 +16,7 @@ function App() {
           <img src={logo} width={100} />
           <h1>DaoSeeder</h1>
         </div>
-        <p>
-          Are you are crypto investor? Looking for cool crypto projects you can
-          be a part of. Be confident in projects by their project details and
-          their historical deliverables. You become part of the DAO to judge
-          their successes and achievements. Be a part of the web3 revolution.
-        </p>
+        <p>A decentralized crowd-funding platform with trust</p>
         <a
           className="btnForm"
           href="https://form.typeform.com/to/GOOMPc2I"
