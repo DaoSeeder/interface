@@ -9,20 +9,22 @@ import logo from "./assets/logo2.png";
 function App() {
   return (
     <div className="App">
+      <div className="overlay"></div>
       <video src={videoBg} autoPlay muted loop />
       <div className="content">
         <div className="brand">
           <img src={logo} width={100} />
           <h1>DaoSeeder</h1>
         </div>
-        <p>A Decentralized Crowd-Funding Platform With Trust</p>
-        <button
-          onClick={() => {
-            window.open("https://form.typeform.com/to/GOOMPc2I");
-          }}
+        <p>A decentralized crowd-funding platform with trust</p>
+        <a
+          className="btnForm"
+          href="https://form.typeform.com/to/GOOMPc2I"
+          target={"_blank"}
+          rel="noreferrer"
         >
           Get Notified At Launch
-        </button>
+        </a>
         <div className="icons">
           <img
             src={Facebook}
@@ -32,15 +34,20 @@ function App() {
               );
             }}
           />
+          <hr className="line" />
           <img
             src={Twitter}
             onClick={() => {
               window.open("https://twitter.com/DaoSeederLabs");
             }}
           />
-          <a href="mailto:team@daoseeder.com">
-            <img src={Email} />
-          </a>
+          <hr className="line" />
+          <img
+            src={Email}
+            onClick={() => {
+              window.location.href = "mailto:team@daoseeder.com";
+            }}
+          />
         </div>
       </div>
     </div>

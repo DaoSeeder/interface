@@ -1,10 +1,13 @@
 .App {
   text-align: center;
   width: 100%;
-  height: 99.1vh;
+  height: 100vh;
+  overflow: hidden;
 }
 
 video {
+  padding: 0px;
+  margin: 0px;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -28,29 +31,64 @@ video {
 }
 
 .content p {
-  font-size: 44px;
-  font-weight: lighter;
+  font-size: 25px;
+  font-weight: 200;
   margin: 20px auto 50px auto;
+  width: 50%;
 }
 
-.content button {
-  width: 400px;
-  height: 60px;
-  border: none;
-  font-size: 25px;
-  background: #ffffff;
-  border-radius: 16px;
+.content .btnForm {
+  position: relative;
+  text-decoration: none;
   cursor: pointer;
+  margin: 10px;
+  padding: 15px 65px;
+  text-align: center;
+  text-transform: uppercase;
+  display: inline-block;
+  font-size: 18px;
+  color: #ffffff;
+}
+
+.content .btnForm::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid transparent;
+  border-radius: 50px;
+  padding: 1px; /* control the border thickness */
+  background: linear-gradient(45deg, #8e2de2, #4a00e0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.content .btnForm:hover {
+  background-position: right center;
+  color: #fff;
+  text-decoration: none;
 }
 
 .icons {
   margin-top: 20px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .icons img {
+  border: 1px solid #ffffff;
+  border-radius: 100%;
+  padding: 6px;
   width: 40px;
   margin: 10px;
   cursor: pointer;
+  z-index: 100;
 }
 
 .brand {
@@ -58,4 +96,88 @@ video {
   justify-content: center;
   flex-direction: row;
   align-items: center;
+}
+
+.overlay {
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.line {
+  width: 35%;
+  transform: rotate(90deg);
+  z-index: 1;
+}
+
+@media only screen and (max-width: 800px) {
+  .content h1 {
+    font-size: 75px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .content h1 {
+    font-size: 55px;
+  }
+
+  .brand img {
+    width: 70px;
+  }
+
+  .content p {
+    font-size: 17px;
+  }
+
+  .content .btnForm {
+    width: 50%;
+    font-size: 11px;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .content h1 {
+    font-size: 50px;
+  }
+
+  .brand img {
+    width: 50px;
+  }
+
+  .content p {
+    font-size: 17px;
+    width: 75%;
+  }
+
+  .content .btnForm {
+    width: 70%;
+    font-size: 11px;
+  }
+}
+
+@media only screen and (max-width: 350px) {
+  .content h1 {
+    font-size: 30px;
+    margin-left: 10px;
+  }
+
+  .brand img {
+    width: 30px;
+  }
+
+  .content p {
+    font-size: 13px;
+    width: 75%;
+    margin-bottom: 30px;
+  }
+
+  .content .btnForm {
+    width: 75%;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-size: 11px;
+  }
 }
