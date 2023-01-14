@@ -10,7 +10,7 @@ const Home = () => {
     btnLearnMore:
       "cursor-pointer w-fit rounded-full bg-gradient-to-r from-primary-primary to-primary-secondary p-[2px]",
     btnLearnMoreContainer:
-      "flex h-full items-center justify-center bg-white back rounded-full px-10 py-2",
+      "flex h-full items-center justify-center bg-white back rounded-full px-10 py-2 font-bold",
     banner: "flex flex-col justify-center items-center h-[550px] text-center",
     bannerHeading:
       "text-font-lightV1 font-bold text-[66px] leading-[90px] mb-8",

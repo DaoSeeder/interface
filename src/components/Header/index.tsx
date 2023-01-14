@@ -35,7 +35,7 @@ const Header = () => {
               : style.navItem
           }`}
         >
-          <p>Marketplace</p>
+          <p>Campaigns</p>
         </div>
         <div
           className={`${style.headerItem} ${
