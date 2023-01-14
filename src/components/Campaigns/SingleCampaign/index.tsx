@@ -10,8 +10,10 @@ import EthLogo from "../../../assets/eth_logo.png";
 function SingleCampaign() {
   const style = {
     campaignDiv: "text-font-lightV1 mt-12 w-full",
-    signleCampaign:
+    mainCampaign:
       "rounded-md bg-gradient-to-r from-white to-white p-[2px] w-full drop-shadow-xl",
+    signleCampaign:
+      "rounded-md bg-gradient-to-r from-white to-white p-[2px] w-[300px]  drop-shadow-xl",
     signleCampaignContainer:
       "flex flex-col h-full items-center justify-center bg-gradient-to-b from-[#9A9A9A]/20 to-[#9A9A9A]/10 back rounded-md px-6 py-2",
     campaignName: "flex flex-row justify-between mt-4 w-full items-center",
@@ -40,7 +42,7 @@ function SingleCampaign() {
   return (
     <>
       <div className={style.campaignDiv}>
-        <div className={style.signleCampaign}>
+        <div className={style.mainCampaign}>
           <div className={style.signleCampaignContainer}>
             <div
               className={style.campaingImage}
