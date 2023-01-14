@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
+import SingleCampaign from "./components/Campaigns/SingleCampaign";
 import Header from "./components/Header";
 import Home from "./components/Home";
 
@@ -16,6 +17,7 @@ function App() {
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/campaign/:id" element={<SingleCampaign />} />
           </Routes>
         </Router>
       </div>

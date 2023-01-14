@@ -108,6 +108,7 @@ const Home = () => {
           </div>
         </div>
       </div>
+      {/* TODO: Once we are getting the data from blockchain we will convert it into its own component */}
       <div className={style.allCampaigns}>
         <div className={style.campaignDiv}>
           <div className={style.signleCampaign}>
