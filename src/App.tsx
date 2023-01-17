@@ -4,6 +4,7 @@ import "./App.css";
 import SingleCampaign from "./components/Campaigns/SingleCampaign";
 import Header from "./components/Header";
 import Home from "./components/Home";
+import Stage from "./components/Stages";
 
 function App() {
   const style = {
@@ -18,6 +19,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/campaign/:id" element={<SingleCampaign />} />
+            <Route path="/campaign/:id/stage/:stageId" element={<Stage />} />
           </Routes>
         </Router>
       </div>
