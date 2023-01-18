@@ -20,7 +20,7 @@ function SingleCampaign() {
     campaignTitle: "font-bold",
     campaignCategory: "text-xs",
     campaignMoney: "text-sm",
-    allCampaigns: "flex justify-between mb-12",
+    allCampaigns: "mb-12",
     campaignMoneyRaised: "text-xs",
     campaignTime: "text-sm",
     campaignTimeLeft: "text-xs",
@@ -98,7 +98,7 @@ function SingleCampaign() {
         <p>More Campaigns</p>
       </div>
       {/* TODO: Once we are getting the data from blockchain we will convert it into its own component */}
-      <div className={style.allCampaigns}>
+      <div className={`${style.allCampaigns} campaignsMain`}>
         <div className={style.campaignDiv}>
           <div className={style.signleCampaign}>
             <div className={style.signleCampaignContainer}>

@@ -26,7 +26,7 @@ const Home = () => {
       "flex h-full items-center justify-center bg-white back rounded-full px-6 py-2",
     btnCategoriesContainerActive:
       "flex h-full items-center justify-center text-font-lightV2 back rounded-full px-6 py-2",
-    allCampaigns: "flex justify-between my-12",
+    allCampaigns: "my-12",
     campaignDiv: "text-font-lightV1",
     signleCampaign:
       "cursor-pointer w-fit rounded-md bg-gradient-to-r from-white to-white p-[2px] w-[300px] drop-shadow-xl",
@@ -109,7 +109,7 @@ const Home = () => {
         </div>
       </div>
       {/* TODO: Once we are getting the data from blockchain we will convert it into its own component */}
-      <div className={style.allCampaigns}>
+      <div className={`${style.allCampaigns} campaignsMain`}>
         <div className={style.campaignDiv}>
           <div className={style.signleCampaign}>
             <div className={style.signleCampaignContainer}>
