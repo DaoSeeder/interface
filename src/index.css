@@ -1,13 +1,121 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: "Nunito Sans", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  justify-content: center;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+@layer base {
+  html {
+    font-family: "Nunito Sans", sans-serif;
+    @apply box-border;
+    @apply overflow-x-hidden;
+  }
+}
+
+.outline-title {
+  text-shadow: 1px 1px 0 #8d8d8d, -1px -1px 0 #8d8d8d, 1px -1px 0 #8d8d8d,
+    -1px 1px 0 #8d8d8d, 1px 1px 0 #8d8d8d;
+}
+
+.module:nth-child(odd) {
+  border-right: 3px solid;
+  padding-left: 0;
+}
+
+.module:nth-child(even) {
+  border-left: 3px solid;
+  padding-right: 0;
+}
+
+.module:first-child {
+  border-top: 0;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+}
+.module:last-child {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.module {
+  font-size: 1em;
+  line-height: 1.75em;
+  border-top: 3px solid;
+  border-image: linear-gradient(to right, #00a54f 0%, #8cc63f 100%);
+  border-image-slice: 1;
+  margin: 0;
+  padding: 40px;
+  counter-increment: section;
+  position: relative;
+  color: black;
+}
+
+.module::before {
+  content: counter(section);
+  position: absolute;
+  border-radius: 50%;
+  height: 1.25em;
+  width: 1.25em;
+  background-color: #489240;
+  text-align: center;
+  line-height: 1.25em;
+  color: #f1f1f1;
+  font-size: 1.25em;
+}
+
+.module:nth-child(odd)::before {
+  left: 100%;
+  margin-left: -10px;
+}
+
+.module:nth-child(even)::before {
+  right: 100%;
+  margin-right: -10px;
+}
+
+.campaignsMain {
+  /* max-width: 1200px; */
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+/* @media (min-width: 600px) {
+  .campaignsMain {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  .campaignsMain {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1400px) {
+  .campaignsMain {
+    gap: 4.2rem;
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 2000px) {
+  .campaignsMain {
+    gap: 4.2rem;
+    grid-template-columns: repeat(6, 1fr);
+  }
+} */
