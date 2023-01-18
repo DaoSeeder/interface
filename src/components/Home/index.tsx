@@ -30,7 +30,7 @@ const Home = () => {
     allCampaigns: "my-12",
     campaignDiv: "text-font-lightV1",
     signleCampaign:
-      "cursor-pointer w-fit rounded-md bg-gradient-to-r from-white to-white p-[2px] w-[300px] drop-shadow-xl",
+      "cursor-pointer w-fit rounded-md bg-gradient-to-r from-white to-white p-[2px] drop-shadow-xl",
     signleCampaignContainer:
       "flex flex-col h-full items-center justify-center bg-gradient-to-b from-[#9A9A9A]/20 to-[#9A9A9A]/10 back rounded-md px-6 py-2",
     campaignName: "flex flex-row justify-between mt-4 w-full items-center",

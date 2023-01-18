@@ -77,23 +77,24 @@ code {
   font-size: 1.25em;
 }
 
-p:nth-child(odd)::before {
+.module:nth-child(odd)::before {
   left: 100%;
   margin-left: -10px;
 }
 
-p:nth-child(even)::before {
+.module:nth-child(even)::before {
   right: 100%;
   margin-right: -10px;
 }
 
 .campaignsMain {
-  max-width: 1200px;
+  /* max-width: 1200px; */
   display: grid;
   gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
 
-@media (min-width: 600px) {
+/* @media (min-width: 600px) {
   .campaignsMain {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -117,4 +118,4 @@ p:nth-child(even)::before {
     gap: 4.2rem;
     grid-template-columns: repeat(6, 1fr);
   }
-}
+} */

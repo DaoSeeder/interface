@@ -13,9 +13,11 @@ function SingleCampaign() {
     mainCampaign:
       "rounded-md bg-gradient-to-r from-white to-white p-[2px] w-full drop-shadow-xl",
     signleCampaign:
-      "rounded-md bg-gradient-to-r from-white to-white p-[2px] w-[300px]  drop-shadow-xl",
+      "rounded-md bg-gradient-to-r from-white to-white p-[2px] drop-shadow-xl",
+    campaignImageContainer:
+      "flex flex-col w-[910px] h-full items-center justify-center bg-gradient-to-b from-[#9A9A9A]/20 to-[#9A9A9A]/10 back rounded-md px-6 py-2",
     signleCampaignContainer:
-      "flex flex-col h-full items-center justify-center bg-gradient-to-b from-[#9A9A9A]/20 to-[#9A9A9A]/10 back rounded-md px-6 py-2",
+      "flex flex-col w-full h-full items-center justify-center bg-gradient-to-b from-[#9A9A9A]/20 to-[#9A9A9A]/10 back rounded-md px-6 py-2",
     campaignName: "flex flex-row justify-between mt-4 w-full items-center",
     campaignTitle: "font-bold",
     campaignCategory: "text-xs",
@@ -43,7 +45,7 @@ function SingleCampaign() {
     <>
       <div className={style.campaignDiv}>
         <div className={style.mainCampaign}>
-          <div className={style.signleCampaignContainer}>
+          <div className={style.campaignImageContainer}>
             <div
               className={style.campaingImage}
               style={{
