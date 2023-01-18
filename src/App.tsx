@@ -8,7 +8,7 @@ import Stage from "./components/Stages";
 
 function App() {
   const style = {
-    wrapper: "w-full flex flex-row justify-center",
+    wrapper: "w-full flex flex-row justify-center max-w-screen-2xl",
     container: "w-9/12 flex flex-col justify-center mt-6",
   };
   return (

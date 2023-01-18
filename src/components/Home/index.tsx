@@ -11,10 +11,11 @@ const Home = () => {
       "cursor-pointer w-fit rounded-full bg-gradient-to-r from-primary-primary to-primary-secondary p-[2px]",
     btnLearnMoreContainer:
       "flex h-full items-center justify-center bg-white back rounded-full px-10 py-2 font-bold",
-    banner: "flex flex-col justify-center items-center h-[550px] text-center",
+    banner:
+      "flex flex-col justify-center items-center h-[550px] text-center relative",
     bannerHeading:
       "text-font-lightV1 font-bold text-[66px] leading-[90px] mb-8",
-    bannerImg: "absolute z-[-1] right-[-10rem] w-[600px] top-[10rem]",
+    bannerImg: "absolute z-[-1] right-[-10rem] w-[600px] top-[9rem]",
     campaignsDiv: "flex flex-col mt-24",
     campaignHeading: "text-center text-3xl text-font-lightV1 font-bold",
     campaignCategories: "flex items-center mt-12 justify-between",
