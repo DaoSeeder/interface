@@ -88,34 +88,36 @@ code {
 }
 
 .campaignsMain {
-  /* max-width: 1200px; */
   display: grid;
   gap: 1rem;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
 
-/* @media (min-width: 600px) {
-  .campaignsMain {
-    grid-template-columns: repeat(2, 1fr);
+input:focus-within ~ label {
+  @apply transform scale-75 -translate-y-6 text-blue-500;
+}
+
+input:focus-within ~ label,
+input:not(:placeholder-shown) ~ label {
+  @apply transform scale-75 -translate-y-6;
+}
+
+input:focus-within ~ label {
+  @apply text-blue-500;
+}
+
+.createCampaignMainContainer {
+  min-width: 910px;
+}
+
+@media screen and (width >= 1100px) {
+  .createCampaignMainContainer {
+    min-width: 920px;
   }
 }
 
-@media (min-width: 900px) {
-  .campaignsMain {
-    grid-template-columns: repeat(3, 1fr);
+@media screen and (width >= 1400px) {
+  .createCampaignMainContainer {
+    min-width: 1100px;
   }
 }
-
-@media (min-width: 1400px) {
-  .campaignsMain {
-    gap: 4.2rem;
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-@media (min-width: 2000px) {
-  .campaignsMain {
-    gap: 4.2rem;
-    grid-template-columns: repeat(6, 1fr);
-  }
-} */
