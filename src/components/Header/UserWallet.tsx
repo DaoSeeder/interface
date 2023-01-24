@@ -9,25 +9,39 @@ interface UserWalletProps {
 }
 
 const UserWallet = ({ disconnectWallet }: UserWalletProps) => {
+  const style = {
+    mainDiv: "text-right",
+    menuMain: "relative inline-block text-left",
+    menuButton:
+      "inline-flex w-full justify-center rounded-md font-medium focus:outline-none",
+    btnDiv: "text-font-lightV1",
+    mainBtn:
+      "cursor-pointer w-fit rounded-full bg-gradient-to-r from-primary-primary to-primary-secondary p-[2px]",
+    addressBtn:
+      "flex h-full w-full items-center justify-center bg-white back rounded-full px-8 py-2",
+    menuItem:
+      "z-50 absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none",
+    mainMenuItem: "px-1 py-1",
+    disconnectBtn:
+      "group flex w-full items-center rounded-md px-2 py-2 text-sm",
+    activeBtn: "bg-primary-secondary text-white",
+    inActiveBtn: "text-gray-900",
+  };
+
   const { address } = useAccount();
 
   return (
-    <div className="text-right">
-      <Menu as="div" className="relative inline-block text-left">
-        <Menu.Button className="inline-flex w-full justify-center rounded-md font-medium focus:outline-none">
-          <div className="text-font-lightV1">
-            <div className="cursor-pointer w-fit rounded-full bg-gradient-to-r from-primary-primary to-primary-secondary p-[2px]">
-              <div className="flex h-full w-full items-center justify-center bg-white back rounded-full px-8 py-2">
+    <div className={style.mainDiv}>
+      <Menu as="div" className={style.menuMain}>
+        <Menu.Button className={style.menuButton}>
+          <div className={style.btnDiv}>
+            <div className={style.mainBtn}>
+              <div className={style.addressBtn}>
                 {address ? truncateAddress(address.toString()) : null} | v
               </div>
             </div>
           </div>
         </Menu.Button>
-        {/* <div>
-          <Menu.Button className="inline-flex w-full justify-center rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-            {address ? truncateAddress(address.toString()) : null} | v
-          </Menu.Button>
-        </div> */}
         <Transition
           as={Fragment}
           enter="transition ease-out duration-100"
@@ -37,8 +51,8 @@ const UserWallet = ({ disconnectWallet }: UserWalletProps) => {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="z-50 absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-            <div className="px-1 py-1 ">
+          <Menu.Items className={style.menuItem}>
+            <div className={style.mainMenuItem}>
               <Menu.Item>
                 {({ active }) => (
                   <button
@@ -46,10 +60,8 @@ const UserWallet = ({ disconnectWallet }: UserWalletProps) => {
                       disconnectWallet();
                     }}
                     className={`${
-                      active
-                        ? "bg-primary-secondary text-white"
-                        : "text-gray-900"
-                    } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                      active ? style.activeBtn : style.inActiveBtn
+                    } ${style.disconnectBtn}`}
                   >
                     Disconnect
                   </button>
