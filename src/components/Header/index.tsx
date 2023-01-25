@@ -78,26 +78,6 @@ const Header = () => {
           <UserWallet disconnectWallet={disconnect} />
         </div>
       ) : (
-        // <div
-        //   onClick={() => {
-        //     disconnect();
-        //   }}
-        // >
-        //   <div
-        //     className={style.connectBtnDiv}
-        //     onClick={() => {
-        //       disconnect();
-        //     }}
-        //   >
-        //     <div className={style.btnConnect}>
-        //       <div className={style.btnConnectContainer}>
-        //         <p>
-        //           {address ? truncateAddress(address.toString()) : null} | v
-        //         </p>
-        //       </div>
-        //     </div>
-        //   </div>
-        // </div>
         <div className={style.connectBtnDiv} onClick={openModal}>
           <div className={style.btnConnect}>
             <div className={style.btnConnectContainer}>
