@@ -61,7 +61,6 @@ code {
   padding: 40px;
   counter-increment: section;
   position: relative;
-  color: black;
 }
 
 .module::before {
@@ -94,7 +93,7 @@ code {
 }
 
 input:focus-within ~ label {
-  @apply transform scale-75 -translate-y-6 text-blue-500;
+  @apply transform scale-75 -translate-y-6;
 }
 
 input:focus-within ~ label,
@@ -102,9 +101,9 @@ input:not(:placeholder-shown) ~ label {
   @apply transform scale-75 -translate-y-6;
 }
 
-input:focus-within ~ label {
+/* input:focus-within ~ label {
   @apply text-blue-500;
-}
+} */
 
 .createCampaignMainContainer {
   min-width: 910px;
