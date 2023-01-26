@@ -10,16 +10,18 @@ type ConnectorModalProps = {
 
 function ConnectorsModal({ isOpen, closeModal }: ConnectorModalProps) {
   const style = {
+    dialog: "z-[1000] relative",
     overlay: "fixed inset-0 bg-black/50",
     dialogMain: "fixed inset-0 overflow-y-auto",
     dialogDiv: "flex min-h-full items-center justify-center p-4 text-center",
     dialogPanel:
-      "w-full max-w-md overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all",
-    dialogHeading: "text-lg font-medium leading-6 text-font-lightV1",
+      "w-full max-w-md overflow-hidden rounded-2xl bg-white dark:bg-dark-box p-6 text-left align-middle shadow-xl transition-all",
+    dialogHeading:
+      "text-lg font-bold leading-6 text-light-font-lightV1 dark:text-dark-font-lightV1",
     dialogBody: "mt-4",
     allProviders:
-      "mb-3 w-full max-w-md inline-flex justify-center rounded-md border border-transparent bg-gray-300 px-4 py-2 text-sm font-medium text-font-lightV1 hover:bg-gray-400 focus:outline-none",
-    error: "text-rose-100",
+      "mb-3 w-full max-w-md inline-flex justify-center rounded-md border border-transparent bg-gray-300 dark:bg-dark-primary-grey px-4 py-2 text-sm font-medium text-light-font-lightV1 dark:text-dark-font-lightV1 hover:bg-gray-400 hover:dark:bg-dark-border-light focus:outline-none",
+    error: "text-error",
   };
 
   const { address, isConnected } = useAccount();
@@ -34,7 +36,7 @@ function ConnectorsModal({ isOpen, closeModal }: ConnectorModalProps) {
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
-      <Dialog as="div" onClose={closeModal}>
+      <Dialog as="div" onClose={closeModal} className={style.dialog}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"

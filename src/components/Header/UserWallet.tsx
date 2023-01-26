@@ -15,18 +15,18 @@ const UserWallet = ({ disconnectWallet }: UserWalletProps) => {
     menuMain: "relative inline-block text-left",
     menuButton:
       "inline-flex w-full justify-center rounded-md font-medium focus:outline-none",
-    btnDiv: "text-font-lightV1",
+    btnDiv: "text-light-font-lightV1 dark:text-dark-font-lightV1",
     mainBtn:
-      "cursor-pointer w-fit rounded-full bg-gradient-to-r from-primary-primary to-primary-secondary p-[2px]",
+      "cursor-pointer w-fit rounded-full bg-gradient-to-r from-light-primary-primary to-light-primary-secondary p-[2px]",
     addressBtn:
-      "flex h-full w-full items-center justify-center bg-white back rounded-full px-6 py-2",
+      "flex h-full w-full items-center justify-center bg-white dark:bg-dark-background rounded-full px-6 py-2",
     menuItem:
-      "z-50 absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none",
+      "z-50 absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white dark:bg-dark-box shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none",
     mainMenuItem: "px-1 py-1",
     disconnectBtn:
       "group flex w-full items-center rounded-md px-2 py-2 text-sm",
-    activeBtn: "bg-primary-secondary text-white",
-    inActiveBtn: "text-gray-900",
+    activeBtn: "bg-light-primary-secondary text-white",
+    inActiveBtn: "text-gray-900 dark:text-white",
     caretDown: "ml-2",
   };
 
