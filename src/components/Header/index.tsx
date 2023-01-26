@@ -6,16 +6,16 @@ import UserWallet from "./UserWallet";
 const Header = () => {
   const style = {
     wrapper: "flex justify-between items-center",
-    headerHeading: "text-2xl font-bold text-primary-primary",
+    headerHeading: "text-2xl font-bold text-light-primary-primary",
     headerLinks: "flex justify-between items-center",
     headerItem: "mx-6 font-bold cursor-pointer",
-    navItem: "text-font-lightV1",
-    activeNavItem: "text-primary-primary",
-    connectBtnDiv: "text-font-lightV1",
+    navItem: "text-light-font-lightV1 dark:text-dark-font-lightV1",
+    activeNavItem: "text-light-primary-primary",
+    connectBtnDiv: "text-light-font-lightV1",
     btnConnect:
-      "cursor-pointer w-fit rounded-full bg-gradient-to-r from-primary-primary to-primary-secondary p-[2px]",
+      "cursor-pointer w-fit rounded-full bg-gradient-to-r from-light-primary-primary to-light-primary-secondary p-[2px]",
     btnConnectContainer:
-      "flex h-full w-full items-center justify-center bg-white back rounded-full px-8 py-2",
+      "flex h-full w-full items-center justify-center bg-white dark:bg-dark-background dark:text-dark-font-lightV1 rounded-full px-8 py-2",
   };
 
   const [isOpen, setIsOpen] = useState(false);

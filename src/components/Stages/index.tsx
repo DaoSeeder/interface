@@ -1,16 +1,15 @@
 import React from "react";
 import Avatar from "../../assets/avatar.png";
-import Clock from "../../assets/clock.svg";
+import { BsClockHistory } from "react-icons/bs";
 
 function Stage() {
   const style = {
-    campaignDiv: "text-font-lightV1 mt-12 w-full",
+    campaignDiv:
+      "text-light-font-lightV1 dark:text-dark-font-lightV1 mt-12 w-full",
     mainCampaign:
-      "rounded-md bg-gradient-to-r from-white to-white p-[2px] w-full drop-shadow-xl",
-    signleCampaign:
-      "rounded-md bg-gradient-to-r from-white to-white p-[2px] w-[300px]  drop-shadow-xl",
+      "rounded-md bg-gradient-to-r from-white to-white dark:from-transparent dark:to-transparent p-[2px] w-full drop-shadow-xl",
     signleCampaignContainer:
-      "flex flex-col h-full bg-gradient-to-b from-[#9A9A9A]/20 to-[#9A9A9A]/10 back rounded-md px-6 py-2 py-6",
+      "flex flex-col h-full bg-gradient-to-b from-[#9A9A9A]/20 to-[#9A9A9A]/10 dark:from-dark-box dark:to-dark-box rounded-md px-6 py-2 py-6",
     topBar: "flex justify-between items-end w-full mb-4",
     userDetails: "flex text-sm gap-4",
     userImage: "w-[40px] rounded-3xl",
@@ -23,24 +22,24 @@ function Stage() {
     timeImage: "w-[15px]",
     totalTimeLeft: "text-sm",
     stageProgressBar:
-      "w-full bg-transparent rounded-3xl border-primary-primary border-[1px] flex items-center mt-4 mb-2 p-px",
+      "w-full bg-transparent rounded-3xl border-light-primary-primary border-[1px] flex items-center mt-4 mb-2 p-px",
     totalProgress:
-      "w-[80%] bg-gradient-to-r from-primary-primary to-primary-secondary rounded-3xl h-1.5",
+      "w-[80%] bg-gradient-to-r from-light-primary-primary to-light-primary-secondary rounded-3xl h-1.5",
     stageDonations: "text-xs",
     stageDetails: "flex mt-3 flex-col",
     stageCategory: "text-xs",
     stageName: "text-xl font-bold",
     stageBtns: "flex mt-4",
     stageDonateNow:
-      "bg-gradient-to-r from-primary-primary to-primary-secondary rounded-3xl py-2 px-8 text-font-lightV2 cursor-pointer flex justify-center items-center",
-    shareBtnDiv: "text-font-lightV1 ml-2",
+      "bg-gradient-to-r from-light-primary-primary to-light-primary-secondary rounded-3xl py-2 px-8 text-light-font-lightV2 dark:text-dark-font-lightV2 cursor-pointer flex justify-center items-center",
+    shareBtnDiv: "text-light-font-lightV1 dark:text-dark-font-lightV1 ml-2",
     btnShare:
-      "cursor-pointer w-fit rounded-full bg-gradient-to-r from-primary-primary to-primary-secondary p-[2px]",
+      "cursor-pointer w-fit rounded-full bg-gradient-to-r from-light-primary-primary to-light-primary-secondary p-[2px]",
     btnShareContainer:
-      "flex h-full w-full items-center justify-center bg-[#F3F3F3] back rounded-full px-8 py-2",
-    deliverables: "mt-12 text-3xl font-bold",
-    allDeliverables: "mt-16 px-2 flex items-center",
-    timeline: "my-12",
+      "flex h-full w-full items-center justify-center bg-[#F3F3F3] dark:bg-dark-box dark:text-dark-font-lightV1 rounded-full px-8 py-2",
+    deliverables:
+      "mt-12 text-3xl font-bold text-light-font-lightV1 dark:text-dark-font-lightV1",
+    timeline: "my-12 text-light-font-lightV1 dark:text-dark-font-lightV1",
   };
   return (
     <>
@@ -70,7 +69,7 @@ function Stage() {
                 </div>
                 <div className={style.stageTimeLeft}>
                   <div className={style.timeImage}>
-                    <img src={Clock} alt={"clock"} />
+                    <BsClockHistory />
                   </div>
                   <div className={style.totalTimeLeft}>4h 30m Left</div>
                 </div>

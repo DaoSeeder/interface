@@ -3,21 +3,22 @@ import CampaignImage from "../../../assets/campaign1.jpg";
 import Image1 from "../../../assets/image_1.png";
 import Image2 from "../../../assets/image_2.png";
 import Image3 from "../../../assets/image_3.png";
-import Link from "../../../assets/link.png";
-import Globe from "../../../assets/globe.png";
-import EthLogo from "../../../assets/eth_logo.png";
+import { RiShareBoxFill } from "react-icons/ri";
+import { AiOutlineGlobal } from "react-icons/ai";
+import { FaEthereum } from "react-icons/fa";
 
 function SingleCampaign() {
   const style = {
-    campaignDiv: "text-font-lightV1 mt-12 w-full",
+    campaignDiv:
+      "text-light-font-lightV1 dark:text-dark-font-lightV1 mt-12 w-full",
     mainCampaign:
-      "rounded-md bg-gradient-to-r from-white to-white p-[2px] w-full drop-shadow-xl",
+      "rounded-md bg-gradient-to-r from-white to-white dark:from-transparent dark:to-transparent p-[2px] w-full drop-shadow-xl",
     signleCampaign:
-      "rounded-md bg-gradient-to-r from-white to-white p-[2px] drop-shadow-xl",
+      "rounded-md bg-gradient-to-r from-white to-white dark:from-transparent dark:to-transparent p-[2px] drop-shadow-xl",
     campaignImageContainer:
-      "flex flex-col w-[910px] h-full items-center justify-center bg-gradient-to-b from-[#9A9A9A]/20 to-[#9A9A9A]/10 back rounded-md px-6 py-2",
+      "flex flex-col w-[910px] h-full items-center justify-center bg-gradient-to-b from-[#9A9A9A]/20 to-[#9A9A9A]/10 dark:from-dark-box dark:to-dark-box rounded-md px-6 py-2",
     signleCampaignContainer:
-      "flex flex-col w-full h-full items-center justify-center bg-gradient-to-b from-[#9A9A9A]/20 to-[#9A9A9A]/10 back rounded-md px-6 py-2",
+      "flex flex-col w-full h-full items-center justify-center bg-gradient-to-b from-[#9A9A9A]/20 to-[#9A9A9A]/10 dark:from-dark-box dark:to-dark-box rounded-md px-6 py-2",
     campaignName: "flex flex-row justify-between mt-4 w-full items-center",
     campaignTitle: "font-bold",
     campaignCategory: "text-xs",
@@ -31,14 +32,18 @@ function SingleCampaign() {
     campaingImage: "cursor-zoom-in w-full h-[400px]",
     carouselArrows: "flex justify-center items-center gap-4 mt-8 select-none",
     carouselLeft:
-      "cursor-pointer w-fit rounded-full bg-gradient-to-r from-primary-primary to-primary-secondary py-1 px-3 text-font-lightV2 font-bold text-lg",
-    campaignDetails: "font-bold text-2xl text-font-lightV1 mt-12",
-    stageDetails: "font-bold text-2xl text-font-lightV1 mt-12 mb-4",
-    campaignWebsite: "flex items-center gap-4 mt-4",
+      "cursor-pointer w-fit rounded-full bg-gradient-to-r from-light-primary-primary to-light-primary-secondary py-1 px-3 text-light-font-lightV2 font-bold text-lg",
+    campaignDetails:
+      "font-bold text-2xl text-light-font-lightV1 dark:text-dark-font-lightV1 mt-12",
+    stageDetails:
+      "font-bold text-2xl text-light-font-lightV1 dark:text-dark-font-lightV1 mt-12 mb-4",
+    campaignWebsite:
+      "flex items-center gap-4 mt-4 text-light-font-lightV1 dark:text-dark-font-lightV1",
     globe: "w-[20px]",
     link: "w-[10px] cursor-pointer",
     eachStage: "flex gap-4 items-center font-semibold",
-    stages: "flex flex-col gap-2",
+    stages:
+      "flex flex-col gap-2 text-light-font-lightV1 dark:text-dark-font-lightV1",
     stageLink: "w-[10px]",
   };
   return (
@@ -66,15 +71,15 @@ function SingleCampaign() {
         <p>Campaign Details</p>
       </div>
       <div className={style.campaignWebsite}>
-        <img src={Globe} alt={"Globe"} className={style.globe} />
+        <AiOutlineGlobal />
         <p>https://www.daoseeder.com</p>
-        <img src={Link} alt={"link"} className={style.link} />
+        <RiShareBoxFill />
       </div>
       <div className={style.campaignDetails}>
         <p>Token Address</p>
       </div>
       <div className={style.campaignWebsite}>
-        <img src={EthLogo} alt={"EthLogo"} className={style.globe} />
+        <FaEthereum />
         <p>
           0x2f7f8cab3db5bf32e433075bb7eeecfdb2f383d40078750ee4739c5f9b25894e
         </p>
@@ -85,15 +90,15 @@ function SingleCampaign() {
       <div className={style.stages}>
         <div className={style.eachStage}>
           <p>First Stage</p>
-          <img src={Link} alt={"link"} className={style.stageLink} />
+          <RiShareBoxFill />
         </div>
         <div className={style.eachStage}>
           <p>Second Stage</p>
-          <img src={Link} alt={"link"} className={style.stageLink} />
+          <RiShareBoxFill />
         </div>
         <div className={style.eachStage}>
           <p>Third Stage</p>
-          <img src={Link} alt={"link"} className={style.stageLink} />
+          <RiShareBoxFill />
         </div>
       </div>
       <div className={style.stageDetails}>
@@ -136,7 +141,7 @@ function SingleCampaign() {
               <div className={style.campaingDesc}>
                 <p>
                   This is a banking application where the user can manage their
-                  funds and can ...
+                  funds ...
                 </p>
               </div>
               <div className={style.campaignData}>
