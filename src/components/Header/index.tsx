@@ -1,4 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDisconnect, useAccount } from "wagmi";
+import ConnectorsModal from "./ConnectorsModal";
+import UserWallet from "./UserWallet";
 
 const Header = () => {
   const style = {
@@ -15,8 +18,22 @@ const Header = () => {
       "flex h-full w-full items-center justify-center bg-white dark:bg-dark-background dark:text-dark-font-lightV1 rounded-full px-8 py-2",
   };
 
+  const [isOpen, setIsOpen] = useState(false);
+
+  const { isConnected } = useAccount();
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  const { disconnect } = useDisconnect();
+
   return (
     <div className={style.wrapper}>
+      <ConnectorsModal isOpen={isOpen} closeModal={closeModal} />
       <div>
         <h1 className={style.headerHeading}>DaoSeeder</h1>
       </div>
@@ -56,13 +73,19 @@ const Header = () => {
           <p>Contact</p>
         </div>
       </div>
-      <div className={style.connectBtnDiv}>
-        <div className={style.btnConnect}>
-          <div className={style.btnConnectContainer}>
-            <p>Connect Wallet</p>
+      {isConnected ? (
+        <div>
+          <UserWallet disconnectWallet={disconnect} />
+        </div>
+      ) : (
+        <div className={style.connectBtnDiv} onClick={openModal}>
+          <div className={style.btnConnect}>
+            <div className={style.btnConnectContainer}>
+              <p>Connect Wallet</p>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
