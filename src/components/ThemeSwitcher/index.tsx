@@ -15,7 +15,7 @@ function ThemeSwitcher() {
   };
   const changeTheme = (theme: string) => {
     if (theme === "light") {
-      localStorage.removeItem("theme");
+      localStorage.theme = "light";
       document.documentElement.classList.remove("dark");
     } else {
       localStorage.theme = "dark";
