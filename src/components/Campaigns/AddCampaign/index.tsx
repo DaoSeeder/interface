@@ -42,7 +42,11 @@ function AddCampaign() {
                   placeholder=" "
                   className={style.mainInput}
                 />
-                <label htmlFor="websiteLink" className={style.inputLabel}>
+                <label
+                  id="imputLabel"
+                  htmlFor="websiteLink"
+                  className={style.inputLabel}
+                >
                   Website Link
                 </label>
               </div>
@@ -53,7 +57,11 @@ function AddCampaign() {
                   placeholder=" "
                   className={style.mainInput}
                 />
-                <label htmlFor="logoLink" className={style.inputLabel}>
+                <label
+                  id="imputLabel"
+                  htmlFor="logoLink"
+                  className={style.inputLabel}
+                >
                   Logo Link
                 </label>
               </div>
@@ -70,7 +78,11 @@ function AddCampaign() {
                     placeholder=" "
                     className={style.mainInput}
                   />
-                  <label htmlFor="mediaLink" className={style.inputLabel}>
+                  <label
+                    id="imputLabel"
+                    htmlFor="mediaLink"
+                    className={style.inputLabel}
+                  >
                     Media Link
                   </label>
                 </div>
@@ -86,7 +98,11 @@ function AddCampaign() {
                   placeholder=" "
                   className={style.mainInput}
                 />
-                <label htmlFor="tokenAddress" className={style.inputLabel}>
+                <label
+                  id="imputLabel"
+                  htmlFor="tokenAddress"
+                  className={style.inputLabel}
+                >
                   Token Address
                 </label>
               </div>

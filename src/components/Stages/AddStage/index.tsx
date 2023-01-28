@@ -42,7 +42,11 @@ function AddStage() {
                   placeholder=" "
                   className={style.mainInput}
                 />
-                <label htmlFor="stageTitle" className={style.inputLabel}>
+                <label
+                  id="imputLabel"
+                  htmlFor="stageTitle"
+                  className={style.inputLabel}
+                >
                   Stage Title
                 </label>
               </div>
@@ -60,6 +64,7 @@ function AddStage() {
                     className={style.mainInput}
                   />
                   <label
+                    id="imputLabel"
                     htmlFor="stageDeliverable"
                     className={style.inputLabel}
                   >
