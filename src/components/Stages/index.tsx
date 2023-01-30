@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Avatar from "../../assets/avatar.png";
 import { BsClockHistory } from "react-icons/bs";
-import StageReview from "./StageReview";
+import StageAddVote from "./StageAddVote";
 
 function Stage() {
   const style = {
@@ -55,7 +55,7 @@ function Stage() {
 
   return (
     <>
-      <StageReview isOpen={isOpen} closeModal={closeModal} />
+      <StageAddVote isOpen={isOpen} closeModal={closeModal} />
       <div className={style.campaignDiv}>
         <div className={style.mainCampaign}>
           <div className={style.signleCampaignContainer}>
@@ -113,7 +113,7 @@ function Stage() {
               </div>
               <div>
                 <div className={style.stageDonateNow} onClick={openModal}>
-                  Add a review
+                  Add your Vote
                 </div>
               </div>
             </div>

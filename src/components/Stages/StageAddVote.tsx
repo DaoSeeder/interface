@@ -6,7 +6,7 @@ type ConnectorModalProps = {
   closeModal: (value?: boolean) => void;
 };
 
-function StageReview({ isOpen, closeModal }: ConnectorModalProps) {
+function StageAddVote({ isOpen, closeModal }: ConnectorModalProps) {
   const style = {
     dialog: "z-[1000] relative",
     overlay: "fixed inset-0 bg-black/50",
@@ -63,12 +63,12 @@ function StageReview({ isOpen, closeModal }: ConnectorModalProps) {
             >
               <Dialog.Panel className={style.dialogPanel}>
                 <Dialog.Title className={style.dialogHeading} as="h3">
-                  Add a review
+                  Add your Vote
                 </Dialog.Title>
                 <div className={style.dialogBody}>
                   <div className={style.stageProgress}>
                     <label className={style.stageProgressLabel}>
-                      Stage Progress
+                      Has the project met the stage deliverables? Yes/No
                     </label>
                     <div className={style.radioContainer}>
                       <div className={style.radioDiv}>
@@ -83,7 +83,7 @@ function StageReview({ isOpen, closeModal }: ConnectorModalProps) {
                           htmlFor="inProgress"
                           className={`${style.radioBtn} ${style.inProgressBtn}`}
                         >
-                          In Progress
+                          Yes
                         </label>
                       </div>
                       <div className={style.radioDiv}>
@@ -98,7 +98,7 @@ function StageReview({ isOpen, closeModal }: ConnectorModalProps) {
                           htmlFor="completed"
                           className={`${style.radioBtn} ${style.completedBtn}`}
                         >
-                          Completed
+                          No
                         </label>
                       </div>
                     </div>
@@ -133,4 +133,4 @@ function StageReview({ isOpen, closeModal }: ConnectorModalProps) {
   );
 }
 
-export default StageReview;
+export default StageAddVote;
