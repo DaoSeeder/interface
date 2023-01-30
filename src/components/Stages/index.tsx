@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import Avatar from "../../assets/avatar.png";
 import { BsClockHistory } from "react-icons/bs";
+import StageAddVote from "./StageAddVote";
 
 function Stage() {
   const style = {
@@ -29,7 +30,8 @@ function Stage() {
     stageDetails: "flex mt-3 flex-col",
     stageCategory: "text-xs",
     stageName: "text-xl font-bold",
-    stageBtns: "flex mt-4",
+    stageBtns: "flex mt-4 justify-between",
+    stageDivBtns: "flex",
     stageDonateNow:
       "bg-gradient-to-r from-light-primary-primary to-light-primary-secondary rounded-3xl py-2 px-8 text-light-font-lightV2 dark:text-dark-font-lightV2 cursor-pointer flex justify-center items-center",
     shareBtnDiv: "text-light-font-lightV1 dark:text-dark-font-lightV1 ml-2",
@@ -41,8 +43,19 @@ function Stage() {
       "mt-12 text-3xl font-bold text-light-font-lightV1 dark:text-dark-font-lightV1",
     timeline: "my-12 text-light-font-lightV1 dark:text-dark-font-lightV1",
   };
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+  function openModal() {
+    setIsOpen(true);
+  }
+
   return (
     <>
+      <StageAddVote isOpen={isOpen} closeModal={closeModal} />
       <div className={style.campaignDiv}>
         <div className={style.mainCampaign}>
           <div className={style.signleCampaignContainer}>
@@ -88,12 +101,19 @@ function Stage() {
               </div>
             </div>
             <div className={style.stageBtns}>
-              <div className={style.stageDonateNow}>Donate Now</div>
-              <div className={style.shareBtnDiv}>
-                <div className={style.btnShare}>
-                  <div className={style.btnShareContainer}>
-                    <p>Share</p>
+              <div className={style.stageDivBtns}>
+                <div className={style.stageDonateNow}>Donate Now</div>
+                <div className={style.shareBtnDiv}>
+                  <div className={style.btnShare}>
+                    <div className={style.btnShareContainer}>
+                      <p>Share</p>
+                    </div>
                   </div>
+                </div>
+              </div>
+              <div>
+                <div className={style.stageDonateNow} onClick={openModal}>
+                  Add your Vote
                 </div>
               </div>
             </div>

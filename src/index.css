@@ -92,18 +92,14 @@ code {
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
 
-input:focus-within ~ label {
+input:focus-within ~ #imputLabel {
   @apply transform scale-75 -translate-y-6;
 }
 
-input:focus-within ~ label,
-input:not(:placeholder-shown) ~ label {
+input:focus-within ~ #imputLabel,
+input:not(:placeholder-shown) ~ #imputLabel {
   @apply transform scale-75 -translate-y-6;
 }
-
-/* input:focus-within ~ label {
-  @apply text-blue-500;
-} */
 
 .createCampaignMainContainer {
   min-width: 910px;
@@ -119,4 +115,14 @@ input:not(:placeholder-shown) ~ label {
   .createCampaignMainContainer {
     min-width: 1100px;
   }
+}
+
+input:checked ~ .radio {
+  color: white;
+  @apply bg-light-primary-primary;
+}
+
+.radio {
+  color: white;
+  @apply bg-light-primary-grey;
 }
