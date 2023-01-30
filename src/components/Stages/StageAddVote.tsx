@@ -17,10 +17,6 @@ function StageAddVote({ isOpen, closeModal }: ConnectorModalProps) {
     dialogHeading:
       "text-lg font-bold leading-6 text-light-font-lightV1 dark:text-dark-font-lightV1",
     dialogBody: "mt-4",
-    textArea:
-      "block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-dark-background dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
-    labelReview:
-      "block mb-2 text-sm font-medium text-light-font-lightV1 dark:text-dark-font-lightV1",
     stageProgress:
       "flex flex-col text-sm text-light-font-lightV1 dark:text-dark-font-lightV1 mb-4",
     stageProgressLabel: "mt-4",
@@ -102,17 +98,6 @@ function StageAddVote({ isOpen, closeModal }: ConnectorModalProps) {
                         </label>
                       </div>
                     </div>
-                  </div>
-                  <div>
-                    <label htmlFor="review" className={style.labelReview}>
-                      Your review
-                    </label>
-                    <textarea
-                      id="review"
-                      rows={4}
-                      className={style.textArea}
-                      placeholder="Write your thoughts here..."
-                    ></textarea>
                   </div>
                   <div>
                     <div className={style.categoriesBtnDiv}>
