@@ -1,7 +1,16 @@
 import React from "react";
+import { AiOutlineMinusCircle } from "react-icons/ai";
 import { MdAddCircleOutline } from "react-icons/md";
+import { useStage } from "../../../hooks/useStage";
 
 function AddStage() {
+  const {
+    setStageName,
+    setDeliverable,
+    addDeliverables,
+    removeDeliverables,
+    stageDeliverables,
+  } = useStage();
   const style = {
     campaignDiv: "text-light-font-lightV1 mt-4 w-full",
     mainCampaign:
@@ -25,6 +34,10 @@ function AddStage() {
       "cursor-pointer w-fit rounded-full bg-gradient-to-r from-light-primary-primary to-light-primary-secondary p-[2px]",
     btnCategoriesContainerActive:
       "flex h-full items-center justify-center text-light-font-lightV2 back rounded-full px-6 py-2",
+    allDeliverables: "mb-8",
+    singleDeliverable:
+      "flex justify-between w-full dark:text-dark-font-lightV1 mb-2",
+    eachDeliverable: "border-b-2 w-full mr-4",
   };
   return (
     <>
@@ -41,9 +54,12 @@ function AddStage() {
                   name="stageTitle"
                   placeholder=" "
                   className={style.mainInput}
+                  onChange={(e) => {
+                    setStageName(e.target.value);
+                  }}
                 />
                 <label
-                  id="imputLabel"
+                  id="inputLabel"
                   htmlFor="stageTitle"
                   className={style.inputLabel}
                 >
@@ -62,18 +78,44 @@ function AddStage() {
                     name="stageDeliverable"
                     placeholder=" "
                     className={style.mainInput}
+                    onChange={(e) => {
+                      setDeliverable(e.target.value);
+                    }}
                   />
                   <label
-                    id="imputLabel"
+                    id="inputLabel"
                     htmlFor="stageDeliverable"
                     className={style.inputLabel}
                   >
                     Stage Deliverable
                   </label>
                 </div>
-                <div>
+                <div
+                  onClick={() => {
+                    addDeliverables();
+                  }}
+                >
                   <MdAddCircleOutline className={style.linkAdd} />
                 </div>
+              </div>
+
+              <div className={style.allDeliverables}>
+                {stageDeliverables &&
+                  stageDeliverables.map((res, idx) => {
+                    return (
+                      <div key={idx} className={style.singleDeliverable}>
+                        <p className={style.eachDeliverable}>{res}</p>
+
+                        <div
+                          onClick={() => {
+                            removeDeliverables(idx);
+                          }}
+                        >
+                          <AiOutlineMinusCircle className={style.linkAdd} />
+                        </div>
+                      </div>
+                    );
+                  })}
               </div>
 
               <div className={style.categoriesBtnDiv}>

@@ -12,8 +12,9 @@ import ThemeSwitcher from "./components/ThemeSwitcher";
 function App() {
   const style = {
     wrapper:
-      "w-full flex flex-row justify-center max-w-screen-2xl px-[200px] dark:bg-dark-background min-h-screen items-start",
-    container: "flex flex-col justify-center mt-6",
+      "w-full flex flex-row justify-center max-w-screen-2xl dark:bg-dark-background min-h-screen items-start",
+    container: "flex flex-col justify-center mt-6 w-full",
+    allRoutes: "px-[200px]",
   };
 
   useEffect(() => {
@@ -36,13 +37,15 @@ function App() {
       <div className={style.container}>
         <Router>
           <Header />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/campaign/:id" element={<SingleCampaign />} />
-            <Route path="/campaign/add" element={<AddCampaign />} />
-            <Route path="/campaign/:id/stage/:stageId" element={<Stage />} />
-            <Route path="/campaign/:id/stage/add" element={<AddStage />} />
-          </Routes>
+          <div className={style.allRoutes}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/campaign/:id" element={<SingleCampaign />} />
+              <Route path="/campaign/add" element={<AddCampaign />} />
+              <Route path="/campaign/:id/stage/:stageId" element={<Stage />} />
+              <Route path="/campaign/:id/stage/add" element={<AddStage />} />
+            </Routes>
+          </div>
         </Router>
       </div>
     </div>

@@ -13,6 +13,10 @@ body {
   justify-content: center;
 }
 
+#root {
+  width: 100%;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
@@ -92,12 +96,12 @@ code {
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
 
-input:focus-within ~ #imputLabel {
+input:focus-within ~ #inputLabel {
   @apply transform scale-75 -translate-y-6;
 }
 
-input:focus-within ~ #imputLabel,
-input:not(:placeholder-shown) ~ #imputLabel {
+input:focus-within ~ #inputLabel,
+input:not(:placeholder-shown) ~ #inputLabel {
   @apply transform scale-75 -translate-y-6;
 }
 
