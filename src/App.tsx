@@ -5,6 +5,7 @@ import AddCampaign from "./components/Campaigns/AddCampaign";
 import SingleCampaign from "./components/Campaigns/SingleCampaign";
 import Header from "./components/Header";
 import Home from "./components/Home";
+import IpfsUpload from "./components/IpfsUpload";
 import Stage from "./components/Stages";
 import AddStage from "./components/Stages/AddStage";
 import ThemeSwitcher from "./components/ThemeSwitcher";
@@ -44,6 +45,7 @@ function App() {
               <Route path="/campaign/add" element={<AddCampaign />} />
               <Route path="/campaign/:id/stage/:stageId" element={<Stage />} />
               <Route path="/campaign/:id/stage/add" element={<AddStage />} />
+              <Route path="/ipfs" element={<IpfsUpload />} />
             </Routes>
           </div>
         </Router>
