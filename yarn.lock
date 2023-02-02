@@ -1221,10 +1221,12 @@
   resolved "https://registry.yarnpkg.com/@csstools/selector-specificity/-/selector-specificity-2.1.1.tgz#c9c61d9fe5ca5ac664e1153bb0aa0eba1c6d6308"
   integrity sha512-jwx+WCqszn53YHOfvFMJJRd/B2GqkCBt+1MJSG6o5/s8+ytHMvDZXsJgUEWLk12UnLd7HYKac4BYU5i/Ron1Cw==
 
-"@daoseeder/core@^0.0.11":
-  version "0.0.11"
-  resolved "https://npm.pkg.github.com/download/@daoseeder/core/0.0.11/52e9ec0d5b69d8f79333bcb97d68935e7a645450#52e9ec0d5b69d8f79333bcb97d68935e7a645450"
-  integrity sha512-D66zhFUcvHonezoF1EQJwlsABYaihgpnfGalXiUesQxbosUBL4sV0iCqaF3ZiV/fhb+2R6jGpgoxVK0mslkcjw==
+"@daoseeder/core@0.1.0":
+  version "0.1.0"
+  resolved "https://npm.pkg.github.com/download/@daoseeder/core/0.1.0/3e99c742a05f186ff7ee4b8be1ba9918c9f8eed0#3e99c742a05f186ff7ee4b8be1ba9918c9f8eed0"
+  integrity sha512-8CCqUVWlOFW74OdAToTY4zW5j8hFFscSFOEyE8JcJCD0UtzTBpQs5yGNorh3Dqdc5aSwKrXJwIek+mVpiKhK5A==
+  dependencies:
+    "@openzeppelin/contracts" "^4.8.1"
 
 "@eslint/eslintrc@^1.4.1":
   version "1.4.1"
@@ -2192,6 +2194,11 @@
   dependencies:
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
+
+"@openzeppelin/contracts@^4.8.1":
+  version "4.8.1"
+  resolved "https://registry.yarnpkg.com/@openzeppelin/contracts/-/contracts-4.8.1.tgz#709cfc4bbb3ca9f4460d60101f15dac6b7a2d5e4"
+  integrity sha512-xQ6eUZl+RDyb/FiZe1h+U7qr/f4p/SrTSQcTPH2bjur3C5DbuW/zFgCU/b1P/xcIaEqJep+9ju4xDRi3rmChdQ==
 
 "@pedrouid/environment@^1.0.1":
   version "1.0.1"
