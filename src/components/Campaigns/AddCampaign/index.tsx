@@ -14,6 +14,7 @@ function AddCampaign() {
     setCampaignDescription,
     setCampaignWebsiteLink,
     setCampaignTokenAddress,
+    addCampaign,
   } = useCampaign();
   const style = {
     campaignDiv: "text-light-font-lightV1 mt-4 w-full",
@@ -194,7 +195,7 @@ function AddCampaign() {
                 </label>
               </div>
 
-              <div className={style.categoriesBtnDiv}>
+              <div className={style.categoriesBtnDiv} onClick={addCampaign}>
                 <div className={style.btnCategories}>
                   <div className={style.btnCategoriesContainerActive}>
                     <p>Submit</p>
