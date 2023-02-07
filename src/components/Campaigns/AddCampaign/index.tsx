@@ -15,6 +15,7 @@ function AddCampaign() {
     setCampaignWebsiteLink,
     setCampaignTokenAddress,
     addCampaign,
+    disableBtn,
   } = useCampaign();
   const style = {
     campaignDiv: "text-light-font-lightV1 mt-4 w-full",
@@ -42,6 +43,7 @@ function AddCampaign() {
     allMediaLinks: "mb-8",
     singleMedia: "flex justify-between w-full dark:text-dark-font-lightV1 mb-2",
     eachMedia: "border-b-2 w-full mr-4",
+    disableBtn: "pointer-events-none",
   };
   return (
     <>
@@ -195,8 +197,15 @@ function AddCampaign() {
                 </label>
               </div>
 
-              <div className={style.categoriesBtnDiv} onClick={addCampaign}>
-                <div className={style.btnCategories}>
+              <div className={style.categoriesBtnDiv}>
+                <div
+                  className={`${style.btnCategories} ${
+                    disableBtn ? style.disableBtn : ""
+                  }`}
+                  onClick={() => {
+                    addCampaign();
+                  }}
+                >
                   <div className={style.btnCategoriesContainerActive}>
                     <p>Submit</p>
                   </div>

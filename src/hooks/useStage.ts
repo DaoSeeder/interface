@@ -5,7 +5,7 @@ import { addStageToIpfs } from "../apis/ipfsApis";
 import { getSmartContractWithSigner } from "../utils/ContractUtils";
 import StageFactory from "@daoseeder/core/artifacts/contracts/StageFactory.sol/StageFactory.json";
 export const useStage = () => {
-  const STAGE_CONTRACT_ADDRESS = process.env.REACT_APP_STAGE_CONTRACT_ADDRESS;
+  const STAGE_CONTRACT_ADDRESS = process.env.REACT_APP_STAGE_FACTORY_ADDRESS;
   const { data: signer } = useSigner();
   const [stageName, setStageName] = useState<string>("");
   const [deliverable, setDeliverable] = useState<string>("");
@@ -23,8 +23,8 @@ export const useStage = () => {
         deliverables: stageDeliverables,
       };
       const cid = addStageToIpfs(stage);
-      const tx = await contract.createStage("project_token", cid);
-      await tx.wait();
+      // const tx = await contract.createStage("project_token", cid);
+      // await tx.wait();
     } else {
       console.log("Please connect your wallet");
       return;

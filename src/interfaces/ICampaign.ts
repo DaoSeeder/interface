@@ -5,4 +5,5 @@ export interface ICampaign {
   websiteLink: string;
   mediaLinks: string[];
   tokenAddress: string;
+  campaignKey: string;
 }

@@ -1,10 +1,10 @@
 import React from "react";
 import Galaxy from "../../assets/galaxy.png";
-import Image1 from "../../assets/image_1.png";
-import Image2 from "../../assets/image_2.png";
-import Image3 from "../../assets/image_3.png";
+import CampaignList from "../Campaigns/CampaignList";
+import { useCampaign } from "../../hooks/useCampaign";
 
 const Home = () => {
+  const { campaigns } = useCampaign();
   const style = {
     learnMoreBtnDiv: "text-light-font-lightV1",
     btnLearnMore:
@@ -17,7 +17,7 @@ const Home = () => {
       "text-light-font-lightV1 dark:text-dark-font-lightV1 font-bold text-[66px] leading-[90px] mb-8 z-[10]",
     bannerImg:
       "absolute z-[0] right-[-10rem] w-[600px] top-[9rem] dark:opacity-80",
-    campaignsDiv: "flex flex-col mt-24",
+    campaignsDiv: "flex flex-col mt-40",
     campaignHeading:
       "text-center text-3xl text-light-font-lightV1 dark:text-dark-font-lightV1 font-bold",
     campaignCategories: "flex items-center mt-12 justify-between",
@@ -62,7 +62,7 @@ const Home = () => {
         </div>
       </div>
       <div className={style.campaignsDiv}>
-        <h1 className={style.campaignHeading}>Discover Campaigns</h1>
+        <h1 className={style.campaignHeading}>Recent Campaigns</h1>
         <div className={style.campaignCategories}>
           <div className={style.browse}>
             <p>Browse</p>
@@ -111,82 +111,22 @@ const Home = () => {
           </div>
         </div>
       </div>
-      {/* TODO: Once we are getting the data from blockchain we will convert it into its own component */}
       <div className={`${style.allCampaigns} campaignsMain`}>
-        <div className={style.campaignDiv}>
-          <div className={style.signleCampaign}>
-            <div className={style.signleCampaignContainer}>
-              <img src={Image1} alt={"img1"} />
-              <div className={style.campaignName}>
-                <p className={style.campaignTitle}>CoinCommerce</p>
-                <p className={style.campaignCategory}>eCommerce</p>
-              </div>
-              <div className={style.campaingDesc}>
-                <p>
-                  We are creating an ecommerce website to promote our product
-                </p>
-              </div>
-              <div className={style.campaignData}>
-                <p className={style.campaignMoney}>
-                  $40 <span className={style.campaignMoneyRaised}>raised</span>
-                </p>
-                <p className={style.campaignTime}>
-                  4h 30m <span className={style.campaignTimeLeft}>left</span>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className={style.campaignDiv}>
-          <div className={style.signleCampaign}>
-            <div className={style.signleCampaignContainer}>
-              <img src={Image2} alt={"img2"} />
-              <div className={style.campaignName}>
-                <p className={style.campaignTitle}>Crypto Bank</p>
-                <p className={style.campaignCategory}>Business</p>
-              </div>
-              <div className={style.campaingDesc}>
-                <p>
-                  This is a banking application where the user can manage their
-                  funds ...
-                </p>
-              </div>
-              <div className={style.campaignData}>
-                <p className={style.campaignMoney}>
-                  $40 <span className={style.campaignMoneyRaised}>raised</span>
-                </p>
-                <p className={style.campaignTime}>
-                  4h 30m <span className={style.campaignTimeLeft}>left</span>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className={style.campaignDiv}>
-          <div className={style.signleCampaign}>
-            <div className={style.signleCampaignContainer}>
-              <img src={Image3} alt={"img3"} />
-              <div className={style.campaignName}>
-                <p className={style.campaignTitle}>Dashboard Block</p>
-                <p className={style.campaignCategory}>Personal</p>
-              </div>
-              <div className={style.campaingDesc}>
-                <p>
-                  It helps the user to manage their fund with beautiful
-                  visualization and..
-                </p>
-              </div>
-              <div className={style.campaignData}>
-                <p className={style.campaignMoney}>
-                  $40 <span className={style.campaignMoneyRaised}>raised</span>
-                </p>
-                <p className={style.campaignTime}>
-                  4h 30m <span className={style.campaignTimeLeft}>left</span>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+        {campaigns &&
+          campaigns.map((item, i) => {
+            return (
+              <CampaignList
+                key={i}
+                name={item.name}
+                description={item.description}
+                logoLink={item.logoLink}
+                websiteLink={item.websiteLink}
+                mediaLinks={item.mediaLinks}
+                tokenAddress={item.tokenAddress}
+                campaignKey={item.campaignKey}
+              />
+            );
+          })}
       </div>
     </>
   );

@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
+import { Toaster } from "react-hot-toast";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
+import Campaign from "./components/Campaigns";
 import AddCampaign from "./components/Campaigns/AddCampaign";
 import SingleCampaign from "./components/Campaigns/SingleCampaign";
 import Header from "./components/Header";
@@ -34,6 +36,7 @@ function App() {
 
   return (
     <div className={style.wrapper}>
+      <Toaster />
       <ThemeSwitcher />
       <div className={style.container}>
         <Router>
@@ -41,6 +44,7 @@ function App() {
           <div className={style.allRoutes}>
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/campaigns" element={<Campaign />} />
               <Route path="/campaign/:id" element={<SingleCampaign />} />
               <Route path="/campaign/add" element={<AddCampaign />} />
               <Route path="/campaign/:id/stage/:stageId" element={<Stage />} />
