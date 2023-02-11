@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Toaster } from "react-hot-toast";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
-import Campaign from "./components/Campaigns";
+import Campaigns from "./components/Campaigns";
 import AddCampaign from "./components/Campaigns/AddCampaign";
 import SingleCampaign from "./components/Campaigns/SingleCampaign";
 import Header from "./components/Header";
@@ -15,7 +15,7 @@ import ThemeSwitcher from "./components/ThemeSwitcher";
 function App() {
   const style = {
     wrapper:
-      "w-full flex flex-row justify-center max-w-screen-2xl dark:bg-dark-background min-h-screen items-start",
+      "w-full flex flex-row justify-center dark:bg-dark-background min-h-screen items-start",
     container: "flex flex-col justify-center mt-6 w-full",
     allRoutes: "px-[200px]",
   };
@@ -44,7 +44,7 @@ function App() {
           <div className={style.allRoutes}>
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/campaigns" element={<Campaign />} />
+              <Route path="/campaigns" element={<Campaigns />} />
               <Route path="/campaign/:id" element={<SingleCampaign />} />
               <Route path="/campaign/add" element={<AddCampaign />} />
               <Route path="/campaign/:id/stage/:stageId" element={<Stage />} />

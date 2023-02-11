@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { MdAdd } from "react-icons/md";
 import { Link } from "react-router-dom";
-import { useDisconnect, useAccount } from "wagmi";
-import ConnectorsModal from "./ConnectorsModal";
 import UserWallet from "./UserWallet";
+import Logo from "../../assets/logo_final_new.png";
 
 const Header = () => {
   const style = {
@@ -21,26 +20,15 @@ const Header = () => {
     headerBtns: "flex items-center",
     addCampaignBtn:
       "text-light-font-lightV1 dark:text-dark-font-lightV1 mr-2 rounded-full bg-gradient-to-r from-light-primary-primary to-light-primary-secondary px-3 py-3",
+    headerLogo: "w-[40px]",
+    headerLogoDiv: "flex items-center gap-2",
   };
-
-  const [isOpen, setIsOpen] = useState(false);
-
-  const { isConnected } = useAccount();
-
-  function closeModal() {
-    setIsOpen(false);
-  }
-  function openModal() {
-    setIsOpen(true);
-  }
-
-  const { disconnect } = useDisconnect();
 
   return (
     <div className={style.wrapper}>
-      <ConnectorsModal isOpen={isOpen} closeModal={closeModal} />
       <div>
-        <Link to="/">
+        <Link to="/" className={style.headerLogoDiv}>
+          <img src={Logo} alt={"logo"} className={style.headerLogo} />
           <h1 className={style.headerHeading}>DaoSeeder</h1>
         </Link>
       </div>
@@ -94,10 +82,10 @@ const Header = () => {
             <MdAdd />
           </div>
         </Link>
-        {isConnected ? (
-          <div>
-            <UserWallet disconnectWallet={disconnect} />
-          </div>
+        <div>
+          <UserWallet />
+        </div>
+        {/* {isConnected ? (
         ) : (
           <div className={style.connectBtnDiv} onClick={openModal}>
             <div className={style.btnConnect}>
@@ -106,7 +94,7 @@ const Header = () => {
               </div>
             </div>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );

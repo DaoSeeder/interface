@@ -2,6 +2,8 @@ import React from "react";
 import { AiOutlineMinusCircle } from "react-icons/ai";
 import { MdAddCircleOutline } from "react-icons/md";
 import { useStage } from "../../../hooks/useStage";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 function AddStage() {
   const {
@@ -10,6 +12,9 @@ function AddStage() {
     addDeliverables,
     removeDeliverables,
     stageDeliverables,
+    setStageInvertment,
+    setExpiryDate,
+    expiryDate,
   } = useStage();
   const style = {
     campaignDiv: "text-light-font-lightV1 mt-4 w-full",
@@ -38,6 +43,8 @@ function AddStage() {
     singleDeliverable:
       "flex justify-between w-full dark:text-dark-font-lightV1 mb-2",
     eachDeliverable: "border-b-2 w-full mr-4",
+    inputSpan: "text-xs",
+    datePicker: "bg-transparent border-b-2 w-full dark:text-dark-font-lightV1",
   };
   return (
     <>
@@ -65,6 +72,32 @@ function AddStage() {
                 >
                   Stage Title
                 </label>
+              </div>
+              <div className={`${style.inputDiv} ${style.inputMargin}`}>
+                <input
+                  type="number"
+                  name="stageInvestment"
+                  placeholder=" "
+                  className={style.mainInput}
+                  onChange={(e) => {
+                    setStageInvertment(parseFloat(e.target.value));
+                  }}
+                />
+                <label
+                  id="inputLabel"
+                  htmlFor="stageInvestment"
+                  className={style.inputLabel}
+                >
+                  Target Amount{" "}
+                  <span className={style.inputSpan}>(in Eths)</span>
+                </label>
+              </div>
+              <div className={style.inputMargin}>
+                <DatePicker
+                  className={style.datePicker}
+                  selected={expiryDate}
+                  onChange={(date: Date | null) => setExpiryDate(date)}
+                />
               </div>
               <div className={style.mediaLinksHeading}>
                 <p>Add Stage Deliverables</p>

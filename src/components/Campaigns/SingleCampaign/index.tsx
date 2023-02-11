@@ -3,11 +3,11 @@ import { RiShareBoxFill } from "react-icons/ri";
 import { AiOutlineGlobal } from "react-icons/ai";
 import { FaEthereum } from "react-icons/fa";
 import CampaignList from "../CampaignList";
-import { useSignleCampaign } from "../../../hooks/useSingleCampaign";
+import { useSingleCampaign } from "../../../hooks/useSingleCampaign";
 
 function SingleCampaign() {
   const { campaign, mediaLinkIdx, prevItem, nextItem, campaigns } =
-    useSignleCampaign();
+    useSingleCampaign();
   const style = {
     campaignDiv:
       "text-light-font-lightV1 dark:text-dark-font-lightV1 mt-12 w-full",
@@ -52,6 +52,7 @@ function SingleCampaign() {
       <div className={style.campaignDiv}>
         <div className={style.mainCampaign}>
           <div className={style.campaignImageContainer}>
+            {/* TODO: get cross origin error solution */}
             <div
               className={style.campaingImage}
               style={{

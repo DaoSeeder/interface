@@ -1,10 +1,10 @@
 import React from "react";
 import Galaxy from "../../assets/galaxy.png";
 import CampaignList from "../Campaigns/CampaignList";
-import { useCampaign } from "../../hooks/useCampaign";
+import { useCampaignsHandler } from "../../hooks/useCampaignsHandler";
 
 const Home = () => {
-  const { campaigns } = useCampaign();
+  const { campaigns } = useCampaignsHandler();
   const style = {
     learnMoreBtnDiv: "text-light-font-lightV1",
     btnLearnMore:

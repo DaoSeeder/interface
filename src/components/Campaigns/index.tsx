@@ -1,9 +1,9 @@
 import React from "react";
 import CampaignList from "./CampaignList";
-import { useCampaign } from "../../hooks/useCampaign";
+import { useCampaignsHandler } from "../../hooks/useCampaignsHandler";
 
-function Campaign() {
-  const { campaigns, loadMoreCampaigns, totalLen } = useCampaign();
+function Campaigns() {
+  const { campaigns, loadMoreCampaigns, totalLen } = useCampaignsHandler();
   const style = {
     allCampaigns: "my-12",
     wrapper: "mt-8",
@@ -50,4 +50,4 @@ function Campaign() {
   );
 }
 
-export default Campaign;
+export default Campaigns;

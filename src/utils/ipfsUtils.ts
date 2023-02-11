@@ -62,6 +62,8 @@ export const getStageData = (key: string): IStage => {
   const data: IStage = {
     name: "",
     deliverables: [""],
+    expiryDate: new Date(),
+    stageInvertment: 0,
   };
   return data;
 };

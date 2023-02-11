@@ -3,15 +3,15 @@ import {
   getCampaigns,
   getSmartContractWithProvider,
   getSmartContractWithSigner,
-} from "./../utils/ContractUtils";
-import { ICampaign } from "./../interfaces/ICampaign";
+} from "../utils/ContractUtils";
+import { ICampaign } from "../interfaces/ICampaign";
 import { useState } from "react";
-import { addCampaignToIpfs } from "../apis/ipfsApis";
+import { addCampaignToIpfs } from "../utils/ipfsUtils";
 import { useProvider, useSigner } from "wagmi";
 import CampaignFactory from "@daoseeder/core/artifacts/contracts/CampaignFactory.sol/CampaignFactory.json";
 import toast from "react-hot-toast";
 
-export const useCampaign = () => {
+export const useCampaignsHandler = () => {
   const provider = useProvider();
   const CAMPAIGN_FACTORY_ADDRESS =
     process.env.REACT_APP_CAMPAIGN_FACTORY_ADDRESS;
@@ -24,6 +24,9 @@ export const useCampaign = () => {
   const [campaignMediaLinks, setCampaignMediaLinks] = useState<string[]>([]);
   const [campaignLink, setCampaignLink] = useState<string>("");
   const [disableBtn, setDisableBtn] = useState<boolean>(false);
+  const [totalLen, setTotalLen] = useState<number>(0);
+  const [fetchFirstTime, setFetchFirstTime] = useState<boolean>(true);
+  const [campaigns, setCampaigns] = useState<ICampaign[]>([]);
 
   const addCampaign = async () => {
     setDisableBtn(true);
@@ -76,10 +79,6 @@ export const useCampaign = () => {
     );
   };
 
-  const [totalLen, setTotalLen] = useState<number>(0);
-  const [fetchFirstTime, setFetchFirstTime] = useState<boolean>(true);
-  const [campaigns, setCampaigns] = useState<ICampaign[]>([]);
-
   useEffect(() => {
     const fetchCampaigns = async () => {
       try {
@@ -119,8 +118,8 @@ export const useCampaign = () => {
         if (totalLen > 0) {
           const len = totalLen > 6 ? totalLen - 6 : 0;
           setTotalLen(totalLen - 6);
+          // TODO: This looks like it may take too long, might need some paging methods on the contract
           const data = await getCampaigns(contract, len, totalLen);
-          console.log(data);
           setCampaigns((prevCampaign) => [...prevCampaign, ...data]);
         }
       }

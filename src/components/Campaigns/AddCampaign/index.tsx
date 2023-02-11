@@ -1,7 +1,7 @@
 import React from "react";
 import { AiOutlineMinusCircle } from "react-icons/ai";
 import { MdAddCircleOutline } from "react-icons/md";
-import { useCampaign } from "../../../hooks/useCampaign";
+import { useCampaignsHandler } from "../../../hooks/useCampaignsHandler";
 
 function AddCampaign() {
   const {
@@ -16,7 +16,7 @@ function AddCampaign() {
     setCampaignTokenAddress,
     addCampaign,
     disableBtn,
-  } = useCampaign();
+  } = useCampaignsHandler();
   const style = {
     campaignDiv: "text-light-font-lightV1 mt-4 w-full",
     mainCampaign:

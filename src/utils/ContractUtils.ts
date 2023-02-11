@@ -1,5 +1,5 @@
 import { ICampaign } from "./../interfaces/ICampaign";
-import { getCampaignData } from "./../apis/ipfsApis";
+import { getCampaignData } from "../utils/ipfsUtils";
 import { Provider } from "@ethersproject/providers";
 import { Contract, Signer } from "ethers";
 

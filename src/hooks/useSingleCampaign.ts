@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 import CampaignFactory from "@daoseeder/core/artifacts/contracts/CampaignFactory.sol/CampaignFactory.json";
 import { ICampaign } from "../interfaces/ICampaign";
 
-export const useSignleCampaign = () => {
+export const useSingleCampaign = () => {
   const { id } = useParams();
   const CAMPAIGN_FACTORY_ADDRESS =
     process.env.REACT_APP_CAMPAIGN_FACTORY_ADDRESS;
@@ -73,10 +73,12 @@ export const useSignleCampaign = () => {
     }
   }, [CAMPAIGN_FACTORY_ADDRESS, id, provider]);
 
+  // TODO: preload all images
   const prevItem = () => {
     if (mediaLinkIdx > 0) setMediaLinkIdx(mediaLinkIdx - 1);
   };
 
+  // TODO: preload all images
   const nextItem = () => {
     if (
       campaign &&
