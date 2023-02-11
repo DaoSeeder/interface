@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 import CampaignFactory from "@daoseeder/core/artifacts/contracts/CampaignFactory.sol/CampaignFactory.json";
 import { ICampaign } from "../interfaces/ICampaign";
 
-export const useSingleCampaign = () => {
+export const useSingleCampaignHandler = () => {
   const { id } = useParams();
   const CAMPAIGN_FACTORY_ADDRESS =
     process.env.REACT_APP_CAMPAIGN_FACTORY_ADDRESS;

@@ -3,11 +3,11 @@ import { RiShareBoxFill } from "react-icons/ri";
 import { AiOutlineGlobal } from "react-icons/ai";
 import { FaEthereum } from "react-icons/fa";
 import CampaignList from "../CampaignList";
-import { useSingleCampaign } from "../../../hooks/useSingleCampaign";
+import { useSingleCampaignHandler } from "../../../hooks/useSingleCampaignHandler";
 
 function SingleCampaign() {
   const { campaign, mediaLinkIdx, prevItem, nextItem, campaigns } =
-    useSingleCampaign();
+    useSingleCampaignHandler();
   const style = {
     campaignDiv:
       "text-light-font-lightV1 dark:text-dark-font-lightV1 mt-12 w-full",

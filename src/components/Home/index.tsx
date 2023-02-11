@@ -20,7 +20,7 @@ const Home = () => {
     campaignsDiv: "flex flex-col mt-40",
     campaignHeading:
       "text-center text-3xl text-light-font-lightV1 dark:text-dark-font-lightV1 font-bold",
-    campaignCategories: "flex items-center mt-12 justify-between",
+    campaignCategories: "flex items-center mt-12 justify-center gap-8",
     browse: "font-bold dark:text-dark-font-lightV1",
     categoriesBtnDiv: "text-light-font-lightV1",
     btnCategories:

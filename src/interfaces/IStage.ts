@@ -1,7 +1,7 @@
 export interface IStage {
   name: string;
   expiryDate: Date;
-  stageInvertment: number;
+  stageInvestment: number;
   deliverables: string[];
 }
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { AiOutlineMinusCircle } from "react-icons/ai";
 import { MdAddCircleOutline } from "react-icons/md";
-import { useStage } from "../../../hooks/useStage";
+import { useStageHandler } from "../../../hooks/useStageHandler";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -12,10 +12,10 @@ function AddStage() {
     addDeliverables,
     removeDeliverables,
     stageDeliverables,
-    setStageInvertment,
+    setstageInvestment,
     setExpiryDate,
     expiryDate,
-  } = useStage();
+  } = useStageHandler();
   const style = {
     campaignDiv: "text-light-font-lightV1 mt-4 w-full",
     mainCampaign:
@@ -28,10 +28,12 @@ function AddStage() {
       "block w-full appearance-none focus:outline-none bg-transparent dark:text-dark-font-lightV1",
     inputLabel:
       "dark:text-dark-font-muted absolute top-0 -z-1 duration-300 origin-0",
-    mediaLinksHeading: "text-2xl font-bold mb-8 dark:text-dark-font-lightV1",
+    dateLabel: "dark:text-dark-font-muted text-xs",
+    mediaLinksHeading: "text-xl font-bold mb-8 dark:text-dark-font-lightV1",
     mediaLinksContainer: "flex justify-between items-center gap-4",
     linkAdd: "w-4 cursor-pointer dark:text-dark-font-lightV2",
     inputMargin: "mb-8",
+    targetInputMargin: "mb-2",
     campaignHeading:
       "mt-12 text-2xl font-bold w-full dark:text-dark-font-lightV1",
     categoriesBtnDiv: "text-light-font-lightV1 w-full flex justify-end mb-8",
@@ -73,14 +75,14 @@ function AddStage() {
                   Stage Title
                 </label>
               </div>
-              <div className={`${style.inputDiv} ${style.inputMargin}`}>
+              <div className={`${style.inputDiv} ${style.targetInputMargin}`}>
                 <input
                   type="number"
                   name="stageInvestment"
                   placeholder=" "
                   className={style.mainInput}
                   onChange={(e) => {
-                    setStageInvertment(parseFloat(e.target.value));
+                    setstageInvestment(parseFloat(e.target.value));
                   }}
                 />
                 <label
@@ -93,6 +95,7 @@ function AddStage() {
                 </label>
               </div>
               <div className={style.inputMargin}>
+                <label className={style.dateLabel}>Stage End Date</label>
                 <DatePicker
                   className={style.datePicker}
                   selected={expiryDate}

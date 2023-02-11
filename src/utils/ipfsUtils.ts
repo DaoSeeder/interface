@@ -54,16 +54,16 @@ export const getCampaignData = async (ipfsKey: string): Promise<ICampaign> => {
   return data;
 };
 
-export const addStageToIpfs = (stage: IStage): string => {
-  return "";
+export const addStageToIpfs = (stage: IStage): IStage => {
+  return stage;
 };
 
-export const getStageData = (key: string): IStage => {
+export const getStageData = (): IStage => {
   const data: IStage = {
     name: "",
     deliverables: [""],
     expiryDate: new Date(),
-    stageInvertment: 0,
+    stageInvestment: 0,
   };
   return data;
 };
