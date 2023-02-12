@@ -15,6 +15,7 @@ function AddStage() {
     setstageInvestment,
     setExpiryDate,
     expiryDate,
+    addStage,
   } = useStageHandler();
   const style = {
     campaignDiv: "text-light-font-lightV1 mt-4 w-full",
@@ -155,7 +156,12 @@ function AddStage() {
               </div>
 
               <div className={style.categoriesBtnDiv}>
-                <div className={style.btnCategories}>
+                <div
+                  className={style.btnCategories}
+                  onClick={() => {
+                    addStage();
+                  }}
+                >
                   <div className={style.btnCategoriesContainerActive}>
                     <p>Submit</p>
                   </div>

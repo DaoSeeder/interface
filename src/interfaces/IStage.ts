@@ -3,6 +3,7 @@ export interface IStage {
   expiryDate: Date;
   stageInvestment: number;
   deliverables: string[];
+  dateInString: string;
 }
 
 export interface IStageMetaData {

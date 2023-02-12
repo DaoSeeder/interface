@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import Avatar from "../../assets/avatar.png";
 import { BsClockHistory } from "react-icons/bs";
 import StageAddVote from "./StageAddVote";
+import { useSingleStageHandler } from "../../hooks/useSingleStageHandler";
 
 function Stage() {
+  const { stage } = useSingleStageHandler();
   const style = {
     campaignDiv:
       "text-light-font-lightV1 dark:text-dark-font-lightV1 mt-12 w-full",
@@ -78,13 +80,15 @@ function Stage() {
             <div className={style.stageGoals}>
               <div className={style.stageData}>
                 <div className={style.stageTotalMoney}>
-                  $40 raised of $95,000 goal
+                  40 ETH raised of {stage?.stageInvestment} ETH goal
                 </div>
                 <div className={style.stageTimeLeft}>
                   <div className={style.timeImage}>
                     <BsClockHistory />
                   </div>
-                  <div className={style.totalTimeLeft}>4h 30m Left</div>
+                  <div className={style.totalTimeLeft}>
+                    {stage?.dateInString} left
+                  </div>
                 </div>
               </div>
               <div className={style.stageProgressBar}>
@@ -96,9 +100,7 @@ function Stage() {
             </div>
             <div className={style.stageDetails}>
               <div className={style.stageCategory}>Personal</div>
-              <div className={style.stageName}>
-                Oculis Lodge: Special Lodging Experience In Nature
-              </div>
+              <div className={style.stageName}>{stage?.name}</div>
             </div>
             <div className={style.stageBtns}>
               <div className={style.stageDivBtns}>
@@ -128,32 +130,15 @@ function Stage() {
       </div>
 
       <div className={style.timeline}>
-        <p className="module">
-          Doggo ipsum long bois lotsa pats blep. What a nice floof ruff super
-          chub very good spot, the neighborhood pupper lotsa pats. Borkdrive
-          shibe shoober what a nice floof, borking doggo.
-        </p>
-        <p className="module">
-          Shoober shooberino adorable doggo many pats, heckin good boys many
-          pats pupper wrinkler, corgo maximum borkdrive. A frighten puggo wow
-          very biscit.
-        </p>
-        <p className="module">
-          Big ol h*ck adorable doggo vvv smol borking doggo with a long snoot
-          for pats big ol, he made many woofs doing me a frighten puggo wow very
-          biscit, ruff fat boi ruff long doggo.{" "}
-        </p>
-        <p className="module">
-          Long bois mlem I am bekom fat wrinkler puggo maximum borkdrive big ol
-          pupper I am bekom fat, fluffer vvv adorable doggo lotsa pats snoot. I
-          am bekom fat ur givin me a spook length boy wow very biscit very good
-          spot.
-        </p>
-        <p className="module">
-          Doggo ipsum long bois lotsa pats blep. What a nice floof ruff super
-          chub very good spot, the neighborhood pupper lotsa pats. Borkdrive
-          shibe shoober what a nice floof, borking doggo.
-        </p>
+        {stage?.deliverables &&
+          stage?.deliverables.length > 0 &&
+          stage.deliverables.map((deliverable, idx) => {
+            return (
+              <p className="module" key={idx}>
+                {deliverable}
+              </p>
+            );
+          })}
       </div>
     </>
   );

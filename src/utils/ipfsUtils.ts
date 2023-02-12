@@ -54,16 +54,52 @@ export const getCampaignData = async (ipfsKey: string): Promise<ICampaign> => {
   return data;
 };
 
-export const addStageToIpfs = (stage: IStage): IStage => {
-  return stage;
+export const addStageToIpfs = async (stage: IStage): Promise<string> => {
+  try {
+    const auth =
+      "Basic " +
+      window.btoa(
+        process.env.REACT_APP_INFURA_PROJECT_ID +
+          ":" +
+          process.env.REACT_APP_INFURA_API_SECRET
+      );
+    const client: IPFSHTTPClient = create({
+      host: "ipfs.infura.io",
+      port: 5001,
+      protocol: "https",
+      headers: {
+        authorization: auth,
+      },
+    });
+    if (client) {
+      const file = await client.add(JSON.stringify(stage));
+      console.log(file.path);
+      return file.path;
+    } else {
+      throw new Error("Could not get ipfs client. Please try again");
+    }
+  } catch (err) {
+    throw "An error occurred while adding data to ipfs.\n" + err;
+  }
 };
 
-export const getStageData = (): IStage => {
-  const data: IStage = {
+export const getStageData = async (ipfsKey: string): Promise<IStage> => {
+  let data: IStage = {
     name: "",
     deliverables: [""],
     expiryDate: new Date(),
     stageInvestment: 0,
+    dateInString: "",
   };
+  data = await fetch(`https://ipfs.io/ipfs/${ipfsKey}`)
+    .then((response) => response.json())
+    .then((res) => {
+      console.log(res);
+      return res;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
   return data;
 };
