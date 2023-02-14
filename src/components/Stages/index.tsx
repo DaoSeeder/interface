@@ -80,14 +80,14 @@ function Stage() {
             <div className={style.stageGoals}>
               <div className={style.stageData}>
                 <div className={style.stageTotalMoney}>
-                  40 ETH raised of {stage?.stageInvestment} ETH goal
+                  40 ETH raised of {stage?.stageTarget} ETH goal
                 </div>
                 <div className={style.stageTimeLeft}>
                   <div className={style.timeImage}>
                     <BsClockHistory />
                   </div>
                   <div className={style.totalTimeLeft}>
-                    {stage?.dateInString} left
+                    {stage?.dateInString}
                   </div>
                 </div>
               </div>

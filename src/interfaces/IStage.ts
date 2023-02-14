@@ -1,7 +1,7 @@
 export interface IStage {
   name: string;
   expiryDate: Date;
-  stageInvestment: number;
+  stageTarget: number;
   deliverables: string[];
   dateInString: string;
 }

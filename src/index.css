@@ -109,15 +109,18 @@ input:not(:placeholder-shown) ~ #inputLabel {
   min-width: 910px;
 }
 
-@media screen and (width >= 1100px) {
-  .createCampaignMainContainer {
-    min-width: 920px;
+/* @media screen and (width >= 1100px) {
+  .allRoutes {
+    max-width: 4000px;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
   }
-}
+} */
 
-@media screen and (width >= 1400px) {
-  .createCampaignMainContainer {
-    min-width: 1100px;
+@media screen and (width >= 1800px) {
+  .allRoutes {
+    padding: 0px 400px;
   }
 }
 

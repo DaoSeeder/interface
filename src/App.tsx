@@ -41,7 +41,7 @@ function App() {
       <div className={style.container}>
         <Router>
           <Header />
-          <div className={style.allRoutes}>
+          <div className={`${style.allRoutes} allRoutes`}>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/campaigns" element={<Campaigns />} />
