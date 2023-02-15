@@ -12,7 +12,7 @@ function AddStage() {
     addDeliverables,
     removeDeliverables,
     stageDeliverables,
-    setStageTarget,
+    setStageGoal,
     setExpiryDate,
     expiryDate,
     addStage,
@@ -79,16 +79,16 @@ function AddStage() {
               <div className={`${style.inputDiv} ${style.targetInputMargin}`}>
                 <input
                   type="number"
-                  name="stageTarget"
+                  name="stageGoal"
                   placeholder=" "
                   className={style.mainInput}
                   onChange={(e) => {
-                    setStageTarget(parseFloat(e.target.value));
+                    setStageGoal(parseFloat(e.target.value));
                   }}
                 />
                 <label
                   id="inputLabel"
-                  htmlFor="stageTarget"
+                  htmlFor="stageGoal"
                   className={style.inputLabel}
                 >
                   Target Amount{" "}

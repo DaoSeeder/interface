@@ -88,7 +88,7 @@ export const getStageData = async (ipfsKey: string): Promise<IStage> => {
     name: "",
     deliverables: [""],
     expiryDate: new Date(),
-    stageTarget: 0,
+    stageGoal: 0,
     dateInString: "",
   };
   data = await fetch(`https://ipfs.io/ipfs/${ipfsKey}`)

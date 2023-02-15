@@ -10,7 +10,7 @@ export const useStageHandler = () => {
   const [stageName, setStageName] = useState<string>("");
   const [deliverable, setDeliverable] = useState<string>("");
   const [stageDeliverables, setStageDeliverables] = useState<string[]>([]);
-  const [stageTarget, setStageTarget] = useState<number>(0);
+  const [stageGoal, setStageGoal] = useState<number>(0);
   const [expiryDate, setExpiryDate] = useState<Date | null>(new Date());
 
   const addStage = async () => {
@@ -24,7 +24,7 @@ export const useStageHandler = () => {
       name: stageName,
       expiryDate: expiryDate || new Date(),
       deliverables: stageDeliverables,
-      stageTarget: stageTarget,
+      stageGoal: stageGoal,
       dateInString: "",
     };
     addStageToIpfs(stage);
@@ -54,7 +54,7 @@ export const useStageHandler = () => {
     addDeliverables,
     removeDeliverables,
     stageDeliverables,
-    setStageTarget,
+    setStageGoal,
     setExpiryDate,
     expiryDate,
   };
