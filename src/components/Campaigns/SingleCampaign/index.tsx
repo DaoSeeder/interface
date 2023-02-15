@@ -1,13 +1,13 @@
 import React from "react";
-import CampaignImage from "../../../assets/campaign1.jpg";
-import Image1 from "../../../assets/image_1.png";
-import Image2 from "../../../assets/image_2.png";
-import Image3 from "../../../assets/image_3.png";
 import { RiShareBoxFill } from "react-icons/ri";
 import { AiOutlineGlobal } from "react-icons/ai";
 import { FaEthereum } from "react-icons/fa";
+import CampaignList from "../CampaignList";
+import { useSingleCampaignHandler } from "../../../hooks/useSingleCampaignHandler";
 
 function SingleCampaign() {
+  const { campaign, mediaLinkIdx, prevItem, nextItem, campaigns } =
+    useSingleCampaignHandler();
   const style = {
     campaignDiv:
       "text-light-font-lightV1 dark:text-dark-font-lightV1 mt-12 w-full",
@@ -16,7 +16,7 @@ function SingleCampaign() {
     signleCampaign:
       "rounded-md bg-gradient-to-r from-white to-white dark:from-transparent dark:to-transparent p-[2px] drop-shadow-xl",
     campaignImageContainer:
-      "flex flex-col w-[910px] h-full items-center justify-center bg-gradient-to-b from-[#9A9A9A]/20 to-[#9A9A9A]/10 dark:from-dark-box dark:to-dark-box rounded-md px-6 py-2",
+      "flex flex-col w-full h-full items-center justify-center bg-gradient-to-b from-[#9A9A9A]/20 to-[#9A9A9A]/10 dark:from-dark-box dark:to-dark-box rounded-md px-6 py-2",
     signleCampaignContainer:
       "flex flex-col w-full h-full items-center justify-center bg-gradient-to-b from-[#9A9A9A]/20 to-[#9A9A9A]/10 dark:from-dark-box dark:to-dark-box rounded-md px-6 py-2",
     campaignName: "flex flex-row justify-between mt-4 w-full items-center",
@@ -45,16 +45,18 @@ function SingleCampaign() {
     stages:
       "flex flex-col gap-2 text-light-font-lightV1 dark:text-dark-font-lightV1",
     stageLink: "w-[10px]",
+    openIcon: "cursor-pointer",
   };
   return (
     <>
       <div className={style.campaignDiv}>
         <div className={style.mainCampaign}>
           <div className={style.campaignImageContainer}>
+            {/* TODO: get cross origin error solution */}
             <div
               className={style.campaingImage}
               style={{
-                backgroundImage: `url(${CampaignImage})`,
+                backgroundImage: `url(${campaign?.mediaLinks[mediaLinkIdx]})`,
                 backgroundSize: "cover",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center center",
@@ -64,25 +66,48 @@ function SingleCampaign() {
         </div>
       </div>
       <div className={style.carouselArrows}>
-        <div className={style.carouselLeft}>{"<"}</div>
-        <div className={style.carouselLeft}>{">"}</div>
+        <div
+          className={style.carouselLeft}
+          onClick={() => {
+            prevItem();
+          }}
+        >
+          {"<"}
+        </div>
+        <div
+          className={style.carouselLeft}
+          onClick={() => {
+            nextItem();
+          }}
+        >
+          {">"}
+        </div>
       </div>
       <div className={style.campaignDetails}>
         <p>Campaign Details</p>
       </div>
       <div className={style.campaignWebsite}>
+        <p>{campaign?.name}</p>
+      </div>
+      <div className={style.campaignWebsite}>
+        <p>{campaign?.description}</p>
+      </div>
+      <div className={style.campaignWebsite}>
         <AiOutlineGlobal />
-        <p>https://www.daoseeder.com</p>
-        <RiShareBoxFill />
+        <p>{campaign?.websiteLink}</p>
+        <RiShareBoxFill
+          className={style.openIcon}
+          onClick={() => {
+            `${window.open("//" + campaign?.websiteLink)}`;
+          }}
+        />
       </div>
       <div className={style.campaignDetails}>
         <p>Token Address</p>
       </div>
       <div className={style.campaignWebsite}>
         <FaEthereum />
-        <p>
-          0x2f7f8cab3db5bf32e433075bb7eeecfdb2f383d40078750ee4739c5f9b25894e
-        </p>
+        <p>{campaign?.tokenAddress}</p>
       </div>
       <div className={style.stageDetails}>
         <p>Stages</p>
@@ -90,96 +115,36 @@ function SingleCampaign() {
       <div className={style.stages}>
         <div className={style.eachStage}>
           <p>First Stage</p>
-          <RiShareBoxFill />
+          <RiShareBoxFill className={style.openIcon} />
         </div>
         <div className={style.eachStage}>
           <p>Second Stage</p>
-          <RiShareBoxFill />
+          <RiShareBoxFill className={style.openIcon} />
         </div>
         <div className={style.eachStage}>
           <p>Third Stage</p>
-          <RiShareBoxFill />
+          <RiShareBoxFill className={style.openIcon} />
         </div>
       </div>
       <div className={style.stageDetails}>
-        <p>More Campaigns</p>
+        <p>Recent Campaigns</p>
       </div>
-      {/* TODO: Once we are getting the data from blockchain we will convert it into its own component */}
       <div className={`${style.allCampaigns} campaignsMain`}>
-        <div className={style.campaignDiv}>
-          <div className={style.signleCampaign}>
-            <div className={style.signleCampaignContainer}>
-              <img src={Image1} alt={"img1"} />
-              <div className={style.campaignName}>
-                <p className={style.campaignTitle}>CoinCommerce</p>
-                <p className={style.campaignCategory}>eCommerce</p>
-              </div>
-              <div className={style.campaingDesc}>
-                <p>
-                  We are creating an ecommerce website to promote our product
-                </p>
-              </div>
-              <div className={style.campaignData}>
-                <p className={style.campaignMoney}>
-                  $40 <span className={style.campaignMoneyRaised}>raised</span>
-                </p>
-                <p className={style.campaignTime}>
-                  4h 30m <span className={style.campaignTimeLeft}>left</span>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className={style.campaignDiv}>
-          <div className={style.signleCampaign}>
-            <div className={style.signleCampaignContainer}>
-              <img src={Image2} alt={"img2"} />
-              <div className={style.campaignName}>
-                <p className={style.campaignTitle}>Crypto Bank</p>
-                <p className={style.campaignCategory}>Business</p>
-              </div>
-              <div className={style.campaingDesc}>
-                <p>
-                  This is a banking application where the user can manage their
-                  funds ...
-                </p>
-              </div>
-              <div className={style.campaignData}>
-                <p className={style.campaignMoney}>
-                  $40 <span className={style.campaignMoneyRaised}>raised</span>
-                </p>
-                <p className={style.campaignTime}>
-                  4h 30m <span className={style.campaignTimeLeft}>left</span>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className={style.campaignDiv}>
-          <div className={style.signleCampaign}>
-            <div className={style.signleCampaignContainer}>
-              <img src={Image3} alt={"img3"} />
-              <div className={style.campaignName}>
-                <p className={style.campaignTitle}>Dashboard Block</p>
-                <p className={style.campaignCategory}>Personal</p>
-              </div>
-              <div className={style.campaingDesc}>
-                <p>
-                  It helps the user to manage their fund with beautiful
-                  visualization and..
-                </p>
-              </div>
-              <div className={style.campaignData}>
-                <p className={style.campaignMoney}>
-                  $40 <span className={style.campaignMoneyRaised}>raised</span>
-                </p>
-                <p className={style.campaignTime}>
-                  4h 30m <span className={style.campaignTimeLeft}>left</span>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+        {campaigns &&
+          campaigns.map((item, i) => {
+            return (
+              <CampaignList
+                key={i}
+                name={item.name}
+                description={item.description}
+                logoLink={item.logoLink}
+                websiteLink={item.websiteLink}
+                mediaLinks={item.mediaLinks}
+                tokenAddress={item.tokenAddress}
+                campaignKey={item.campaignKey}
+              />
+            );
+          })}
       </div>
     </>
   );

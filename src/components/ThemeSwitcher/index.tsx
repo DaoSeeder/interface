@@ -24,7 +24,7 @@ function ThemeSwitcher() {
   };
 
   return (
-    <div className={style.themeContainer}>
+    <div id="theme" className={style.themeContainer}>
       <div
         className={style.sunDiv}
         onClick={() => {

@@ -1,7 +1,22 @@
 import React from "react";
+import { AiOutlineMinusCircle } from "react-icons/ai";
 import { MdAddCircleOutline } from "react-icons/md";
+import { useCampaignsHandler } from "../../../hooks/useCampaignsHandler";
 
 function AddCampaign() {
+  const {
+    campaignMediaLinks,
+    addMediaLinks,
+    setCampaignLink,
+    removeMediaLinks,
+    setCampaignName,
+    setCampaignLogoLink,
+    setCampaignDescription,
+    setCampaignWebsiteLink,
+    setCampaignTokenAddress,
+    addCampaign,
+    disableBtn,
+  } = useCampaignsHandler();
   const style = {
     campaignDiv: "text-light-font-lightV1 mt-4 w-full",
     mainCampaign:
@@ -25,6 +40,10 @@ function AddCampaign() {
       "cursor-pointer w-fit rounded-full bg-gradient-to-r from-light-primary-primary to-light-primary-secondary p-[2px]",
     btnCategoriesContainerActive:
       "flex h-full items-center justify-center text-light-font-lightV2 back rounded-full px-6 py-2",
+    allMediaLinks: "mb-8",
+    singleMedia: "flex justify-between w-full dark:text-dark-font-lightV1 mb-2",
+    eachMedia: "border-b-2 w-full mr-4",
+    disableBtn: "pointer-events-none",
   };
   return (
     <>
@@ -38,12 +57,51 @@ function AddCampaign() {
               <div className={`${style.inputDiv} ${style.inputMargin}`}>
                 <input
                   type="text"
+                  name="campaignName"
+                  placeholder=" "
+                  className={style.mainInput}
+                  onChange={(e) => {
+                    setCampaignName(e.target.value);
+                  }}
+                />
+                <label
+                  id="inputLabel"
+                  htmlFor="campaignName"
+                  className={style.inputLabel}
+                >
+                  Camapign Name
+                </label>
+              </div>
+              <div className={`${style.inputDiv} ${style.inputMargin}`}>
+                <input
+                  type="text"
+                  name="campaignDescription"
+                  placeholder=" "
+                  className={style.mainInput}
+                  onChange={(e) => {
+                    setCampaignDescription(e.target.value);
+                  }}
+                />
+                <label
+                  id="inputLabel"
+                  htmlFor="campaignDescription"
+                  className={style.inputLabel}
+                >
+                  Campaign Description
+                </label>
+              </div>
+              <div className={`${style.inputDiv} ${style.inputMargin}`}>
+                <input
+                  type="text"
                   name="websiteLink"
                   placeholder=" "
                   className={style.mainInput}
+                  onChange={(e) => {
+                    setCampaignWebsiteLink(e.target.value);
+                  }}
                 />
                 <label
-                  id="imputLabel"
+                  id="inputLabel"
                   htmlFor="websiteLink"
                   className={style.inputLabel}
                 >
@@ -56,9 +114,12 @@ function AddCampaign() {
                   name="logoLink"
                   placeholder=" "
                   className={style.mainInput}
+                  onChange={(e) => {
+                    setCampaignLogoLink(e.target.value);
+                  }}
                 />
                 <label
-                  id="imputLabel"
+                  id="inputLabel"
                   htmlFor="logoLink"
                   className={style.inputLabel}
                 >
@@ -77,18 +138,44 @@ function AddCampaign() {
                     name="mediaLink"
                     placeholder=" "
                     className={style.mainInput}
+                    onChange={(e) => {
+                      setCampaignLink(e.target.value);
+                    }}
                   />
                   <label
-                    id="imputLabel"
+                    id="inputLabel"
                     htmlFor="mediaLink"
                     className={style.inputLabel}
                   >
                     Media Link
                   </label>
                 </div>
-                <div>
+                <div
+                  onClick={() => {
+                    addMediaLinks();
+                  }}
+                >
                   <MdAddCircleOutline className={style.linkAdd} />
                 </div>
+              </div>
+
+              <div className={style.allMediaLinks}>
+                {campaignMediaLinks &&
+                  campaignMediaLinks.map((res, idx) => {
+                    return (
+                      <div key={idx} className={style.singleMedia}>
+                        <p className={style.eachMedia}>{res}</p>
+
+                        <div
+                          onClick={() => {
+                            removeMediaLinks(idx);
+                          }}
+                        >
+                          <AiOutlineMinusCircle className={style.linkAdd} />
+                        </div>
+                      </div>
+                    );
+                  })}
               </div>
 
               <div className={`${style.inputDiv} ${style.inputMargin}`}>
@@ -97,9 +184,12 @@ function AddCampaign() {
                   name="tokenAddress"
                   placeholder=" "
                   className={style.mainInput}
+                  onChange={(e) => {
+                    setCampaignTokenAddress(e.target.value);
+                  }}
                 />
                 <label
-                  id="imputLabel"
+                  id="inputLabel"
                   htmlFor="tokenAddress"
                   className={style.inputLabel}
                 >
@@ -108,7 +198,14 @@ function AddCampaign() {
               </div>
 
               <div className={style.categoriesBtnDiv}>
-                <div className={style.btnCategories}>
+                <div
+                  className={`${style.btnCategories} ${
+                    disableBtn ? style.disableBtn : ""
+                  }`}
+                  onClick={() => {
+                    addCampaign();
+                  }}
+                >
                   <div className={style.btnCategoriesContainerActive}>
                     <p>Submit</p>
                   </div>
