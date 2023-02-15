@@ -6,7 +6,7 @@ import Logo from "../../assets/logo_final_new.png";
 
 const Header = () => {
   const style = {
-    wrapper: "flex justify-between items-center px-8",
+    wrapper: "flex justify-between items-center px-8 w-full",
     headerHeading: "text-2xl font-bold text-light-primary-primary",
     headerLinks: "flex justify-between items-center",
     headerItem: "mx-6 font-bold cursor-pointer",
@@ -25,7 +25,7 @@ const Header = () => {
   };
 
   return (
-    <div className={style.wrapper}>
+    <div id="header" className={style.wrapper}>
       <div>
         <Link to="/" className={style.headerLogoDiv}>
           <img src={Logo} alt={"logo"} className={style.headerLogo} />

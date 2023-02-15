@@ -13,6 +13,12 @@ body {
   justify-content: center;
 }
 
+#root {
+  width: 100%;
+  justify-content: center;
+  display: flex;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
