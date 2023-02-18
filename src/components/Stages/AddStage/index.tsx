@@ -16,6 +16,7 @@ function AddStage() {
     setExpiryDate,
     expiryDate,
     addStage,
+    disableBtn,
   } = useStageHandler();
   const style = {
     campaignDiv: "text-light-font-lightV1 mt-4 w-full",
@@ -48,6 +49,7 @@ function AddStage() {
     eachDeliverable: "border-b-2 w-full mr-4",
     inputSpan: "text-xs",
     datePicker: "bg-transparent border-b-2 w-full dark:text-dark-font-lightV1",
+    disableBtn: "pointer-events-none",
   };
   return (
     <>
@@ -157,7 +159,9 @@ function AddStage() {
 
               <div className={style.categoriesBtnDiv}>
                 <div
-                  className={style.btnCategories}
+                  className={`${style.btnCategories} ${
+                    disableBtn ? style.disableBtn : ""
+                  }`}
                   onClick={() => {
                     addStage();
                   }}

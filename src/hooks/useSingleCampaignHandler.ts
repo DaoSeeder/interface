@@ -7,13 +7,13 @@ import {
 } from "../utils/ContractUtils";
 import { useProvider } from "wagmi";
 import toast from "react-hot-toast";
-import CampaignFactory from "@daoseeder/core/artifacts/contracts/CampaignFactory.sol/CampaignFactory.json";
+import DaoSeederFactory from "@daoseeder/core/artifacts/contracts/DaoSeederFactory.sol/DaoSeederFactory.json";
 import { ICampaign } from "../interfaces/ICampaign";
 
 export const useSingleCampaignHandler = () => {
   const { id } = useParams();
-  const CAMPAIGN_FACTORY_ADDRESS =
-    process.env.REACT_APP_CAMPAIGN_FACTORY_ADDRESS;
+  const DAOSEEDER_FACTORY_ADDRESS =
+    process.env.REACT_APP_DAOSEEDER_FACTORY_ADDRESS;
   const provider = useProvider();
   const [campaign, setCampaign] = useState<ICampaign | null>(null);
   const [fetchFirstTime, setFetchFirstTime] = useState<boolean>(true);
@@ -22,11 +22,11 @@ export const useSingleCampaignHandler = () => {
   useEffect(() => {
     const fetchCampaigns = async () => {
       try {
-        if (provider && CAMPAIGN_FACTORY_ADDRESS) {
+        if (provider && DAOSEEDER_FACTORY_ADDRESS) {
           const contract = await getSmartContractWithProvider(
-            CAMPAIGN_FACTORY_ADDRESS,
+            DAOSEEDER_FACTORY_ADDRESS,
             provider,
-            JSON.stringify(CampaignFactory.abi)
+            JSON.stringify(DaoSeederFactory.abi)
           );
           const campaignLength = await contract.getCampaignsLength();
           const arrLength = parseInt(campaignLength.toString());
@@ -40,20 +40,20 @@ export const useSingleCampaignHandler = () => {
         console.log(err);
       }
     };
-    if (fetchFirstTime && provider && CAMPAIGN_FACTORY_ADDRESS) {
+    if (fetchFirstTime && provider && DAOSEEDER_FACTORY_ADDRESS) {
       setFetchFirstTime(false);
       fetchCampaigns();
     }
-  }, [CAMPAIGN_FACTORY_ADDRESS, fetchFirstTime, provider]);
+  }, [DAOSEEDER_FACTORY_ADDRESS, fetchFirstTime, provider]);
 
   useEffect(() => {
     const fetchSingleCampaign = async () => {
       try {
-        if (provider && CAMPAIGN_FACTORY_ADDRESS && id) {
+        if (provider && DAOSEEDER_FACTORY_ADDRESS && id) {
           const contract = await getSmartContractWithProvider(
-            CAMPAIGN_FACTORY_ADDRESS,
+            DAOSEEDER_FACTORY_ADDRESS,
             provider,
-            JSON.stringify(CampaignFactory.abi)
+            JSON.stringify(DaoSeederFactory.abi)
           );
           const data = await getCampaign(id, contract);
           if (data) {
@@ -68,10 +68,10 @@ export const useSingleCampaignHandler = () => {
         );
       }
     };
-    if (id && CAMPAIGN_FACTORY_ADDRESS && provider) {
+    if (id && DAOSEEDER_FACTORY_ADDRESS && provider) {
       fetchSingleCampaign();
     }
-  }, [CAMPAIGN_FACTORY_ADDRESS, id, provider]);
+  }, [DAOSEEDER_FACTORY_ADDRESS, id, provider]);
 
   // TODO: preload all images
   const prevItem = () => {
