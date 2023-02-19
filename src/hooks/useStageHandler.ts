@@ -1,3 +1,4 @@
+import { getDateDifferenceInSeconds } from "./../utils/dateTimeUtils";
 import { toast } from "react-hot-toast";
 import { getContractCampaign } from "./../utils/ContractUtils";
 import { useCallback, useEffect } from "react";
@@ -14,6 +15,7 @@ export const useStageHandler = () => {
   const { id } = useParams();
   const DAOSEEDER_FACTORY_ADDRESS =
     process.env.REACT_APP_DAOSEEDER_FACTORY_ADDRESS;
+  const BLOCK_TIME = process.env.REACT_APP_ETHEREUM_BLOCK_TIME;
   const provider = useProvider();
   const { data: signer } = useSigner();
   const [stageName, setStageName] = useState<string>("");
@@ -24,6 +26,7 @@ export const useStageHandler = () => {
   const [fetchFirstTime, setFetchFirstTime] = useState<boolean>(true);
   const [tokenAddress, setTokenAddress] = useState<string>("");
   const [disableBtn, setDisableBtn] = useState<boolean>(false);
+  const [expiryBlock, setExpiryBlock] = useState<number>(0);
 
   const fetchCampaign = useCallback(async () => {
     try {
@@ -81,7 +84,7 @@ export const useStageHandler = () => {
         const tx = await contract.createStage(
           tokenAddress,
           stageGoal,
-          1000,
+          expiryBlock,
           cid
         );
         await tx.wait();
@@ -116,6 +119,15 @@ export const useStageHandler = () => {
     );
   };
 
+  const setExpiryDateData = async (date: Date | null) => {
+    if (date && BLOCK_TIME) {
+      setExpiryDate(date);
+      const diffInSeconds = getDateDifferenceInSeconds(date);
+      const blockExpiry = Math.floor(diffInSeconds / parseInt(BLOCK_TIME));
+      setExpiryBlock(blockExpiry);
+    }
+  };
+
   return {
     setStageName,
     addStage,
@@ -125,7 +137,9 @@ export const useStageHandler = () => {
     stageDeliverables,
     setStageGoal,
     setExpiryDate,
+    setExpiryDateData,
     expiryDate,
     disableBtn,
+    expiryBlock,
   };
 };
