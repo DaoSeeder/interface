@@ -73,7 +73,6 @@ export const addStageToIpfs = async (stage: IStage): Promise<string> => {
     });
     if (client) {
       const file = await client.add(JSON.stringify(stage));
-      console.log(file.path);
       return file.path;
     } else {
       throw new Error("Could not get ipfs client. Please try again");
@@ -94,7 +93,6 @@ export const getStageData = async (ipfsKey: string): Promise<IStage> => {
   data = await fetch(`https://ipfs.io/ipfs/${ipfsKey}`)
     .then((response) => response.json())
     .then((res) => {
-      console.log(res);
       return res;
     })
     .catch((err) => {

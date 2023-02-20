@@ -17,3 +17,10 @@ export const getTimeRemaining = (date: Date): string => {
   }
   return Difference_In_Days.toFixed(0).toString() + " " + time + " left";
 };
+
+export const getDateDifferenceInSeconds = (date: Date): number => {
+  console.log(date);
+  const Difference_In_Time = new Date(date).getTime() - new Date().getTime();
+  const Seconds_from_T1_to_T2 = Difference_In_Time / 1000;
+  return Math.abs(Seconds_from_T1_to_T2);
+};

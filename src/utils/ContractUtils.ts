@@ -44,7 +44,19 @@ export const getCampaign = async (
   campaignKey: string,
   contract: Contract
 ): Promise<ICampaign> => {
-  const campaignData = await contract.getCampaign(campaignKey);
+  const campaignData = await getContractCampaign(campaignKey, contract);
   const ipfsCampaign: ICampaign = await getCampaignData(campaignData.ipfsKey);
   return ipfsCampaign;
+};
+
+export const getContractCampaign = async (
+  campaignKey: string,
+  contract: Contract
+) => {
+  try {
+    const campaignData = await contract.getCampaign(campaignKey);
+    return campaignData;
+  } catch (err) {
+    throw new Error("An error occurred while fetching campaign\n" + err);
+  }
 };

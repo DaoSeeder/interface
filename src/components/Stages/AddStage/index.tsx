@@ -13,9 +13,11 @@ function AddStage() {
     removeDeliverables,
     stageDeliverables,
     setStageGoal,
-    setExpiryDate,
+    setExpiryDateData,
     expiryDate,
     addStage,
+    disableBtn,
+    expiryBlock,
   } = useStageHandler();
   const style = {
     campaignDiv: "text-light-font-lightV1 mt-4 w-full",
@@ -48,6 +50,8 @@ function AddStage() {
     eachDeliverable: "border-b-2 w-full mr-4",
     inputSpan: "text-xs",
     datePicker: "bg-transparent border-b-2 w-full dark:text-dark-font-lightV1",
+    disableBtn: "pointer-events-none",
+    expiry: "mt-4 dark:text-dark-font-lightV1 text-light-font-lightV1",
   };
   return (
     <>
@@ -100,8 +104,14 @@ function AddStage() {
                 <DatePicker
                   className={style.datePicker}
                   selected={expiryDate}
-                  onChange={(date: Date | null) => setExpiryDate(date)}
+                  onChange={(date: Date | null) => setExpiryDateData(date)}
+                  minDate={new Date()}
                 />
+                {expiryBlock ? (
+                  <div className={style.expiry}>
+                    Estimated campaign expiration block: {expiryBlock}
+                  </div>
+                ) : null}
               </div>
               <div className={style.mediaLinksHeading}>
                 <p>Add Stage Deliverables</p>
@@ -157,7 +167,9 @@ function AddStage() {
 
               <div className={style.categoriesBtnDiv}>
                 <div
-                  className={style.btnCategories}
+                  className={`${style.btnCategories} ${
+                    disableBtn ? style.disableBtn : ""
+                  }`}
                   onClick={() => {
                     addStage();
                   }}
