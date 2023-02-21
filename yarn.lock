@@ -1221,10 +1221,10 @@
   resolved "https://registry.yarnpkg.com/@csstools/selector-specificity/-/selector-specificity-2.1.1.tgz#c9c61d9fe5ca5ac664e1153bb0aa0eba1c6d6308"
   integrity sha512-jwx+WCqszn53YHOfvFMJJRd/B2GqkCBt+1MJSG6o5/s8+ytHMvDZXsJgUEWLk12UnLd7HYKac4BYU5i/Ron1Cw==
 
-"@daoseeder/core@0.1.4":
-  version "0.1.4"
-  resolved "https://npm.pkg.github.com/download/@daoseeder/core/0.1.4/cbb2afebc68ca3d6b9f3c30f82d88d1deac82963#cbb2afebc68ca3d6b9f3c30f82d88d1deac82963"
-  integrity sha512-ASU707ANxudJpIGPk1Ikr+FdwfsGgEH/ajVhtwBSg4CEXdVGMoBrsY+ftTJ47M2PcLLtGhTXcUmZ5s2QWEV/eA==
+"@daoseeder/core@0.2.1":
+  version "0.2.1"
+  resolved "https://npm.pkg.github.com/download/@daoseeder/core/0.2.1/7ac225339e334566a67c38722b7a27c0d2624082#7ac225339e334566a67c38722b7a27c0d2624082"
+  integrity sha512-RrmlFZNvIZfrJYMpau1pmqLHCkCH9XrvRTebThsHqOFrtW7PT8jqp9seHahE2/AfJIkpcdjf7dwr8Pys8i+6cw==
   dependencies:
     "@openzeppelin/contracts" "^4.8.1"
 

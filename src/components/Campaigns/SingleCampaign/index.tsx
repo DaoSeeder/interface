@@ -4,9 +4,10 @@ import { AiOutlineGlobal } from "react-icons/ai";
 import { FaEthereum } from "react-icons/fa";
 import CampaignList from "../CampaignList";
 import { useSingleCampaignHandler } from "../../../hooks/useSingleCampaignHandler";
+import { Link } from "react-router-dom";
 
 function SingleCampaign() {
-  const { campaign, mediaLinkIdx, prevItem, nextItem, campaigns } =
+  const { campaign, mediaLinkIdx, prevItem, nextItem, campaigns, allStages } =
     useSingleCampaignHandler();
   const style = {
     campaignDiv:
@@ -41,10 +42,10 @@ function SingleCampaign() {
       "flex items-center gap-4 mt-4 text-light-font-lightV1 dark:text-dark-font-lightV1",
     globe: "w-[20px]",
     link: "w-[10px] cursor-pointer",
-    eachStage: "flex gap-4 items-center font-semibold",
+    eachStage: "flex gap-4 items-center font-semibold w-fit",
     stages:
       "flex flex-col gap-2 text-light-font-lightV1 dark:text-dark-font-lightV1",
-    stageLink: "w-[10px]",
+    stageLink: "w-fit",
     openIcon: "cursor-pointer",
   };
   return (
@@ -113,18 +114,22 @@ function SingleCampaign() {
         <p>Stages</p>
       </div>
       <div className={style.stages}>
-        <div className={style.eachStage}>
-          <p>First Stage</p>
-          <RiShareBoxFill className={style.openIcon} />
-        </div>
-        <div className={style.eachStage}>
-          <p>Second Stage</p>
-          <RiShareBoxFill className={style.openIcon} />
-        </div>
-        <div className={style.eachStage}>
-          <p>Third Stage</p>
-          <RiShareBoxFill className={style.openIcon} />
-        </div>
+        {allStages && allStages.length
+          ? allStages.map((res, idx) => {
+              return (
+                <Link
+                  to={`stage/${res.address}`}
+                  key={idx}
+                  className={style.stageLink}
+                >
+                  <div className={style.eachStage}>
+                    <p>{res.name}</p>
+                    <RiShareBoxFill className={style.openIcon} />
+                  </div>
+                </Link>
+              );
+            })
+          : null}
       </div>
       <div className={style.stageDetails}>
         <p>Recent Campaigns</p>
@@ -142,6 +147,7 @@ function SingleCampaign() {
                 mediaLinks={item.mediaLinks}
                 tokenAddress={item.tokenAddress}
                 campaignKey={item.campaignKey}
+                stageCount={item.stageCount}
               />
             );
           })}

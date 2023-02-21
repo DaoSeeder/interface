@@ -124,6 +124,7 @@ const Home = () => {
                 mediaLinks={item.mediaLinks}
                 tokenAddress={item.tokenAddress}
                 campaignKey={item.campaignKey}
+                stageCount={item.stageCount}
               />
             );
           })}

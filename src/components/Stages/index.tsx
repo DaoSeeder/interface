@@ -14,7 +14,7 @@ function Stage() {
     signleCampaignContainer:
       "flex flex-col h-full bg-gradient-to-b from-[#9A9A9A]/20 to-[#9A9A9A]/10 dark:from-dark-box dark:to-dark-box rounded-md px-6 py-2 py-6",
     topBar: "flex justify-between items-end w-full mb-4",
-    userDetails: "flex text-sm gap-4",
+    userDetails: "flex text-sm gap-4 items-center",
     userImage: "w-[40px] rounded-3xl",
     userData: "flex flex-col",
     stageProgress: "text-sm",
@@ -27,7 +27,7 @@ function Stage() {
     stageProgressBar:
       "w-full bg-transparent rounded-3xl border-light-primary-primary border-[1px] flex items-center mt-4 mb-2 p-px",
     totalProgress:
-      "w-[80%] bg-gradient-to-r from-light-primary-primary to-light-primary-secondary rounded-3xl h-1.5",
+      "bg-gradient-to-r from-light-primary-primary to-light-primary-secondary rounded-3xl h-1.5",
     stageDonations: "text-xs",
     stageDetails: "flex mt-3 flex-col",
     stageCategory: "text-xs",
@@ -71,36 +71,41 @@ function Stage() {
                   />
                 </div>
                 <div className={style.userData}>
-                  <div>0x71C....976F</div>
-                  <div>20 Campaigns</div>
+                  <div>{stage?.projectOwner}</div>
                 </div>
               </div>
-              <div className={style.stageProgress}>In Progress</div>
+              <div className={style.stageProgress}>
+                {stage?.isComplete ? "Stage Completed" : "In Progress"}
+              </div>
             </div>
             <div className={style.stageGoals}>
               <div className={style.stageData}>
                 <div className={style.stageTotalMoney}>
-                  40 ETH raised of {stage?.stageGoal} ETH goal
+                  {stage?.totalCommitted} ETH raised of {stage?.stage.stageGoal}{" "}
+                  ETH goal
                 </div>
                 <div className={style.stageTimeLeft}>
                   <div className={style.timeImage}>
                     <BsClockHistory />
                   </div>
                   <div className={style.totalTimeLeft}>
-                    {stage?.dateInString}
+                    Stage expiration block: {stage?.expiryBlock}
                   </div>
                 </div>
               </div>
               <div className={style.stageProgressBar}>
-                <div className={style.totalProgress}></div>
-              </div>
-              <div className={style.stageDonations}>
-                <div>500 Donations</div>
+                <div
+                  className={`${style.totalProgress} ${
+                    stage
+                      ? "w-" +
+                        (stage?.totalCommitted / stage?.stage.stageGoal) * 100
+                      : ""
+                  }`}
+                ></div>
               </div>
             </div>
             <div className={style.stageDetails}>
-              <div className={style.stageCategory}>Personal</div>
-              <div className={style.stageName}>{stage?.name}</div>
+              <div className={style.stageName}>{stage?.stage.name}</div>
             </div>
             <div className={style.stageBtns}>
               <div className={style.stageDivBtns}>
@@ -130,9 +135,9 @@ function Stage() {
       </div>
 
       <div className={style.timeline}>
-        {stage?.deliverables &&
-          stage?.deliverables.length > 0 &&
-          stage.deliverables.map((deliverable, idx) => {
+        {stage?.stage.deliverables &&
+          stage?.stage.deliverables.length > 0 &&
+          stage.stage.deliverables.map((deliverable, idx) => {
             return (
               <p className="module" key={idx}>
                 {deliverable}

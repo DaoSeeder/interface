@@ -1,3 +1,5 @@
+import { ICampaignStage } from "./../interfaces/IStage";
+import { getStageData } from "./../utils/ipfsUtils";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
@@ -8,7 +10,9 @@ import {
 import { useProvider } from "wagmi";
 import toast from "react-hot-toast";
 import DaoSeederFactory from "@daoseeder/core/artifacts/contracts/DaoSeederFactory.sol/DaoSeederFactory.json";
+import StageContract from "@daoseeder/core/artifacts/contracts/Stage.sol/Stage.json";
 import { ICampaign } from "../interfaces/ICampaign";
+import { constants } from "ethers";
 
 export const useSingleCampaignHandler = () => {
   const { id } = useParams();
@@ -19,6 +23,7 @@ export const useSingleCampaignHandler = () => {
   const [fetchFirstTime, setFetchFirstTime] = useState<boolean>(true);
   const [campaigns, setCampaigns] = useState<ICampaign[]>([]);
   const [mediaLinkIdx, setMediaLinkIdx] = useState<number>(0);
+  const [allStages, setAllStages] = useState<ICampaignStage[] | null>(null);
   useEffect(() => {
     const fetchCampaigns = async () => {
       try {
@@ -73,6 +78,43 @@ export const useSingleCampaignHandler = () => {
     }
   }, [DAOSEEDER_FACTORY_ADDRESS, id, provider]);
 
+  useEffect(() => {
+    const fetchStageData = async () => {
+      if (campaign && campaign.stageCount > 0 && DAOSEEDER_FACTORY_ADDRESS) {
+        const contract = await getSmartContractWithProvider(
+          DAOSEEDER_FACTORY_ADDRESS,
+          provider,
+          JSON.stringify(DaoSeederFactory.abi)
+        );
+        const obj: ICampaignStage[] = [];
+        for (let i = 0; i < campaign.stageCount; i++) {
+          const stageKey = await contract.getKey(campaign.tokenAddress, i);
+          const stage = await contract.getStage(stageKey);
+          if (constants.AddressZero !== stage) {
+            const stageContract = await getSmartContractWithProvider(
+              stage,
+              provider,
+              JSON.stringify(StageContract.abi)
+            );
+            const stageIpfsKey = await stageContract.ipfsKey();
+            const stageIpfsData = await getStageData(stageIpfsKey);
+            obj.push({ name: stageIpfsData.name, address: stage });
+          }
+        }
+        setAllStages(obj);
+      }
+    };
+
+    if (
+      campaign &&
+      campaign.stageCount > 0 &&
+      DAOSEEDER_FACTORY_ADDRESS &&
+      provider
+    ) {
+      fetchStageData();
+    }
+  }, [campaign, DAOSEEDER_FACTORY_ADDRESS, provider]);
+
   // TODO: preload all images
   const prevItem = () => {
     if (mediaLinkIdx > 0) setMediaLinkIdx(mediaLinkIdx - 1);
@@ -88,5 +130,5 @@ export const useSingleCampaignHandler = () => {
       setMediaLinkIdx(mediaLinkIdx + 1);
     }
   };
-  return { campaign, mediaLinkIdx, prevItem, nextItem, campaigns };
+  return { campaign, mediaLinkIdx, prevItem, nextItem, campaigns, allStages };
 };

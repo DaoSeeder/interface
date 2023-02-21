@@ -7,6 +7,7 @@ export interface IStage {
 }
 
 export interface IStageMetaData {
+  stage: IStage;
   isComplete: boolean;
   isSuccess: boolean;
   startBlock: number;
@@ -15,4 +16,10 @@ export interface IStageMetaData {
   totalVotes: number;
   lastIndex: number;
   totalCommitted: number;
+  projectOwner: string;
+}
+
+export interface ICampaignStage {
+  name: string;
+  address: string;
 }

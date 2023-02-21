@@ -41,6 +41,7 @@ export const getCampaignData = async (ipfsKey: string): Promise<ICampaign> => {
     mediaLinks: [""],
     tokenAddress: "",
     campaignKey: "",
+    stageCount: 0,
   };
   data = await fetch(`https://ipfs.io/ipfs/${ipfsKey}`)
     .then((response) => response.json())

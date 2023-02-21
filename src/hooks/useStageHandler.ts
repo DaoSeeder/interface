@@ -65,6 +65,7 @@ export const useStageHandler = () => {
 
   const addStage = async () => {
     setDisableBtn(true);
+    const loading = toast.loading("Saving...");
     try {
       if (signer && DAOSEEDER_FACTORY_ADDRESS) {
         setDisableBtn(true);
@@ -88,9 +89,9 @@ export const useStageHandler = () => {
           cid
         );
         await tx.wait();
+        toast.success("Successful");
       } else {
         toast.error("Please connect your wallet");
-        return;
       }
     } catch (e) {
       if (e instanceof Error) {
@@ -106,6 +107,7 @@ export const useStageHandler = () => {
       }
     }
     setDisableBtn(false);
+    toast.dismiss(loading);
   };
 
   const addDeliverables = () => {
