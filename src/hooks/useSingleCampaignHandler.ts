@@ -1,3 +1,4 @@
+import { getStageKey } from "./../utils/ContractUtils";
 import { ICampaignStage } from "./../interfaces/IStage";
 import { getStageData } from "./../utils/ipfsUtils";
 import { useEffect, useState } from "react";
@@ -88,7 +89,7 @@ export const useSingleCampaignHandler = () => {
         );
         const obj: ICampaignStage[] = [];
         for (let i = 0; i < campaign.stageCount; i++) {
-          const stageKey = await contract.getKey(campaign.tokenAddress, i);
+          const stageKey = await getStageKey(campaign.tokenAddress, i);
           const stage = await contract.getStage(stageKey);
           if (constants.AddressZero !== stage) {
             const stageContract = await getSmartContractWithProvider(
