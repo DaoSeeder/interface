@@ -3,9 +3,16 @@ import Avatar from "../../assets/avatar.png";
 import { BsClockHistory } from "react-icons/bs";
 import StageAddVote from "./StageAddVote";
 import { useSingleStageHandler } from "../../hooks/useSingleStageHandler";
+import StageDonate from "./StageDonate";
 
 function Stage() {
-  const { stage } = useSingleStageHandler();
+  const {
+    stage,
+    transferAmount,
+    handleInputChange,
+    donationAmount,
+    btnDisable,
+  } = useSingleStageHandler();
   const style = {
     campaignDiv:
       "text-light-font-lightV1 dark:text-dark-font-lightV1 mt-12 w-full",
@@ -46,18 +53,36 @@ function Stage() {
     timeline: "my-12 text-light-font-lightV1 dark:text-dark-font-lightV1",
   };
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isDonateOpen, setIsDonateOpen] = useState<boolean>(false);
 
-  function closeModal() {
+  const closeModal = () => {
     setIsOpen(false);
-  }
-  function openModal() {
+  };
+
+  const openModal = () => {
     setIsOpen(true);
-  }
+  };
+
+  const donateNowDialog = () => {
+    setIsDonateOpen(true);
+  };
+
+  const closeDonateModal = () => {
+    setIsDonateOpen(false);
+  };
 
   return (
     <>
       <StageAddVote isOpen={isOpen} closeModal={closeModal} />
+      <StageDonate
+        isOpen={isDonateOpen}
+        closeModal={closeDonateModal}
+        handleInputChange={handleInputChange}
+        donationAmount={donationAmount}
+        sendTransaction={transferAmount}
+        btnDisable={btnDisable}
+      />
       <div className={style.campaignDiv}>
         <div className={style.mainCampaign}>
           <div className={style.signleCampaignContainer}>
@@ -71,25 +96,27 @@ function Stage() {
                   />
                 </div>
                 <div className={style.userData}>
-                  <div>{stage?.projectOwner}</div>
+                  <div>{stage?.stageContract.projectOwner}</div>
                 </div>
               </div>
               <div className={style.stageProgress}>
-                {stage?.isComplete ? "Stage Completed" : "In Progress"}
+                {stage?.stageContract.isComplete
+                  ? "Stage Completed"
+                  : "In Progress"}
               </div>
             </div>
             <div className={style.stageGoals}>
               <div className={style.stageData}>
                 <div className={style.stageTotalMoney}>
-                  {stage?.totalCommitted} ETH raised of {stage?.stage.stageGoal}{" "}
-                  ETH goal
+                  {stage?.stageContract.totalCommitted} ETH raised of{" "}
+                  {stage?.stage.stageGoal} ETH goal
                 </div>
                 <div className={style.stageTimeLeft}>
                   <div className={style.timeImage}>
                     <BsClockHistory />
                   </div>
                   <div className={style.totalTimeLeft}>
-                    Stage expiration block: {stage?.expiryBlock}
+                    Stage expiration block: {stage?.stageContract.expiryBlock}
                   </div>
                 </div>
               </div>
@@ -98,7 +125,9 @@ function Stage() {
                   className={`${style.totalProgress} ${
                     stage
                       ? "w-" +
-                        (stage?.totalCommitted / stage?.stage.stageGoal) * 100
+                        (stage?.stageContract.totalCommitted /
+                          stage?.stage.stageGoal) *
+                          100
                       : ""
                   }`}
                 ></div>
@@ -109,7 +138,9 @@ function Stage() {
             </div>
             <div className={style.stageBtns}>
               <div className={style.stageDivBtns}>
-                <div className={style.stageDonateNow}>Donate Now</div>
+                <div className={style.stageDonateNow} onClick={donateNowDialog}>
+                  Donate Now
+                </div>
                 <div className={style.shareBtnDiv}>
                   <div className={style.btnShare}>
                     <div className={style.btnShareContainer}>

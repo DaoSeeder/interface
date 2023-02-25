@@ -3,7 +3,7 @@ import { toast } from "react-hot-toast";
 import { getContractCampaign } from "./../utils/ContractUtils";
 import { useCallback, useEffect } from "react";
 import { useSigner } from "wagmi";
-import { IStage } from "../interfaces/IStage";
+import { IStageIPFSData } from "../interfaces/IStage";
 import { useState } from "react";
 import { addStageToIpfs } from "../utils/ipfsUtils";
 import { useParams } from "react-router-dom";
@@ -74,7 +74,7 @@ export const useStageHandler = () => {
           signer,
           JSON.stringify(DaoSeederFactory.abi)
         );
-        const stage: IStage = {
+        const stage: IStageIPFSData = {
           name: stageName,
           expiryDate: expiryDate || new Date(),
           deliverables: stageDeliverables,
@@ -89,7 +89,7 @@ export const useStageHandler = () => {
           cid
         );
         await tx.wait();
-        toast.success("Successful");
+        toast.success("Your transaction was successful");
       } else {
         toast.error("Please connect your wallet");
       }

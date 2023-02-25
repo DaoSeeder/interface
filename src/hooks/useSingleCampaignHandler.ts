@@ -1,6 +1,5 @@
 import { getStageKey } from "./../utils/ContractUtils";
 import { ICampaignStage } from "./../interfaces/IStage";
-import { getStageData } from "./../utils/ipfsUtils";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
@@ -11,9 +10,7 @@ import {
 import { useProvider } from "wagmi";
 import toast from "react-hot-toast";
 import DaoSeederFactory from "@daoseeder/core/artifacts/contracts/DaoSeederFactory.sol/DaoSeederFactory.json";
-import StageContract from "@daoseeder/core/artifacts/contracts/Stage.sol/Stage.json";
 import { ICampaign } from "../interfaces/ICampaign";
-import { constants } from "ethers";
 
 export const useSingleCampaignHandler = () => {
   const { id } = useParams();
@@ -81,40 +78,20 @@ export const useSingleCampaignHandler = () => {
 
   useEffect(() => {
     const fetchStageData = async () => {
-      if (campaign && campaign.stageCount > 0 && DAOSEEDER_FACTORY_ADDRESS) {
-        const contract = await getSmartContractWithProvider(
-          DAOSEEDER_FACTORY_ADDRESS,
-          provider,
-          JSON.stringify(DaoSeederFactory.abi)
-        );
+      if (campaign && campaign.stageCount > 0) {
         const obj: ICampaignStage[] = [];
         for (let i = 0; i < campaign.stageCount; i++) {
           const stageKey = await getStageKey(campaign.tokenAddress, i);
-          const stage = await contract.getStage(stageKey);
-          if (constants.AddressZero !== stage) {
-            const stageContract = await getSmartContractWithProvider(
-              stage,
-              provider,
-              JSON.stringify(StageContract.abi)
-            );
-            const stageIpfsKey = await stageContract.ipfsKey();
-            const stageIpfsData = await getStageData(stageIpfsKey);
-            obj.push({ name: stageIpfsData.name, address: stage });
-          }
+          obj.push({ name: "Stage " + (i + 1), address: stageKey });
         }
         setAllStages(obj);
       }
     };
 
-    if (
-      campaign &&
-      campaign.stageCount > 0 &&
-      DAOSEEDER_FACTORY_ADDRESS &&
-      provider
-    ) {
+    if (campaign && campaign.stageCount > 0) {
       fetchStageData();
     }
-  }, [campaign, DAOSEEDER_FACTORY_ADDRESS, provider]);
+  }, [campaign]);
 
   // TODO: preload all images
   const prevItem = () => {

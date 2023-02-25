@@ -1,4 +1,4 @@
-import { IStage } from "../interfaces/IStage";
+import { IStageIPFSData } from "../interfaces/IStage";
 import { ICampaign } from "../interfaces/ICampaign";
 import { create, IPFSHTTPClient } from "ipfs-http-client";
 
@@ -55,7 +55,9 @@ export const getCampaignData = async (ipfsKey: string): Promise<ICampaign> => {
   return data;
 };
 
-export const addStageToIpfs = async (stage: IStage): Promise<string> => {
+export const addStageToIpfs = async (
+  stage: IStageIPFSData
+): Promise<string> => {
   try {
     const auth =
       "Basic " +
@@ -83,8 +85,10 @@ export const addStageToIpfs = async (stage: IStage): Promise<string> => {
   }
 };
 
-export const getStageData = async (ipfsKey: string): Promise<IStage> => {
-  let data: IStage = {
+export const getStageData = async (
+  ipfsKey: string
+): Promise<IStageIPFSData> => {
+  let data: IStageIPFSData = {
     name: "",
     deliverables: [""],
     expiryDate: new Date(),

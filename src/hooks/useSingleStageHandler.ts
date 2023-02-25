@@ -1,20 +1,48 @@
-import { useProvider } from "wagmi";
+import { toast } from "react-hot-toast";
+import { useProvider, useSigner } from "wagmi";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { IStageMetaData } from "./../interfaces/IStage";
+import { IStage } from "./../interfaces/IStage";
 import { getStageData } from "./../utils/ipfsUtils";
 import { getSmartContractWithProvider } from "../utils/ContractUtils";
 import StageContract from "@daoseeder/core/artifacts/contracts/Stage.sol/Stage.json";
+import { constants, ethers } from "ethers";
+import DaoSeederFactory from "@daoseeder/core/artifacts/contracts/DaoSeederFactory.sol/DaoSeederFactory.json";
 
 export const useSingleStageHandler = () => {
   const { stageId } = useParams();
+  const DAOSEEDER_FACTORY_ADDRESS =
+    process.env.REACT_APP_DAOSEEDER_FACTORY_ADDRESS;
   const provider = useProvider();
-  const [stage, setStage] = useState<IStageMetaData | null>(null);
+  const { data: signer } = useSigner();
+  const [stage, setStage] = useState<IStage | null>(null);
+  const [donationAmount, setDonationAmount] = useState<number>(0);
+  const [btnDisable, setBtnDisable] = useState<boolean>(false);
+  const [stageAddress, setStageAddress] = useState<string>("");
+
+  useEffect(() => {
+    const fetchStageAddress = async () => {
+      if (stageId && provider && DAOSEEDER_FACTORY_ADDRESS) {
+        const contract = await getSmartContractWithProvider(
+          DAOSEEDER_FACTORY_ADDRESS,
+          provider,
+          JSON.stringify(DaoSeederFactory.abi)
+        );
+        const stage = await contract.getStage(stageId);
+        setStageAddress(stage);
+      }
+    };
+
+    if (stageId && provider) {
+      fetchStageAddress();
+    }
+  }, [DAOSEEDER_FACTORY_ADDRESS, provider, stageId]);
+
   useEffect(() => {
     const fetchStage = async () => {
-      if (stageId) {
+      if (stageAddress) {
         const stageContract = await getSmartContractWithProvider(
-          stageId,
+          stageAddress,
           provider,
           JSON.stringify(StageContract.abi)
         );
@@ -29,25 +57,83 @@ export const useSingleStageHandler = () => {
         const totalVotes = await stageContract.totalVotes();
         const lastIndex = await stageContract.lastIndex();
         const totalCommitted = await stageContract.totalCommitted();
-        const obj: IStageMetaData = {
+        const obj: IStage = {
           stage: stageIpfsData,
-          isComplete,
-          isSuccess,
-          startBlock: parseInt(startBlock.toString()),
-          expiryBlock: parseInt(expiryBlock.toString()),
-          yays: parseInt(yays.toString()),
-          totalVotes: parseInt(totalVotes.toString()),
-          lastIndex: parseInt(lastIndex.toString()),
-          totalCommitted: parseInt(totalCommitted.toString()),
-          projectOwner,
+          stageContract: {
+            isComplete,
+            isSuccess,
+            startBlock: parseInt(startBlock.toString()),
+            expiryBlock: parseInt(expiryBlock.toString()),
+            yays: parseInt(yays.toString()),
+            totalVotes: parseInt(totalVotes.toString()),
+            lastIndex: parseInt(lastIndex.toString()),
+            totalCommitted: parseInt(totalCommitted.toString()),
+            projectOwner,
+          },
         };
         setStage(obj);
       }
     };
-    if (stageId) {
+    if (stageAddress) {
       fetchStage();
     }
-  }, [provider, stageId]);
+  }, [provider, stageAddress]);
 
-  return { stage };
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    setDonationAmount(parseFloat(newValue));
+  };
+
+  const transferAmount = async () => {
+    if (donationAmount <= 0) {
+      toast.error("Please enter a valid amount");
+      return;
+    }
+    if (!stageAddress || constants.AddressZero === stageAddress) {
+      toast.error("Please enter a valid stage address");
+      return;
+    }
+    if (!signer) {
+      toast.error("Please connect you wallet");
+      return;
+    }
+    setBtnDisable(true);
+    // const loading = toast.loading("Loading...");
+    // try {
+    //   const recipientAddress = stageAddress;
+    //   const etherAmount = ethers.utils.parseEther(donationAmount.toString());
+
+    //   const transaction = await signer.sendTransaction({
+    //     to: recipientAddress,
+    //     value: etherAmount,
+    //     gasLimit: 20000000,
+    //   });
+    //   await transaction.wait();
+    //   toast.success("Your transaction was successful");
+    // } catch (err) {
+    //   if (typeof err === "string") {
+    //     toast.error(err);
+    //   } else if (err instanceof Error) {
+    //     if (err.message.includes("invalid address")) {
+    //       toast.error("Please provide a valid stage address");
+    //     } else {
+    //       toast.error(err.message);
+    //     }
+    //   } else {
+    //     toast.error(
+    //       "An error occurred while processing the request. Please try again"
+    //     );
+    //   }
+    // }
+    // toast.dismiss(loading);
+    setBtnDisable(false);
+  };
+
+  return {
+    stage,
+    handleInputChange,
+    transferAmount,
+    donationAmount,
+    btnDisable,
+  };
 };
