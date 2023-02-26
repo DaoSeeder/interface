@@ -13,7 +13,6 @@ export interface IStageContractData {
   expiryBlock: number;
   yays: number;
   totalVotes: number;
-  lastIndex: number;
   totalCommitted: number;
   projectOwner: string;
 }

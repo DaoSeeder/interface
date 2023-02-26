@@ -18,9 +18,10 @@ function CampaignList({ name, description, logoLink, campaignKey }: ICampaign) {
     campaignTimeLeft: "text-xs",
     campaingDesc: "text-sm my-4",
     campaignData: "flex justify-between w-full mb-4",
+    link: "w-fit",
   };
   return (
-    <Link to={`/campaign/${campaignKey}`}>
+    <Link to={`/campaign/${campaignKey}`} className={style.link}>
       <div className={style.campaignDiv}>
         <div className={style.signleCampaign}>
           <div className={style.signleCampaignContainer}>

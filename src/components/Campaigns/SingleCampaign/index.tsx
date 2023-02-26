@@ -7,8 +7,18 @@ import { useSingleCampaignHandler } from "../../../hooks/useSingleCampaignHandle
 import { Link } from "react-router-dom";
 
 function SingleCampaign() {
-  const { campaign, mediaLinkIdx, prevItem, nextItem, campaigns, allStages } =
-    useSingleCampaignHandler();
+  const {
+    campaign,
+    mediaLinkIdx,
+    prevItem,
+    nextItem,
+    campaigns,
+    totalPages,
+    changePage,
+    currentStages,
+    prevPage,
+    nextPage,
+  } = useSingleCampaignHandler();
   const style = {
     campaignDiv:
       "text-light-font-lightV1 dark:text-dark-font-lightV1 mt-12 w-full",
@@ -47,6 +57,10 @@ function SingleCampaign() {
       "flex flex-col gap-2 text-light-font-lightV1 dark:text-dark-font-lightV1",
     stageLink: "w-fit",
     openIcon: "cursor-pointer",
+    pagination:
+      "mt-4 text-light-font-lightV1 dark:text-dark-font-lightV1 flex gap-2",
+    paginationBtn:
+      "cursor-pointer bg-gradient-to-r from-light-primary-primary to-light-primary-secondary py-1 px-3 w-fit",
   };
   return (
     <>
@@ -114,8 +128,8 @@ function SingleCampaign() {
         <p>Stages</p>
       </div>
       <div className={style.stages}>
-        {allStages && allStages.length
-          ? allStages.map((res, idx) => {
+        {currentStages && currentStages.length
+          ? currentStages.map((res, idx) => {
               return (
                 <Link
                   to={`stage/${res.address}`}
@@ -131,6 +145,40 @@ function SingleCampaign() {
             })
           : null}
       </div>
+      {totalPages && totalPages.length > 1 ? (
+        <div className={style.pagination}>
+          <p
+            className={style.paginationBtn}
+            onClick={() => {
+              prevPage();
+            }}
+          >
+            Prev
+          </p>
+          {totalPages.map((res, i) => {
+            return (
+              <p
+                className={style.paginationBtn}
+                key={i}
+                onClick={() => {
+                  changePage(res);
+                }}
+              >
+                {res + 1}
+              </p>
+            );
+          })}
+
+          <p
+            className={style.paginationBtn}
+            onClick={() => {
+              nextPage();
+            }}
+          >
+            Next
+          </p>
+        </div>
+      ) : null}
       <div className={style.stageDetails}>
         <p>Recent Campaigns</p>
       </div>

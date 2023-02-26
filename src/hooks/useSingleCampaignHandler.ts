@@ -16,12 +16,19 @@ export const useSingleCampaignHandler = () => {
   const { id } = useParams();
   const DAOSEEDER_FACTORY_ADDRESS =
     process.env.REACT_APP_DAOSEEDER_FACTORY_ADDRESS;
+  const PAGE_JUMP = 5;
+
   const provider = useProvider();
   const [campaign, setCampaign] = useState<ICampaign | null>(null);
   const [fetchFirstTime, setFetchFirstTime] = useState<boolean>(true);
   const [campaigns, setCampaigns] = useState<ICampaign[]>([]);
   const [mediaLinkIdx, setMediaLinkIdx] = useState<number>(0);
   const [allStages, setAllStages] = useState<ICampaignStage[] | null>(null);
+  const [currentStages, setCurrentStages] = useState<ICampaignStage[] | null>(
+    null
+  );
+  const [totalPages, setTotalPages] = useState<number[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>(0);
   useEffect(() => {
     const fetchCampaigns = async () => {
       try {
@@ -84,7 +91,12 @@ export const useSingleCampaignHandler = () => {
           const stageKey = await getStageKey(campaign.tokenAddress, i);
           obj.push({ name: "Stage " + (i + 1), address: stageKey });
         }
+        const stagesSlice = obj.slice(0, PAGE_JUMP);
         setAllStages(obj);
+        setCurrentStages(stagesSlice);
+        setTotalPages(
+          Array.from(Array(Math.ceil(obj.length / PAGE_JUMP)).keys())
+        );
       }
     };
 
@@ -108,5 +120,51 @@ export const useSingleCampaignHandler = () => {
       setMediaLinkIdx(mediaLinkIdx + 1);
     }
   };
-  return { campaign, mediaLinkIdx, prevItem, nextItem, campaigns, allStages };
+
+  const changePage = (page: number) => {
+    if (allStages === null || allStages?.length === 0) return;
+    const stagesSlice = allStages.slice(
+      page * PAGE_JUMP,
+      page * PAGE_JUMP + PAGE_JUMP
+    );
+    setCurrentPage(page);
+    setCurrentStages(stagesSlice);
+  };
+
+  const prevPage = () => {
+    if (allStages === null || allStages?.length === 0) return;
+    const page = currentPage - 1 < 0 ? 0 : currentPage - 1;
+    const stagesSlice = allStages.slice(
+      page * PAGE_JUMP,
+      page * PAGE_JUMP + PAGE_JUMP
+    );
+    setCurrentPage(page);
+    setCurrentStages(stagesSlice);
+  };
+
+  const nextPage = () => {
+    if (allStages === null || allStages?.length === 0) return;
+    let page = currentPage;
+    if (currentPage + 1 !== Math.ceil(allStages.length / PAGE_JUMP)) {
+      page = currentPage + 1;
+    }
+    const stagesSlice = allStages.slice(
+      page * PAGE_JUMP,
+      page * PAGE_JUMP + PAGE_JUMP
+    );
+    setCurrentPage(page);
+    setCurrentStages(stagesSlice);
+  };
+  return {
+    campaign,
+    mediaLinkIdx,
+    prevItem,
+    nextItem,
+    campaigns,
+    totalPages,
+    changePage,
+    currentStages,
+    prevPage,
+    nextPage,
+  };
 };

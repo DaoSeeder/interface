@@ -55,7 +55,6 @@ export const useSingleStageHandler = () => {
         const isSuccess = await stageContract.isSuccess();
         const yays = await stageContract.yays();
         const totalVotes = await stageContract.totalVotes();
-        const lastIndex = await stageContract.lastIndex();
         const totalCommitted = await stageContract.totalCommitted();
         const obj: IStage = {
           stage: stageIpfsData,
@@ -66,7 +65,6 @@ export const useSingleStageHandler = () => {
             expiryBlock: parseInt(expiryBlock.toString()),
             yays: parseInt(yays.toString()),
             totalVotes: parseInt(totalVotes.toString()),
-            lastIndex: parseInt(lastIndex.toString()),
             totalCommitted: parseInt(totalCommitted.toString()),
             projectOwner,
           },
@@ -98,34 +96,36 @@ export const useSingleStageHandler = () => {
       return;
     }
     setBtnDisable(true);
-    // const loading = toast.loading("Loading...");
-    // try {
-    //   const recipientAddress = stageAddress;
-    //   const etherAmount = ethers.utils.parseEther(donationAmount.toString());
+    const loading = toast.loading("Loading...");
+    try {
+      const recipientAddress = stageAddress;
+      const etherAmount = ethers.utils.parseEther(donationAmount.toString());
 
-    //   const transaction = await signer.sendTransaction({
-    //     to: recipientAddress,
-    //     value: etherAmount,
-    //     gasLimit: 20000000,
-    //   });
-    //   await transaction.wait();
-    //   toast.success("Your transaction was successful");
-    // } catch (err) {
-    //   if (typeof err === "string") {
-    //     toast.error(err);
-    //   } else if (err instanceof Error) {
-    //     if (err.message.includes("invalid address")) {
-    //       toast.error("Please provide a valid stage address");
-    //     } else {
-    //       toast.error(err.message);
-    //     }
-    //   } else {
-    //     toast.error(
-    //       "An error occurred while processing the request. Please try again"
-    //     );
-    //   }
-    // }
-    // toast.dismiss(loading);
+      const transaction = await signer.sendTransaction({
+        to: recipientAddress,
+        value: etherAmount,
+        gasLimit: 20000000,
+      });
+      await transaction.wait();
+      toast.success("Your transaction was successful");
+    } catch (err) {
+      if (typeof err === "string") {
+        toast.error(err);
+      } else if (err instanceof Error) {
+        if (err.message.includes("invalid address")) {
+          toast.error("Please provide a valid stage address");
+        } else if (err.message.includes("user rejected transaction")) {
+          toast.error("Transaction rejected");
+        } else {
+          toast.error(err.message);
+        }
+      } else {
+        toast.error(
+          "An error occurred while processing the request. Please try again"
+        );
+      }
+    }
+    toast.dismiss(loading);
     setBtnDisable(false);
   };
 
