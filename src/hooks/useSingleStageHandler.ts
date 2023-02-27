@@ -103,15 +103,6 @@ export const useSingleStageHandler = () => {
     setBtnDisable(true);
     const loading = toast.loading("Loading...");
     try {
-      const recipientAddress = stageAddress;
-      const etherAmount = ethers.utils.parseEther(donationAmount.toString());
-
-      const transaction = await signer.sendTransaction({
-        to: recipientAddress,
-        value: etherAmount,
-        gasLimit: 20000000,
-      });
-      await transaction.wait();
       const stageContract = await getSmartContractWithSigner(
         stageAddress,
         signer,
