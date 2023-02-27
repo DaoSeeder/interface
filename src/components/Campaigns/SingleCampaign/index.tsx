@@ -5,20 +5,11 @@ import { FaEthereum } from "react-icons/fa";
 import CampaignList from "../CampaignList";
 import { useSingleCampaignHandler } from "../../../hooks/useSingleCampaignHandler";
 import { Link } from "react-router-dom";
+import { MdAdd } from "react-icons/md";
 
 function SingleCampaign() {
-  const {
-    campaign,
-    mediaLinkIdx,
-    prevItem,
-    nextItem,
-    campaigns,
-    totalPages,
-    changePage,
-    currentStages,
-    prevPage,
-    nextPage,
-  } = useSingleCampaignHandler();
+  const { campaign, mediaLinkIdx, prevItem, nextItem, campaigns, allStages } =
+    useSingleCampaignHandler();
   const style = {
     campaignDiv:
       "text-light-font-lightV1 dark:text-dark-font-lightV1 mt-12 w-full",
@@ -46,6 +37,7 @@ function SingleCampaign() {
       "cursor-pointer w-fit rounded-full bg-gradient-to-r from-light-primary-primary to-light-primary-secondary py-1 px-3 text-light-font-lightV2 font-bold text-lg",
     campaignDetails:
       "font-bold text-2xl text-light-font-lightV1 dark:text-dark-font-lightV1 mt-12",
+    allStages: "flex items-center",
     stageDetails:
       "font-bold text-2xl text-light-font-lightV1 dark:text-dark-font-lightV1 mt-12 mb-4",
     campaignWebsite:
@@ -53,14 +45,16 @@ function SingleCampaign() {
     globe: "w-[20px]",
     link: "w-[10px] cursor-pointer",
     eachStage: "flex gap-4 items-center font-semibold w-fit",
-    stages:
-      "flex flex-col gap-2 text-light-font-lightV1 dark:text-dark-font-lightV1",
+    stages: "flex gap-2 text-light-font-lightV1 dark:text-dark-font-lightV1",
     stageLink: "w-fit",
     openIcon: "cursor-pointer",
     pagination:
       "mt-4 text-light-font-lightV1 dark:text-dark-font-lightV1 flex gap-2",
     paginationBtn:
       "cursor-pointer bg-gradient-to-r from-light-primary-primary to-light-primary-secondary py-1 px-3 w-fit",
+    addCampaignBtn:
+      "w-fit text-light-font-lightV1 dark:text-dark-font-lightV1 ml-2 rounded-full bg-gradient-to-r from-light-primary-primary to-light-primary-secondary px-1 py-1",
+    linkBtn: "w-fit",
   };
   return (
     <>
@@ -124,61 +118,29 @@ function SingleCampaign() {
         <FaEthereum />
         <p>{campaign?.tokenAddress}</p>
       </div>
-      <div className={style.stageDetails}>
+      <div className={`${style.stageDetails} ${style.allStages}`}>
         <p>Stages</p>
+        <Link to="stage/add" className={style.linkBtn}>
+          <div className={style.addCampaignBtn}>
+            <MdAdd />
+          </div>
+        </Link>
       </div>
       <div className={style.stages}>
-        {currentStages && currentStages.length
-          ? currentStages.map((res, idx) => {
+        {allStages && allStages.length > 0
+          ? allStages.map((res, idx) => {
               return (
                 <Link
                   to={`stage/${res.address}`}
+                  className={`${style.stageLink} ${style.paginationBtn}`}
                   key={idx}
-                  className={style.stageLink}
                 >
-                  <div className={style.eachStage}>
-                    <p>{res.name}</p>
-                    <RiShareBoxFill className={style.openIcon} />
-                  </div>
+                  <p>{idx + 1}</p>
                 </Link>
               );
             })
           : null}
       </div>
-      {totalPages && totalPages.length > 1 ? (
-        <div className={style.pagination}>
-          <p
-            className={style.paginationBtn}
-            onClick={() => {
-              prevPage();
-            }}
-          >
-            Prev
-          </p>
-          {totalPages.map((res, i) => {
-            return (
-              <p
-                className={style.paginationBtn}
-                key={i}
-                onClick={() => {
-                  changePage(res);
-                }}
-              >
-                {res + 1}
-              </p>
-            );
-          })}
-
-          <p
-            className={style.paginationBtn}
-            onClick={() => {
-              nextPage();
-            }}
-          >
-            Next
-          </p>
-        </div>
-      ) : null}
       <div className={style.stageDetails}>
         <p>Recent Campaigns</p>
       </div>
