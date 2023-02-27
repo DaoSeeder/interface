@@ -122,14 +122,15 @@ function Stage() {
               </div>
               <div className={style.stageProgressBar}>
                 <div
-                  className={`${style.totalProgress} ${
-                    stage
-                      ? "w-" +
-                        (stage?.stageContract.totalCommitted /
+                  style={{
+                    width: stage
+                      ? (stage?.stageContract.totalCommitted /
                           stage?.stage.stageGoal) *
-                          100
-                      : ""
-                  }`}
+                          100 +
+                        "%"
+                      : 0,
+                  }}
+                  className={`${style.totalProgress}`}
                 ></div>
               </div>
             </div>

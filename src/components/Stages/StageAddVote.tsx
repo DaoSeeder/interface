@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import { useSingleStageHandler } from "../../hooks/useSingleStageHandler";
 
 type ConnectorModalProps = {
   isOpen: boolean;
@@ -7,6 +8,7 @@ type ConnectorModalProps = {
 };
 
 function StageAddVote({ isOpen, closeModal }: ConnectorModalProps) {
+  const { setUserVote, addUserVote, voteBtnDisable } = useSingleStageHandler();
   const style = {
     dialog: "z-[1000] relative",
     overlay: "fixed inset-0 bg-black/50",
@@ -30,6 +32,7 @@ function StageAddVote({ isOpen, closeModal }: ConnectorModalProps) {
       "cursor-pointer w-fit rounded-full bg-gradient-to-r from-light-primary-primary to-light-primary-secondary p-[2px]",
     btnCategoriesContainerActive:
       "flex h-full items-center justify-center text-light-font-lightV2 back rounded-full px-6 py-2",
+    disableBtn: "pointer-events-none",
   };
 
   return (
@@ -72,6 +75,9 @@ function StageAddVote({ isOpen, closeModal }: ConnectorModalProps) {
                           type="radio"
                           name="room_type"
                           id="inProgress"
+                          onChange={() => {
+                            setUserVote(true);
+                          }}
                           readOnly
                           hidden
                         />
@@ -87,6 +93,9 @@ function StageAddVote({ isOpen, closeModal }: ConnectorModalProps) {
                           type="radio"
                           name="room_type"
                           id="completed"
+                          onChange={() => {
+                            setUserVote(false);
+                          }}
                           readOnly
                           hidden
                         />
@@ -101,7 +110,12 @@ function StageAddVote({ isOpen, closeModal }: ConnectorModalProps) {
                   </div>
                   <div>
                     <div className={style.categoriesBtnDiv}>
-                      <div className={style.btnCategories}>
+                      <div
+                        className={`${style.btnCategories} ${
+                          voteBtnDisable ? style.disableBtn : ""
+                        }`}
+                        onClick={addUserVote}
+                      >
                         <div className={style.btnCategoriesContainerActive}>
                           <p>Submit</p>
                         </div>

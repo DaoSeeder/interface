@@ -5,6 +5,7 @@ import { FaEthereum } from "react-icons/fa";
 import CampaignList from "../CampaignList";
 import { useSingleCampaignHandler } from "../../../hooks/useSingleCampaignHandler";
 import { Link } from "react-router-dom";
+import { MdAdd } from "react-icons/md";
 
 function SingleCampaign() {
   const {
@@ -46,6 +47,7 @@ function SingleCampaign() {
       "cursor-pointer w-fit rounded-full bg-gradient-to-r from-light-primary-primary to-light-primary-secondary py-1 px-3 text-light-font-lightV2 font-bold text-lg",
     campaignDetails:
       "font-bold text-2xl text-light-font-lightV1 dark:text-dark-font-lightV1 mt-12",
+    allStages: "flex items-center",
     stageDetails:
       "font-bold text-2xl text-light-font-lightV1 dark:text-dark-font-lightV1 mt-12 mb-4",
     campaignWebsite:
@@ -61,6 +63,9 @@ function SingleCampaign() {
       "mt-4 text-light-font-lightV1 dark:text-dark-font-lightV1 flex gap-2",
     paginationBtn:
       "cursor-pointer bg-gradient-to-r from-light-primary-primary to-light-primary-secondary py-1 px-3 w-fit",
+    addCampaignBtn:
+      "w-fit text-light-font-lightV1 dark:text-dark-font-lightV1 ml-2 rounded-full bg-gradient-to-r from-light-primary-primary to-light-primary-secondary px-1 py-1",
+    linkBtn: "w-fit",
   };
   return (
     <>
@@ -124,8 +129,13 @@ function SingleCampaign() {
         <FaEthereum />
         <p>{campaign?.tokenAddress}</p>
       </div>
-      <div className={style.stageDetails}>
+      <div className={`${style.stageDetails} ${style.allStages}`}>
         <p>Stages</p>
+        <Link to="stage/add" className={style.linkBtn}>
+          <div className={style.addCampaignBtn}>
+            <MdAdd />
+          </div>
+        </Link>
       </div>
       <div className={style.stages}>
         {currentStages && currentStages.length

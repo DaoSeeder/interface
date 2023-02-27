@@ -85,16 +85,6 @@ const Header = () => {
         <div>
           <UserWallet />
         </div>
-        {/* {isConnected ? (
-        ) : (
-          <div className={style.connectBtnDiv} onClick={openModal}>
-            <div className={style.btnConnect}>
-              <div className={style.btnConnectContainer}>
-                <p>Connect Wallet</p>
-              </div>
-            </div>
-          </div>
-        )} */}
       </div>
     </div>
   );
