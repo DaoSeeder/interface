@@ -15,11 +15,11 @@ function SingleCampaign() {
       "text-light-font-lightV1 dark:text-dark-font-lightV1 mt-12 w-full",
     mainCampaign:
       "rounded-md bg-gradient-to-r from-white to-white dark:from-transparent dark:to-transparent p-[2px] w-full drop-shadow-xl",
-    signleCampaign:
+    singleCampaign:
       "rounded-md bg-gradient-to-r from-white to-white dark:from-transparent dark:to-transparent p-[2px] drop-shadow-xl",
     campaignImageContainer:
       "flex flex-col w-full h-full items-center justify-center bg-gradient-to-b from-[#9A9A9A]/20 to-[#9A9A9A]/10 dark:from-dark-box dark:to-dark-box rounded-md px-6 py-2",
-    signleCampaignContainer:
+    singleCampaignContainer:
       "flex flex-col w-full h-full items-center justify-center bg-gradient-to-b from-[#9A9A9A]/20 to-[#9A9A9A]/10 dark:from-dark-box dark:to-dark-box rounded-md px-6 py-2",
     campaignName: "flex flex-row justify-between mt-4 w-full items-center",
     campaignTitle: "font-bold",
@@ -48,9 +48,7 @@ function SingleCampaign() {
     stages: "flex gap-2 text-light-font-lightV1 dark:text-dark-font-lightV1",
     stageLink: "w-fit",
     openIcon: "cursor-pointer",
-    pagination:
-      "mt-4 text-light-font-lightV1 dark:text-dark-font-lightV1 flex gap-2",
-    paginationBtn:
+    stageLinkBtn:
       "cursor-pointer bg-gradient-to-r from-light-primary-primary to-light-primary-secondary py-1 px-3 w-fit",
     addCampaignBtn:
       "w-fit text-light-font-lightV1 dark:text-dark-font-lightV1 ml-2 rounded-full bg-gradient-to-r from-light-primary-primary to-light-primary-secondary px-1 py-1",
@@ -132,7 +130,7 @@ function SingleCampaign() {
               return (
                 <Link
                   to={`stage/${res.address}`}
-                  className={`${style.stageLink} ${style.paginationBtn}`}
+                  className={`${style.stageLink} ${style.stageLinkBtn}`}
                   key={idx}
                 >
                   <p>{idx + 1}</p>

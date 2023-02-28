@@ -18,7 +18,7 @@ function Stage() {
       "text-light-font-lightV1 dark:text-dark-font-lightV1 mt-12 w-full",
     mainCampaign:
       "rounded-md bg-gradient-to-r from-white to-white dark:from-transparent dark:to-transparent p-[2px] w-full drop-shadow-xl",
-    signleCampaignContainer:
+    singleCampaignContainer:
       "flex flex-col h-full bg-gradient-to-b from-[#9A9A9A]/20 to-[#9A9A9A]/10 dark:from-dark-box dark:to-dark-box rounded-md px-6 py-2 py-6",
     topBar: "flex justify-between items-end w-full mb-4",
     userDetails: "flex text-sm gap-4 items-center",
@@ -85,7 +85,7 @@ function Stage() {
       />
       <div className={style.campaignDiv}>
         <div className={style.mainCampaign}>
-          <div className={style.signleCampaignContainer}>
+          <div className={style.singleCampaignContainer}>
             <div className={style.topBar}>
               <div className={style.userDetails}>
                 <div>

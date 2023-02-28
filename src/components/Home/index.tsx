@@ -31,9 +31,9 @@ const Home = () => {
       "flex h-full items-center justify-center text-light-font-lightV2 back rounded-full px-6 py-2",
     allCampaigns: "my-12",
     campaignDiv: "text-light-font-lightV1 dark:text-dark-font-lightV1",
-    signleCampaign:
+    singleCampaign:
       "cursor-pointer w-fit rounded-md bg-gradient-to-r from-white to-white dark:from-transparent dark:to-transparent p-[2px] drop-shadow-xl",
-    signleCampaignContainer:
+    singleCampaignContainer:
       "flex flex-col h-full items-center justify-center bg-gradient-to-b from-[#9A9A9A]/20 to-[#9A9A9A]/10 dark:from-dark-box dark:to-dark-box rounded-md px-6 py-2",
     campaignName: "flex flex-row justify-between mt-4 w-full items-center",
     campaignTitle: "font-bold",
