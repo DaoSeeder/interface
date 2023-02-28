@@ -8,7 +8,7 @@ type ConnectorModalProps = {
 };
 
 function StageAddVote({ isOpen, closeModal }: ConnectorModalProps) {
-  const { setUserVote, addUserVote, voteBtnDisable } = useSingleStageHandler();
+  const { setUserVote, submitUserVote, voteBtnDisable } = useSingleStageHandler();
   const style = {
     dialog: "z-[1000] relative",
     overlay: "fixed inset-0 bg-black/50",
@@ -114,7 +114,7 @@ function StageAddVote({ isOpen, closeModal }: ConnectorModalProps) {
                         className={`${style.btnCategories} ${
                           voteBtnDisable ? style.disableBtn : ""
                         }`}
-                        onClick={addUserVote}
+                        onClick={submitUserVote}
                       >
                         <div className={style.btnCategoriesContainerActive}>
                           <p>Submit</p>

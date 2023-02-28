@@ -136,7 +136,7 @@ export const useSingleStageHandler = () => {
     setBtnDisable(false);
   };
 
-  const addUserVote = async () => {
+  const submitUserVote = async () => {
     if (!stageAddress || constants.AddressZero === stageAddress) {
       toast.error("Please enter a valid stage address");
       return;
@@ -182,7 +182,7 @@ export const useSingleStageHandler = () => {
     donationAmount,
     btnDisable,
     setUserVote,
-    addUserVote,
+    submitUserVote,
     voteBtnDisable,
   };
 };
