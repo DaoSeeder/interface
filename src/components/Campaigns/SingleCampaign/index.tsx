@@ -4,20 +4,22 @@ import { AiOutlineGlobal } from "react-icons/ai";
 import { FaEthereum } from "react-icons/fa";
 import CampaignList from "../CampaignList";
 import { useSingleCampaignHandler } from "../../../hooks/useSingleCampaignHandler";
+import { Link } from "react-router-dom";
+import { MdAdd } from "react-icons/md";
 
 function SingleCampaign() {
-  const { campaign, mediaLinkIdx, prevItem, nextItem, campaigns } =
+  const { campaign, mediaLinkIdx, prevItem, nextItem, campaigns, allStages } =
     useSingleCampaignHandler();
   const style = {
     campaignDiv:
       "text-light-font-lightV1 dark:text-dark-font-lightV1 mt-12 w-full",
     mainCampaign:
       "rounded-md bg-gradient-to-r from-white to-white dark:from-transparent dark:to-transparent p-[2px] w-full drop-shadow-xl",
-    signleCampaign:
+    singleCampaign:
       "rounded-md bg-gradient-to-r from-white to-white dark:from-transparent dark:to-transparent p-[2px] drop-shadow-xl",
     campaignImageContainer:
       "flex flex-col w-full h-full items-center justify-center bg-gradient-to-b from-[#9A9A9A]/20 to-[#9A9A9A]/10 dark:from-dark-box dark:to-dark-box rounded-md px-6 py-2",
-    signleCampaignContainer:
+    singleCampaignContainer:
       "flex flex-col w-full h-full items-center justify-center bg-gradient-to-b from-[#9A9A9A]/20 to-[#9A9A9A]/10 dark:from-dark-box dark:to-dark-box rounded-md px-6 py-2",
     campaignName: "flex flex-row justify-between mt-4 w-full items-center",
     campaignTitle: "font-bold",
@@ -35,17 +37,22 @@ function SingleCampaign() {
       "cursor-pointer w-fit rounded-full bg-gradient-to-r from-light-primary-primary to-light-primary-secondary py-1 px-3 text-light-font-lightV2 font-bold text-lg",
     campaignDetails:
       "font-bold text-2xl text-light-font-lightV1 dark:text-dark-font-lightV1 mt-12",
+    allStages: "flex items-center",
     stageDetails:
       "font-bold text-2xl text-light-font-lightV1 dark:text-dark-font-lightV1 mt-12 mb-4",
     campaignWebsite:
       "flex items-center gap-4 mt-4 text-light-font-lightV1 dark:text-dark-font-lightV1",
     globe: "w-[20px]",
     link: "w-[10px] cursor-pointer",
-    eachStage: "flex gap-4 items-center font-semibold",
-    stages:
-      "flex flex-col gap-2 text-light-font-lightV1 dark:text-dark-font-lightV1",
-    stageLink: "w-[10px]",
+    eachStage: "flex gap-4 items-center font-semibold w-fit",
+    stages: "flex gap-2 text-light-font-lightV1 dark:text-dark-font-lightV1",
+    stageLink: "w-fit",
     openIcon: "cursor-pointer",
+    stageLinkBtn:
+      "cursor-pointer bg-gradient-to-r from-light-primary-primary to-light-primary-secondary py-1 px-3 w-fit",
+    addCampaignBtn:
+      "w-fit text-light-font-lightV1 dark:text-dark-font-lightV1 ml-2 rounded-full bg-gradient-to-r from-light-primary-primary to-light-primary-secondary px-1 py-1",
+    linkBtn: "w-fit",
   };
   return (
     <>
@@ -109,22 +116,28 @@ function SingleCampaign() {
         <FaEthereum />
         <p>{campaign?.tokenAddress}</p>
       </div>
-      <div className={style.stageDetails}>
+      <div className={`${style.stageDetails} ${style.allStages}`}>
         <p>Stages</p>
+        <Link to="stage/add" className={style.linkBtn}>
+          <div className={style.addCampaignBtn}>
+            <MdAdd />
+          </div>
+        </Link>
       </div>
       <div className={style.stages}>
-        <div className={style.eachStage}>
-          <p>First Stage</p>
-          <RiShareBoxFill className={style.openIcon} />
-        </div>
-        <div className={style.eachStage}>
-          <p>Second Stage</p>
-          <RiShareBoxFill className={style.openIcon} />
-        </div>
-        <div className={style.eachStage}>
-          <p>Third Stage</p>
-          <RiShareBoxFill className={style.openIcon} />
-        </div>
+        {allStages && allStages.length > 0
+          ? allStages.map((res, idx) => {
+              return (
+                <Link
+                  to={`stage/${res.address}`}
+                  className={`${style.stageLink} ${style.stageLinkBtn}`}
+                  key={idx}
+                >
+                  <p>{idx + 1}</p>
+                </Link>
+              );
+            })
+          : null}
       </div>
       <div className={style.stageDetails}>
         <p>Recent Campaigns</p>
@@ -142,6 +155,7 @@ function SingleCampaign() {
                 mediaLinks={item.mediaLinks}
                 tokenAddress={item.tokenAddress}
                 campaignKey={item.campaignKey}
+                stageCount={item.stageCount}
               />
             );
           })}

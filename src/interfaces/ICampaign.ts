@@ -6,4 +6,5 @@ export interface ICampaign {
   mediaLinks: string[];
   tokenAddress: string;
   campaignKey: string;
+  stageCount: number;
 }

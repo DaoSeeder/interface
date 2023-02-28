@@ -3,18 +3,25 @@ import Avatar from "../../assets/avatar.png";
 import { BsClockHistory } from "react-icons/bs";
 import StageAddVote from "./StageAddVote";
 import { useSingleStageHandler } from "../../hooks/useSingleStageHandler";
+import StageDonate from "./StageDonate";
 
 function Stage() {
-  const { stage } = useSingleStageHandler();
+  const {
+    stage,
+    transferAmount,
+    handleInputChange,
+    donationAmount,
+    btnDisable,
+  } = useSingleStageHandler();
   const style = {
     campaignDiv:
       "text-light-font-lightV1 dark:text-dark-font-lightV1 mt-12 w-full",
     mainCampaign:
       "rounded-md bg-gradient-to-r from-white to-white dark:from-transparent dark:to-transparent p-[2px] w-full drop-shadow-xl",
-    signleCampaignContainer:
+    singleCampaignContainer:
       "flex flex-col h-full bg-gradient-to-b from-[#9A9A9A]/20 to-[#9A9A9A]/10 dark:from-dark-box dark:to-dark-box rounded-md px-6 py-2 py-6",
     topBar: "flex justify-between items-end w-full mb-4",
-    userDetails: "flex text-sm gap-4",
+    userDetails: "flex text-sm gap-4 items-center",
     userImage: "w-[40px] rounded-3xl",
     userData: "flex flex-col",
     stageProgress: "text-sm",
@@ -27,7 +34,7 @@ function Stage() {
     stageProgressBar:
       "w-full bg-transparent rounded-3xl border-light-primary-primary border-[1px] flex items-center mt-4 mb-2 p-px",
     totalProgress:
-      "w-[80%] bg-gradient-to-r from-light-primary-primary to-light-primary-secondary rounded-3xl h-1.5",
+      "bg-gradient-to-r from-light-primary-primary to-light-primary-secondary rounded-3xl h-1.5",
     stageDonations: "text-xs",
     stageDetails: "flex mt-3 flex-col",
     stageCategory: "text-xs",
@@ -46,21 +53,39 @@ function Stage() {
     timeline: "my-12 text-light-font-lightV1 dark:text-dark-font-lightV1",
   };
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isDonateOpen, setIsDonateOpen] = useState<boolean>(false);
 
-  function closeModal() {
+  const closeModal = () => {
     setIsOpen(false);
-  }
-  function openModal() {
+  };
+
+  const openModal = () => {
     setIsOpen(true);
-  }
+  };
+
+  const donateNowDialog = () => {
+    setIsDonateOpen(true);
+  };
+
+  const closeDonateModal = () => {
+    setIsDonateOpen(false);
+  };
 
   return (
     <>
       <StageAddVote isOpen={isOpen} closeModal={closeModal} />
+      <StageDonate
+        isOpen={isDonateOpen}
+        closeModal={closeDonateModal}
+        handleInputChange={handleInputChange}
+        donationAmount={donationAmount}
+        sendTransaction={transferAmount}
+        btnDisable={btnDisable}
+      />
       <div className={style.campaignDiv}>
         <div className={style.mainCampaign}>
-          <div className={style.signleCampaignContainer}>
+          <div className={style.singleCampaignContainer}>
             <div className={style.topBar}>
               <div className={style.userDetails}>
                 <div>
@@ -71,40 +96,52 @@ function Stage() {
                   />
                 </div>
                 <div className={style.userData}>
-                  <div>0x71C....976F</div>
-                  <div>20 Campaigns</div>
+                  <div>{stage?.stageContract.projectOwner}</div>
                 </div>
               </div>
-              <div className={style.stageProgress}>In Progress</div>
+              <div className={style.stageProgress}>
+                {stage?.stageContract.isComplete
+                  ? "Stage Completed"
+                  : "In Progress"}
+              </div>
             </div>
             <div className={style.stageGoals}>
               <div className={style.stageData}>
                 <div className={style.stageTotalMoney}>
-                  40 ETH raised of {stage?.stageGoal} ETH goal
+                  {stage?.stageContract.totalCommitted} ETH raised of{" "}
+                  {stage?.stage.stageGoal} ETH goal
                 </div>
                 <div className={style.stageTimeLeft}>
                   <div className={style.timeImage}>
                     <BsClockHistory />
                   </div>
                   <div className={style.totalTimeLeft}>
-                    {stage?.dateInString}
+                    Stage expiration block: {stage?.stageContract.expiryBlock}
                   </div>
                 </div>
               </div>
               <div className={style.stageProgressBar}>
-                <div className={style.totalProgress}></div>
-              </div>
-              <div className={style.stageDonations}>
-                <div>500 Donations</div>
+                <div
+                  style={{
+                    width: stage
+                      ? (stage?.stageContract.totalCommitted /
+                          stage?.stage.stageGoal) *
+                          100 +
+                        "%"
+                      : 0,
+                  }}
+                  className={`${style.totalProgress}`}
+                ></div>
               </div>
             </div>
             <div className={style.stageDetails}>
-              <div className={style.stageCategory}>Personal</div>
-              <div className={style.stageName}>{stage?.name}</div>
+              <div className={style.stageName}>{stage?.stage.name}</div>
             </div>
             <div className={style.stageBtns}>
               <div className={style.stageDivBtns}>
-                <div className={style.stageDonateNow}>Donate Now</div>
+                <div className={style.stageDonateNow} onClick={donateNowDialog}>
+                  Donate Now
+                </div>
                 <div className={style.shareBtnDiv}>
                   <div className={style.btnShare}>
                     <div className={style.btnShareContainer}>
@@ -130,9 +167,9 @@ function Stage() {
       </div>
 
       <div className={style.timeline}>
-        {stage?.deliverables &&
-          stage?.deliverables.length > 0 &&
-          stage.deliverables.map((deliverable, idx) => {
+        {stage?.stage.deliverables &&
+          stage?.stage.deliverables.length > 0 &&
+          stage.stage.deliverables.map((deliverable, idx) => {
             return (
               <p className="module" key={idx}>
                 {deliverable}

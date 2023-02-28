@@ -1,7 +1,7 @@
 import { ICampaign } from "./../interfaces/ICampaign";
 import { getCampaignData } from "../utils/ipfsUtils";
 import { Provider } from "@ethersproject/providers";
-import { Contract, Signer } from "ethers";
+import { Contract, ethers, Signer } from "ethers";
 
 export const truncateAddress = (address: string): string => {
   const first = address.substring(0, 5);
@@ -46,6 +46,7 @@ export const getCampaign = async (
 ): Promise<ICampaign> => {
   const campaignData = await getContractCampaign(campaignKey, contract);
   const ipfsCampaign: ICampaign = await getCampaignData(campaignData.ipfsKey);
+  ipfsCampaign.stageCount = campaignData.stageCount;
   return ipfsCampaign;
 };
 
@@ -59,4 +60,14 @@ export const getContractCampaign = async (
   } catch (err) {
     throw new Error("An error occurred while fetching campaign\n" + err);
   }
+};
+
+export const getStageKey = (projectToken: string, stageNumber: number) => {
+  const abiCoder = new ethers.utils.AbiCoder();
+  const encodedParams = abiCoder.encode(
+    ["address", "uint256"],
+    [projectToken, stageNumber]
+  );
+  const hash = ethers.utils.keccak256(encodedParams);
+  return hash;
 };
