@@ -1,16 +1,16 @@
-import { toast } from "react-hot-toast";
-import { useProvider, useSigner } from "wagmi";
-import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { IStage } from "./../interfaces/IStage";
 import { getStageData } from "./../utils/ipfsUtils";
 import {
   getSmartContractWithProvider,
   getSmartContractWithSigner,
-} from "../utils/ContractUtils";
+} from "./../utils/ContractUtils";
+import toast from "react-hot-toast";
 import StageContract from "@daoseeder/core/artifacts/contracts/Stage.sol/Stage.json";
-import { constants, ethers } from "ethers";
+import { useParams } from "react-router-dom";
 import DaoSeederFactory from "@daoseeder/core/artifacts/contracts/DaoSeederFactory.sol/DaoSeederFactory.json";
+import { useProvider, useSigner } from "wagmi";
+import { constants, ethers } from "ethers";
 
 export const useSingleStageHandler = () => {
   const { stageId } = useParams();
@@ -19,6 +19,8 @@ export const useSingleStageHandler = () => {
   const provider = useProvider();
   const { data: signer } = useSigner();
   const [stage, setStage] = useState<IStage | null>(null);
+  const [userVote, setUserVote] = useState<boolean>(false);
+  const [voteBtnDisable, setVoteBtnDisable] = useState<boolean>(false);
   const [donationAmount, setDonationAmount] = useState<number>(0);
   const [btnDisable, setBtnDisable] = useState<boolean>(false);
   const [stageAddress, setStageAddress] = useState<string>("");
@@ -134,11 +136,53 @@ export const useSingleStageHandler = () => {
     setBtnDisable(false);
   };
 
+  const submitUserVote = async () => {
+    if (!stageAddress || constants.AddressZero === stageAddress) {
+      toast.error("Please enter a valid stage address");
+      return;
+    }
+    if (!signer) {
+      toast.error("Please connect you wallet");
+      return;
+    }
+    setVoteBtnDisable(true);
+    const loading = toast.loading("Loading...");
+    try {
+      const stageContract = await getSmartContractWithSigner(
+        stageAddress,
+        signer,
+        JSON.stringify(StageContract.abi)
+      );
+      const tx = await stageContract.vote(userVote);
+      await tx.wait();
+      toast.success("Your transaction was successful");
+    } catch (err) {
+      if (typeof err === "string") {
+        toast.error(err);
+      } else if (err instanceof Error) {
+        if (err.message && err.message.includes("Active()")) {
+          toast.error("The stage is still active. You can not add vote");
+        } else {
+          toast.error(err.message);
+        }
+      } else {
+        toast.error(
+          "An error occurred while processing the request. Please try again"
+        );
+      }
+    }
+    toast.dismiss(loading);
+    setVoteBtnDisable(false);
+  };
+
   return {
     stage,
     handleInputChange,
     transferAmount,
     donationAmount,
     btnDisable,
+    setUserVote,
+    submitUserVote,
+    voteBtnDisable,
   };
 };
