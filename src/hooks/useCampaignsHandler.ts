@@ -46,6 +46,7 @@ export const useCampaignsHandler = () => {
           mediaLinks: campaignMediaLinks,
           tokenAddress: campaignTokenAddress,
           campaignKey: "",
+          stageCount: 0,
         };
         const cid = await addCampaignToIpfs(campaign);
         if (cid) {

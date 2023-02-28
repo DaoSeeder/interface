@@ -4,7 +4,7 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { MetaMaskConnector } from "wagmi/connectors/metaMask";
-import { WagmiConfig, createClient, configureChains } from "wagmi";
+import { WagmiConfig, createClient, configureChains, Chain } from "wagmi";
 import { publicProvider } from "wagmi/providers/public";
 import { hardhat } from "wagmi/chains";
 
@@ -12,11 +12,26 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
+const DaoSeederTest: Chain = {
+  id: 326,
+  name: "DaoSeeder",
+  network: "DaoSeeder Test",
+  nativeCurrency: { name: "ETH", symbol: "ETH", decimals: 18 },
+  rpcUrls: {
+    public: { http: ["https://rpctest.daoseeder.com/"] },
+    default: { http: ["https://rpctest.daoseeder.com/"] },
+  },
+  testnet: true,
+};
+
+const env = process.env.NODE_ENV; // = 'production' when deployed
+console.log("env", env);
+const chainToUse = env == "development" ? hardhat : DaoSeederTest;
 const {
   chains,
   provider: wagmiProvider,
   webSocketProvider,
-} = configureChains([hardhat], [publicProvider()]);
+} = configureChains([chainToUse], [publicProvider()]);
 
 const client = createClient({
   autoConnect: true,

@@ -30,6 +30,7 @@ function Campaigns() {
                 mediaLinks={item.mediaLinks}
                 tokenAddress={item.tokenAddress}
                 campaignKey={item.campaignKey}
+                stageCount={item.stageCount}
               />
             );
           })}

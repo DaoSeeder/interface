@@ -1,4 +1,4 @@
-export interface IStage {
+export interface IStageIPFSData {
   name: string;
   expiryDate: Date;
   stageGoal: number;
@@ -6,13 +6,23 @@ export interface IStage {
   dateInString: string;
 }
 
-export interface IStageMetaData {
+export interface IStageContractData {
   isComplete: boolean;
   isSuccess: boolean;
   startBlock: number;
   expiryBlock: number;
   yays: number;
   totalVotes: number;
-  lastIndex: number;
   totalCommitted: number;
+  projectOwner: string;
+}
+
+export interface IStage {
+  stage: IStageIPFSData;
+  stageContract: IStageContractData;
+}
+
+export interface ICampaignStage {
+  name: string;
+  address: string;
 }

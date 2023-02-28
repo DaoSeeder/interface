@@ -1,3 +1,5 @@
+import { getStageKey } from "./../utils/ContractUtils";
+import { ICampaignStage } from "./../interfaces/IStage";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
@@ -14,11 +16,13 @@ export const useSingleCampaignHandler = () => {
   const { id } = useParams();
   const DAOSEEDER_FACTORY_ADDRESS =
     process.env.REACT_APP_DAOSEEDER_FACTORY_ADDRESS;
+
   const provider = useProvider();
   const [campaign, setCampaign] = useState<ICampaign | null>(null);
   const [fetchFirstTime, setFetchFirstTime] = useState<boolean>(true);
   const [campaigns, setCampaigns] = useState<ICampaign[]>([]);
   const [mediaLinkIdx, setMediaLinkIdx] = useState<number>(0);
+  const [allStages, setAllStages] = useState<ICampaignStage[] | null>(null);
   useEffect(() => {
     const fetchCampaigns = async () => {
       try {
@@ -73,6 +77,23 @@ export const useSingleCampaignHandler = () => {
     }
   }, [DAOSEEDER_FACTORY_ADDRESS, id, provider]);
 
+  useEffect(() => {
+    const fetchStageData = async () => {
+      if (campaign && campaign.stageCount > 0) {
+        const obj: ICampaignStage[] = [];
+        for (let i = 0; i < campaign.stageCount; i++) {
+          const stageKey = await getStageKey(campaign.tokenAddress, i);
+          obj.push({ name: "Stage " + (i + 1), address: stageKey });
+        }
+        setAllStages(obj);
+      }
+    };
+
+    if (campaign && campaign.stageCount > 0) {
+      fetchStageData();
+    }
+  }, [campaign]);
+
   // TODO: preload all images
   const prevItem = () => {
     if (mediaLinkIdx > 0) setMediaLinkIdx(mediaLinkIdx - 1);
@@ -88,5 +109,6 @@ export const useSingleCampaignHandler = () => {
       setMediaLinkIdx(mediaLinkIdx + 1);
     }
   };
-  return { campaign, mediaLinkIdx, prevItem, nextItem, campaigns };
+
+  return { campaign, mediaLinkIdx, prevItem, nextItem, campaigns, allStages };
 };
