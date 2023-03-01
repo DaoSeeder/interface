@@ -71,3 +71,10 @@ export const getStageKey = (projectToken: string, stageNumber: number) => {
   const hash = ethers.utils.keccak256(encodedParams);
   return hash;
 };
+
+export const getCampaignKey = (projectToken: string) => {
+  const abiCoder = new ethers.utils.AbiCoder();
+  const encodedParams = abiCoder.encode(["address"], [projectToken]);
+  const hash = ethers.utils.keccak256(encodedParams);
+  return hash;
+};

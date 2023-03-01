@@ -1,6 +1,10 @@
 import { getDateDifferenceInSeconds } from "./../utils/dateTimeUtils";
 import { toast } from "react-hot-toast";
-import { getContractCampaign } from "./../utils/ContractUtils";
+import {
+  getCampaign,
+  getContractCampaign,
+  getStageKey,
+} from "./../utils/ContractUtils";
 import { useCallback, useEffect } from "react";
 import { useSigner } from "wagmi";
 import { IStageIPFSData } from "../interfaces/IStage";
@@ -90,6 +94,21 @@ export const useStageHandler = () => {
         );
         await tx.wait();
         toast.success("Your transaction was successful");
+        if (id) {
+          const contract = await getSmartContractWithProvider(
+            DAOSEEDER_FACTORY_ADDRESS,
+            provider,
+            JSON.stringify(DaoSeederFactory.abi)
+          );
+          const data = await getCampaign(id, contract);
+          if (data) {
+            const stageKey = await getStageKey(
+              data.tokenAddress,
+              data.stageCount - 1
+            );
+            window.location.href = `/campaign/${id}/stage/${stageKey}`;
+          }
+        }
       } else {
         toast.error("Please connect your wallet");
       }
