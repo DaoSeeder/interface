@@ -81,7 +81,7 @@ export const useSingleCampaignHandler = () => {
     const fetchStageData = async () => {
       if (campaign && campaign.stageCount > 0) {
         const obj: ICampaignStage[] = [];
-        for (let i = 0; i < campaign.stageCount; i++) {
+        for (let i = 1; i <= campaign.stageCount; i++) {
           const stageKey = await getStageKey(campaign.tokenAddress, i);
           obj.push({ name: "Stage " + (i + 1), address: stageKey });
         }
