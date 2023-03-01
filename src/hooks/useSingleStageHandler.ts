@@ -24,6 +24,8 @@ export const useSingleStageHandler = () => {
   const [donationAmount, setDonationAmount] = useState<number>(0);
   const [btnDisable, setBtnDisable] = useState<boolean>(false);
   const [stageAddress, setStageAddress] = useState<string>("");
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isDonateOpen, setIsDonateOpen] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchStageAddress = async () => {
@@ -84,6 +86,22 @@ export const useSingleStageHandler = () => {
     }
   }, [provider, stageAddress]);
 
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const donateNowDialog = () => {
+    setIsDonateOpen(true);
+  };
+
+  const closeDonateModal = () => {
+    setIsDonateOpen(false);
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
     setDonationAmount(parseFloat(newValue));
@@ -115,6 +133,14 @@ export const useSingleStageHandler = () => {
       });
       await tx.wait();
       toast.success("Your transaction was successful");
+      const obj = stage;
+      if (obj?.stageContract.totalCommitted) {
+        obj.stageContract.totalCommitted += donationAmount;
+      } else if (obj) {
+        obj.stageContract.totalCommitted = donationAmount;
+      }
+      setStage(obj);
+      closeDonateModal();
     } catch (err) {
       if (typeof err === "string") {
         toast.error(err);
@@ -184,5 +210,11 @@ export const useSingleStageHandler = () => {
     setUserVote,
     submitUserVote,
     voteBtnDisable,
+    isOpen,
+    closeModal,
+    openModal,
+    isDonateOpen,
+    closeDonateModal,
+    donateNowDialog,
   };
 };

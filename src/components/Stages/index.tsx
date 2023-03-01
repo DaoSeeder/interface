@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Avatar from "../../assets/avatar.png";
 import { BsClockHistory } from "react-icons/bs";
 import StageAddVote from "./StageAddVote";
@@ -12,6 +12,12 @@ function Stage() {
     handleInputChange,
     donationAmount,
     btnDisable,
+    isOpen,
+    closeModal,
+    openModal,
+    isDonateOpen,
+    closeDonateModal,
+    donateNowDialog,
   } = useSingleStageHandler();
   const style = {
     campaignDiv:
@@ -53,25 +59,6 @@ function Stage() {
     timeline: "my-12 text-light-font-lightV1 dark:text-dark-font-lightV1",
   };
 
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [isDonateOpen, setIsDonateOpen] = useState<boolean>(false);
-
-  const closeModal = () => {
-    setIsOpen(false);
-  };
-
-  const openModal = () => {
-    setIsOpen(true);
-  };
-
-  const donateNowDialog = () => {
-    setIsDonateOpen(true);
-  };
-
-  const closeDonateModal = () => {
-    setIsDonateOpen(false);
-  };
-
   return (
     <>
       <StageAddVote isOpen={isOpen} closeModal={closeModal} />
@@ -108,8 +95,10 @@ function Stage() {
             <div className={style.stageGoals}>
               <div className={style.stageData}>
                 <div className={style.stageTotalMoney}>
-                  {stage?.stageContract.totalCommitted} ETH raised of{" "}
-                  {stage?.stage.stageGoal} ETH goal
+                  {stage?.stageContract.totalCommitted}{" "}
+                  {process.env.REACT_APP_NETWORK_CURRECNY} raised of{" "}
+                  {stage?.stage.stageGoal}{" "}
+                  {process.env.REACT_APP_NETWORK_CURRECNY} goal
                 </div>
                 <div className={style.stageTimeLeft}>
                   <div className={style.timeImage}>
@@ -140,7 +129,7 @@ function Stage() {
             <div className={style.stageBtns}>
               <div className={style.stageDivBtns}>
                 <div className={style.stageDonateNow} onClick={donateNowDialog}>
-                  Donate Now
+                  Commit Funds
                 </div>
                 <div className={style.shareBtnDiv}>
                   <div className={style.btnShare}>

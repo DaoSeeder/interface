@@ -1,11 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   getCampaigns,
   getSmartContractWithProvider,
   getSmartContractWithSigner,
 } from "../utils/ContractUtils";
 import { ICampaign } from "../interfaces/ICampaign";
-import { useState } from "react";
 import { addCampaignToIpfs } from "../utils/ipfsUtils";
 import { useProvider, useSigner } from "wagmi";
 import DaoSeederFactory from "@daoseeder/core/artifacts/contracts/DaoSeederFactory.sol/DaoSeederFactory.json";

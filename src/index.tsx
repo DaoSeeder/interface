@@ -16,7 +16,11 @@ const DaoSeederTest: Chain = {
   id: 326,
   name: "DaoSeeder",
   network: "DaoSeeder Test",
-  nativeCurrency: { name: "ETH", symbol: "ETH", decimals: 18 },
+  nativeCurrency: {
+    name: process.env.REACT_APP_NETWORK_CURRECNY || "ETH",
+    symbol: process.env.REACT_APP_NETWORK_CURRECNY || "ETH",
+    decimals: 18,
+  },
   rpcUrls: {
     public: { http: ["https://rpctest.daoseeder.com/"] },
     default: { http: ["https://rpctest.daoseeder.com/"] },
@@ -25,7 +29,6 @@ const DaoSeederTest: Chain = {
 };
 
 const env = process.env.NODE_ENV; // = 'production' when deployed
-console.log("env", env);
 const chainToUse = env == "development" ? hardhat : DaoSeederTest;
 const {
   chains,

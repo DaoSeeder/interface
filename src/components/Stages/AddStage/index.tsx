@@ -96,7 +96,9 @@ function AddStage() {
                   className={style.inputLabel}
                 >
                   Target Amount{" "}
-                  <span className={style.inputSpan}>(in Eths)</span>
+                  <span className={style.inputSpan}>
+                    (in {process.env.REACT_APP_NETWORK_CURRECNY})
+                  </span>
                 </label>
               </div>
               <div className={style.inputMargin}>
