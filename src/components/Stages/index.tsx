@@ -12,6 +12,22 @@ function Stage() {
     handleInputChange,
     donationAmount,
     btnDisable,
+    address,
+    showCompleteBtn,
+    completeStage,
+    completeBtnDisable,
+    showClaimToken,
+    claimTokenBtnDisable,
+    claimTokens,
+    showRefundBtn,
+    refundBtnDisable,
+    refundTokens,
+    showCollectFundsBtn,
+    collectFundsBtnDisable,
+    collectFunds,
+    showWithdrawFundsBtn,
+    withdrawFundsBtnDisable,
+    withdrawTokens,
   } = useSingleStageHandler();
   const style = {
     campaignDiv:
@@ -51,6 +67,7 @@ function Stage() {
     deliverables:
       "mt-12 text-3xl font-bold text-light-font-lightV1 dark:text-dark-font-lightV1",
     timeline: "my-12 text-light-font-lightV1 dark:text-dark-font-lightV1",
+    disableBtn: "pointer-events-none",
   };
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -151,9 +168,61 @@ function Stage() {
                 </div>
               </div>
               <div>
-                <div className={style.stageDonateNow} onClick={openModal}>
-                  Add your Vote
-                </div>
+                {stage?.stageContract.projectOwner !== address ? (
+                  <div className={style.stageDonateNow} onClick={openModal}>
+                    Add your Vote
+                  </div>
+                ) : null}
+                {showCompleteBtn ? (
+                  <div
+                    className={`${style.stageDonateNow} ${
+                      completeBtnDisable ? style.disableBtn : ""
+                    }`}
+                    onClick={completeStage}
+                  >
+                    Complete Stage
+                  </div>
+                ) : null}
+                {showClaimToken ? (
+                  <div
+                    className={`${style.stageDonateNow} ${
+                      claimTokenBtnDisable ? style.disableBtn : ""
+                    }`}
+                    onClick={claimTokens}
+                  >
+                    Claim Tokens
+                  </div>
+                ) : null}
+                {showRefundBtn ? (
+                  <div
+                    className={`${style.stageDonateNow} ${
+                      refundBtnDisable ? style.disableBtn : ""
+                    }`}
+                    onClick={refundTokens}
+                  >
+                    Refund Tokens
+                  </div>
+                ) : null}
+                {showCollectFundsBtn ? (
+                  <div
+                    className={`${style.stageDonateNow} ${
+                      collectFundsBtnDisable ? style.disableBtn : ""
+                    }`}
+                    onClick={collectFunds}
+                  >
+                    Collect Funds
+                  </div>
+                ) : null}
+                {showWithdrawFundsBtn ? (
+                  <div
+                    className={`${style.stageDonateNow} ${
+                      withdrawFundsBtnDisable ? style.disableBtn : ""
+                    }`}
+                    onClick={withdrawTokens}
+                  >
+                    Withdraw Funds
+                  </div>
+                ) : null}
               </div>
             </div>
           </div>

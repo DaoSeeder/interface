@@ -71,3 +71,9 @@ export const getStageKey = (projectToken: string, stageNumber: number) => {
   const hash = ethers.utils.keccak256(encodedParams);
   return hash;
 };
+
+export const fetchCurrentBlock = async (): Promise<number> => {
+  const provider = new ethers.providers.JsonRpcProvider();
+  const blockNumber = await provider.getBlockNumber();
+  return blockNumber;
+};
