@@ -3,6 +3,7 @@ import { MdAdd } from "react-icons/md";
 import { Link } from "react-router-dom";
 import UserWallet from "./UserWallet";
 import Logo from "../../assets/logo_final_new.png";
+import Marquee from "../Marquee";
 
 const Header = () => {
   const style = {
@@ -25,68 +26,72 @@ const Header = () => {
   };
 
   return (
-    <div id="header" className={style.wrapper}>
-      <div>
-        <Link to="/" className={style.headerLogoDiv}>
-          <img src={Logo} alt={"logo"} className={style.headerLogo} />
-          <h1 className={style.headerHeading}>DaoSeeder</h1>
-        </Link>
-      </div>
-      <div className={style.headerLinks}>
-        <Link to="/">
-          <div
-            className={`${style.headerItem} ${
-              location.pathname === "/" ? style.activeNavItem : style.navItem
-            }`}
-          >
-            <p>Home</p>
-          </div>
-        </Link>
-        <Link to="/campaigns">
-          <div
-            className={`${style.headerItem} ${
-              location.pathname === "/marketplace"
-                ? style.activeNavItem
-                : style.navItem
-            }`}
-          >
-            <p>Campaigns</p>
-          </div>
-        </Link>
-        <Link to="/community">
-          <div
-            className={`${style.headerItem} ${
-              location.pathname === "/community"
-                ? style.activeNavItem
-                : style.navItem
-            }`}
-          >
-            <p>Community</p>
-          </div>
-        </Link>
-        <Link to="/contact">
-          <div
-            className={`${style.headerItem} ${
-              location.pathname === "/contact"
-                ? style.activeNavItem
-                : style.navItem
-            }`}
-          >
-            <p>Contact</p>
-          </div>
-        </Link>
-      </div>
-      <div className={style.headerBtns}>
-        <Link to="/campaign/add">
-          <div className={style.addCampaignBtn}>
-            <MdAdd />
-          </div>
-        </Link>
+    <>
+      <Marquee />
+
+      <div id="header" className={style.wrapper}>
         <div>
-          <UserWallet />
+          <Link to="/" className={style.headerLogoDiv}>
+            <img src={Logo} alt={"logo"} className={style.headerLogo} />
+            <h1 className={style.headerHeading}>DaoSeeder</h1>
+          </Link>
+        </div>
+        <div className={style.headerLinks}>
+          <Link to="/">
+            <div
+              className={`${style.headerItem} ${
+                location.pathname === "/" ? style.activeNavItem : style.navItem
+              }`}
+            >
+              <p>Home</p>
+            </div>
+          </Link>
+          <Link to="/campaigns">
+            <div
+              className={`${style.headerItem} ${
+                location.pathname === "/marketplace"
+                  ? style.activeNavItem
+                  : style.navItem
+              }`}
+            >
+              <p>Campaigns</p>
+            </div>
+          </Link>
+          <Link to="/community">
+            <div
+              className={`${style.headerItem} ${
+                location.pathname === "/community"
+                  ? style.activeNavItem
+                  : style.navItem
+              }`}
+            >
+              <p>Community</p>
+            </div>
+          </Link>
+          <Link to="/contact">
+            <div
+              className={`${style.headerItem} ${
+                location.pathname === "/contact"
+                  ? style.activeNavItem
+                  : style.navItem
+              }`}
+            >
+              <p>Contact</p>
+            </div>
+          </Link>
+        </div>
+        <div className={style.headerBtns}>
+          <Link to="/campaign/add">
+            <div className={style.addCampaignBtn}>
+              <MdAdd />
+            </div>
+          </Link>
+          <div>
+            <UserWallet />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
