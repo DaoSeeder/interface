@@ -85,7 +85,6 @@ export const getDateFromBlockNumber = async (
   const BLOCK_TIME = process.env.REACT_APP_ETHEREUM_BLOCK_TIME;
   const blockDiff = expiryBlockNumber - blockNumber;
   const timeInSeconds = blockDiff * parseInt(BLOCK_TIME || "12");
-  console.log(timeInSeconds);
   const currentDate = new Date();
   currentDate.setTime(currentDate.getTime() + timeInSeconds * 1000);
   const day = currentDate.getDate().toString().padStart(2, "0");
@@ -93,5 +92,5 @@ export const getDateFromBlockNumber = async (
   const year = currentDate.getFullYear().toString();
   const hours = currentDate.getHours().toString().padStart(2, "0");
   const minutes = currentDate.getMinutes().toString().padStart(2, "0");
-  return `${day}/${month}/${year} ${hours}:${minutes}`;
+  return `${day}/${month}/${year.slice(-2)} ${hours}:${minutes}`;
 };

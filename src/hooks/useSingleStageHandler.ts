@@ -45,6 +45,7 @@ export const useSingleStageHandler = () => {
   const [showVotingBtn, setShowVotingBtn] = useState<boolean>(false);
   const [currBlock, setCurrBlock] = useState<number>();
   const [expiryDate, setExpiryDate] = useState<string>();
+  const [currBlockTime, setCurrBlockTime] = useState<string>();
 
   useEffect(() => {
     const fetchStageAddress = async () => {
@@ -109,7 +110,13 @@ export const useSingleStageHandler = () => {
           obj.stageContract.expiryBlock
         );
 
+        const currestBlockTime = await getDateFromBlockNumber(
+          blockNumber,
+          blockNumber
+        );
+
         setExpiryDate(expirationDate);
+        setCurrBlockTime(currestBlockTime);
 
         if (
           blockNumber >= parseInt(obj.stageContract.expiryBlock.toString()) &&
@@ -593,5 +600,6 @@ export const useSingleStageHandler = () => {
     showVotingBtn,
     currBlock,
     expiryDate,
+    currBlockTime,
   };
 };

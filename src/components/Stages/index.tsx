@@ -31,6 +31,7 @@ function Stage() {
     showVotingBtn,
     currBlock,
     expiryDate,
+    currBlockTime,
   } = useSingleStageHandler();
   const style = {
     campaignDiv:
@@ -72,6 +73,7 @@ function Stage() {
       "mt-12 text-3xl font-bold text-light-font-lightV1 dark:text-dark-font-lightV1",
     timeline: "my-12 text-light-font-lightV1 dark:text-dark-font-lightV1",
     disableBtn: "pointer-events-none",
+    expDate: "text-xs",
   };
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -144,13 +146,12 @@ function Stage() {
                   </div>
                   <div className={style.blockTime}>
                     <div className={style.totalTimeLeft}>
-                      Stage expiration block: {stage?.stageContract.expiryBlock}
+                      Expiration block: {stage?.stageContract.expiryBlock}{" "}
+                      <span className={style.expDate}>({expiryDate})</span>
                     </div>
                     <div className={style.totalTimeLeft}>
-                      Current Block: {currBlock}
-                    </div>
-                    <div className={style.totalTimeLeft}>
-                      Expiration Time: {expiryDate}
+                      Current Block: {currBlock}{" "}
+                      <span className={style.expDate}>({currBlockTime})</span>
                     </div>
                   </div>
                 </div>
