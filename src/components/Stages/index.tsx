@@ -28,6 +28,9 @@ function Stage() {
     showWithdrawFundsBtn,
     withdrawFundsBtnDisable,
     withdrawTokens,
+    showVotingBtn,
+    currBlock,
+    expiryDate,
   } = useSingleStageHandler();
   const style = {
     campaignDiv:
@@ -47,6 +50,7 @@ function Stage() {
     stageTimeLeft: "flex gap-4 items-center",
     timeImage: "w-[15px]",
     totalTimeLeft: "text-sm",
+    blockTime: "flex flex-col",
     stageProgressBar:
       "w-full bg-transparent rounded-3xl border-light-primary-primary border-[1px] flex items-center mt-4 mb-2 p-px",
     totalProgress:
@@ -120,6 +124,12 @@ function Stage() {
                 {stage?.stageContract.isComplete
                   ? "Stage Completed"
                   : "In Progress"}
+                {showVotingBtn ? "Voting and evaluation" : null}
+                {stage?.stageContract.isComplete
+                  ? stage?.stageContract.isSuccess
+                    ? " (Success) "
+                    : " (Failed) "
+                  : ""}
               </div>
             </div>
             <div className={style.stageGoals}>
@@ -132,8 +142,16 @@ function Stage() {
                   <div className={style.timeImage}>
                     <BsClockHistory />
                   </div>
-                  <div className={style.totalTimeLeft}>
-                    Stage expiration block: {stage?.stageContract.expiryBlock}
+                  <div className={style.blockTime}>
+                    <div className={style.totalTimeLeft}>
+                      Stage expiration block: {stage?.stageContract.expiryBlock}
+                    </div>
+                    <div className={style.totalTimeLeft}>
+                      Current Block: {currBlock}
+                    </div>
+                    <div className={style.totalTimeLeft}>
+                      Expiration Time: {expiryDate}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -168,7 +186,8 @@ function Stage() {
                 </div>
               </div>
               <div>
-                {stage?.stageContract.projectOwner !== address ? (
+                {stage?.stageContract.projectOwner !== address &&
+                showVotingBtn ? (
                   <div className={style.stageDonateNow} onClick={openModal}>
                     Add your Vote
                   </div>
@@ -220,7 +239,7 @@ function Stage() {
                     }`}
                     onClick={withdrawTokens}
                   >
-                    Withdraw Funds
+                    Withdraw Tokens
                   </div>
                 ) : null}
               </div>

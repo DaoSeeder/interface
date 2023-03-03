@@ -3,6 +3,7 @@ import { IStage } from "./../interfaces/IStage";
 import { getStageData } from "./../utils/ipfsUtils";
 import {
   fetchCurrentBlock,
+  getDateFromBlockNumber,
   getSmartContractWithProvider,
   getSmartContractWithSigner,
 } from "./../utils/ContractUtils";
@@ -41,6 +42,9 @@ export const useSingleStageHandler = () => {
     useState<boolean>(false);
   const [withdrawFundsBtnDisable, setWithdrawFundsBtnDisable] =
     useState<boolean>(false);
+  const [showVotingBtn, setShowVotingBtn] = useState<boolean>(false);
+  const [currBlock, setCurrBlock] = useState<number>();
+  const [expiryDate, setExpiryDate] = useState<string>();
 
   useEffect(() => {
     const fetchStageAddress = async () => {
@@ -98,10 +102,29 @@ export const useSingleStageHandler = () => {
         setStage(obj);
 
         const blockNumber: number = await fetchCurrentBlock();
+        setCurrBlock(blockNumber);
+
+        const expirationDate = await getDateFromBlockNumber(
+          blockNumber,
+          obj.stageContract.expiryBlock
+        );
+
+        setExpiryDate(expirationDate);
+
+        if (
+          blockNumber >= parseInt(obj.stageContract.expiryBlock.toString()) &&
+          blockNumber <
+            parseInt(obj.stageContract.expiryBlock.toString()) +
+              parseInt(obj.stageContract.votingPeriod.toString()) &&
+          !obj.stageContract.isComplete
+        ) {
+          setShowVotingBtn(true);
+        }
 
         if (
           blockNumber >=
-            obj.stageContract.expiryBlock + obj.stageContract.votingPeriod &&
+            parseInt(obj.stageContract.expiryBlock.toString()) +
+              parseInt(obj.stageContract.votingPeriod.toString()) &&
           !obj.stageContract.isComplete
         ) {
           setShowCompleteBtn(true);
@@ -203,8 +226,7 @@ export const useSingleStageHandler = () => {
       return;
     }
 
-    const currentBlock: number = await fetchCurrentBlock();
-    if (currentBlock < parseInt(stage.stageContract.expiryBlock.toString())) {
+    if (!showVotingBtn) {
       toast.error(
         "The stage is still active. You can only vote when the stage is completed"
       );
@@ -568,5 +590,8 @@ export const useSingleStageHandler = () => {
     showWithdrawFundsBtn,
     withdrawFundsBtnDisable,
     withdrawTokens,
+    showVotingBtn,
+    currBlock,
+    expiryDate,
   };
 };
