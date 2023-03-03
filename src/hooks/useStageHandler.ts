@@ -94,6 +94,7 @@ export const useStageHandler = () => {
         );
         await tx.wait();
         toast.success("Your transaction was successful");
+        // TODO: we should save the factory address in memory instead of keep getting it every time
         if (id) {
           const contract = await getSmartContractWithProvider(
             DAOSEEDER_FACTORY_ADDRESS,
