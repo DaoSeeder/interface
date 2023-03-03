@@ -18,6 +18,7 @@ function Stage() {
     isDonateOpen,
     closeDonateModal,
     donateNowDialog,
+    balance,
   } = useSingleStageHandler();
   const style = {
     campaignDiv:
@@ -95,10 +96,8 @@ function Stage() {
             <div className={style.stageGoals}>
               <div className={style.stageData}>
                 <div className={style.stageTotalMoney}>
-                  {stage?.stageContract.totalCommitted}{" "}
-                  {process.env.REACT_APP_NETWORK_CURRECNY} raised of{" "}
-                  {stage?.stage.stageGoal}{" "}
-                  {process.env.REACT_APP_NETWORK_CURRECNY} goal
+                  {stage?.stageContract.totalCommitted} {balance?.symbol} raised
+                  of {stage?.stage.stageGoal} {balance?.symbol} goal
                 </div>
                 <div className={style.stageTimeLeft}>
                   <div className={style.timeImage}>

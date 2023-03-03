@@ -18,6 +18,7 @@ function AddStage() {
     addStage,
     disableBtn,
     expiryBlock,
+    balance,
   } = useStageHandler();
   const style = {
     campaignDiv: "text-light-font-lightV1 mt-4 w-full",
@@ -97,7 +98,7 @@ function AddStage() {
                 >
                   Target Amount{" "}
                   <span className={style.inputSpan}>
-                    (in {process.env.REACT_APP_NETWORK_CURRECNY})
+                    (in {balance?.symbol})
                   </span>
                 </label>
               </div>

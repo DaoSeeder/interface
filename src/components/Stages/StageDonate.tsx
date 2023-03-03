@@ -83,7 +83,7 @@ function StageDonate({
                       className={style.stageProgressLabel}
                       htmlFor="donationInput"
                     >
-                      Committing Amount
+                      Amount to Commit
                     </label>
                     <div className={style.radioContainer}>
                       <div className={style.inputDiv}>

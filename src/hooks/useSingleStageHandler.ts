@@ -9,11 +9,16 @@ import toast from "react-hot-toast";
 import StageContract from "@daoseeder/core/artifacts/contracts/Stage.sol/Stage.json";
 import { useParams } from "react-router-dom";
 import DaoSeederFactory from "@daoseeder/core/artifacts/contracts/DaoSeederFactory.sol/DaoSeederFactory.json";
-import { useProvider, useSigner } from "wagmi";
+import { useProvider, useSigner, useBalance, useAccount } from "wagmi";
 import { constants, ethers } from "ethers";
 
 export const useSingleStageHandler = () => {
   const { stageId } = useParams();
+  const { address } = useAccount();
+
+  const { data: balance } = useBalance({
+    address,
+  });
   const DAOSEEDER_FACTORY_ADDRESS =
     process.env.REACT_APP_DAOSEEDER_FACTORY_ADDRESS;
   const provider = useProvider();
@@ -216,5 +221,6 @@ export const useSingleStageHandler = () => {
     isDonateOpen,
     closeDonateModal,
     donateNowDialog,
+    balance,
   };
 };

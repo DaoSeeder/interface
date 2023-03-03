@@ -2,7 +2,7 @@ import { getDateDifferenceInSeconds } from "./../utils/dateTimeUtils";
 import { toast } from "react-hot-toast";
 import { getContractCampaign } from "./../utils/ContractUtils";
 import { useCallback, useEffect, useState } from "react";
-import { useSigner } from "wagmi";
+import { useAccount, useBalance, useSigner } from "wagmi";
 import { IStageIPFSData } from "../interfaces/IStage";
 import { addStageToIpfs } from "../utils/ipfsUtils";
 import { useParams } from "react-router-dom";
@@ -12,6 +12,11 @@ import { getSmartContractWithProvider } from "../utils/ContractUtils";
 import DaoSeederFactory from "@daoseeder/core/artifacts/contracts/DaoSeederFactory.sol/DaoSeederFactory.json";
 export const useStageHandler = () => {
   const { id } = useParams();
+  const { address } = useAccount();
+
+  const { data: balance } = useBalance({
+    address,
+  });
   const DAOSEEDER_FACTORY_ADDRESS =
     process.env.REACT_APP_DAOSEEDER_FACTORY_ADDRESS;
   const BLOCK_TIME = process.env.REACT_APP_ETHEREUM_BLOCK_TIME;
@@ -142,5 +147,6 @@ export const useStageHandler = () => {
     expiryDate,
     disableBtn,
     expiryBlock,
+    balance,
   };
 };
