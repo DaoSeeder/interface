@@ -79,11 +79,11 @@ export const fetchCurrentBlock = async (): Promise<number> => {
 };
 
 export const getDateFromBlockNumber = async (
-  blockNumber: number,
-  expiryBlockNumber: number
+  currentBlockNumber: number,
+  targetBlockNumber: number
 ): Promise<string> => {
   const BLOCK_TIME = process.env.REACT_APP_ETHEREUM_BLOCK_TIME;
-  const blockDiff = expiryBlockNumber - blockNumber;
+  const blockDiff = targetBlockNumber - currentBlockNumber;
   const timeInSeconds = blockDiff * parseInt(BLOCK_TIME || "12");
   const currentDate = new Date();
   currentDate.setTime(currentDate.getTime() + timeInSeconds * 1000);
