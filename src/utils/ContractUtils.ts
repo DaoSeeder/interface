@@ -72,6 +72,29 @@ export const getStageKey = (projectToken: string, stageNumber: number) => {
   return hash;
 };
 
+export const fetchCurrentBlock = async (): Promise<number> => {
+  const provider = new ethers.providers.JsonRpcProvider();
+  const blockNumber = await provider.getBlockNumber();
+  return blockNumber;
+};
+
+export const getDateFromBlockNumber = async (
+  currentBlockNumber: number,
+  targetBlockNumber: number
+): Promise<string> => {
+  const BLOCK_TIME = process.env.REACT_APP_ETHEREUM_BLOCK_TIME;
+  const blockDiff = targetBlockNumber - currentBlockNumber;
+  const timeInSeconds = blockDiff * parseInt(BLOCK_TIME || "12");
+  const currentDate = new Date();
+  currentDate.setTime(currentDate.getTime() + timeInSeconds * 1000);
+  const day = currentDate.getDate().toString().padStart(2, "0");
+  const month = (currentDate.getMonth() + 1).toString().padStart(2, "0");
+  const year = currentDate.getFullYear().toString();
+  const hours = currentDate.getHours().toString().padStart(2, "0");
+  const minutes = currentDate.getMinutes().toString().padStart(2, "0");
+  return `${day}/${month}/${year.slice(-2)} ${hours}:${minutes}`;
+};
+
 export const getCampaignKey = (projectToken: string) => {
   const abiCoder = new ethers.utils.AbiCoder();
   const encodedParams = abiCoder.encode(["address"], [projectToken]);
