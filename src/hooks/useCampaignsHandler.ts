@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import {
+  getCampaignKey,
   getCampaigns,
   getSmartContractWithProvider,
   getSmartContractWithSigner,
@@ -53,6 +54,8 @@ export const useCampaignsHandler = () => {
           const tx = await contract.createCampaign(campaignTokenAddress, cid);
           await tx.wait();
           toast.success("Your transaction was successful");
+          const campaignKey = getCampaignKey(campaignTokenAddress);
+          window.location.href = `/campaign/${campaignKey}`;
         } else {
           toast.error("Ipfs did not return a valid value. Please try again");
         }

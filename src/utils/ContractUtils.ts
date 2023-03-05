@@ -94,3 +94,10 @@ export const getDateFromBlockNumber = async (
   const minutes = currentDate.getMinutes().toString().padStart(2, "0");
   return `${day}/${month}/${year.slice(-2)} ${hours}:${minutes}`;
 };
+
+export const getCampaignKey = (projectToken: string) => {
+  const abiCoder = new ethers.utils.AbiCoder();
+  const encodedParams = abiCoder.encode(["address"], [projectToken]);
+  const hash = ethers.utils.keccak256(encodedParams);
+  return hash;
+};
