@@ -8,7 +8,7 @@ export const addCampaignToIpfs = async (
   try {
     const auth =
       "Basic " +
-      window.btoa(
+      btoa(
         process.env.REACT_APP_INFURA_PROJECT_ID +
           ":" +
           process.env.REACT_APP_INFURA_API_SECRET
