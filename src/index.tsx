@@ -17,8 +17,8 @@ const DaoSeederTest: Chain = {
   name: "DaoSeeder",
   network: "DaoSeeder Test",
   nativeCurrency: {
-    name: process.env.REACT_APP_NETWORK_CURRENCY || "ETH",
-    symbol: process.env.REACT_APP_NETWORK_CURRENCY || "ETH",
+    name: "ETH",
+    symbol: "ETH",
     decimals: 18,
   },
   rpcUrls: {
