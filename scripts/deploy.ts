@@ -3,9 +3,11 @@ import { ethers } from "hardhat";
 import DaoSeederFactoryJSON from "@daoseeder/core/artifacts/contracts/DaoSeederFactory.sol/DaoSeederFactory.json";
 import StageJSON from "@daoseeder/core/artifacts/contracts/Stage.sol/Stage.json";
 import CampaignManagerJSON from "@daoseeder/core/artifacts/contracts/CampaignManager.sol/CampaignManager.json";
-import { ICampaign } from "../src/interfaces/ICampaign";
-import { addCampaignToIpfs } from "../src/utils/ipfsUtils";
+import { addCampaignToIpfs, addStageToIpfs } from "../src/utils/ipfsUtils";
 import dotenv from "dotenv";
+import campaigns from "./campaigns.json";
+import stages from "./stages.json";
+import { getDateDifferenceInSeconds } from "../src/utils/dateTimeUtils";
 
 export async function main() {
   const [owner] = await ethers.getSigners();
@@ -44,27 +46,33 @@ export async function main() {
   // daoSeederFactory
 
   dotenv.config({ path: `.env.local` });
+  for (let i = 0; i < campaigns.length; i++) {
+    const cid = await addCampaignToIpfs(campaigns[i]);
+    if (cid) {
+      const tx = await daoSeederFactory.createCampaign(
+        campaigns[i].tokenAddress,
+        cid
+      );
+      await tx.wait();
 
-  const campaign: ICampaign = {
-    name: "Google",
-    description: "Google funds",
-    logoLink:
-      "https://www.google.com/images/branding/googlelogo/1x/googlelogo_light_color_272x92dp.png",
-    websiteLink: "https://www.google.com/",
-    mediaLinks: [
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSK5q0FP74VV9wbfwP378_7kj7iDomHuKrxkXsxDdUT28V9dlVMNUe-EMzaLwaFhneeuZI&usqp=CAU",
-    ],
-    tokenAddress: "0xdac17f958d2ee523a2206206994597c13d831ec7",
-    campaignKey: "",
-    stageCount: 0,
-  };
-  const cid = await addCampaignToIpfs(campaign);
-  if (cid) {
-    const tx = await daoSeederFactory.createCampaign(
-      "0xdac17f958d2ee523a2206206994597c13d831ec7",
-      cid
-    );
-    await tx.wait();
+      const date = new Date();
+      date.setDate(date.getDate() + 1);
+
+      const diffInSeconds = getDateDifferenceInSeconds(date);
+      const blockExpiry = Math.floor(
+        diffInSeconds /
+          parseInt(process.env.REACT_APP_ETHEREUM_BLOCK_TIME || "12")
+      );
+
+      const cidStage = await addStageToIpfs(stages[i]);
+      const txStage = await daoSeederFactory.createStage(
+        campaigns[i].tokenAddress,
+        stages[i].stageGoal,
+        blockExpiry,
+        cidStage
+      );
+      await txStage.wait();
+    }
   }
 }
 

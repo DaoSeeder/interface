@@ -18,19 +18,22 @@ function CampaignList({ name, description, logoLink, campaignKey }: ICampaign) {
     campaignTimeLeft: "text-xs",
     campaingDesc: "text-sm my-4",
     campaignData: "flex justify-between w-full mb-4",
-    link: "w-fit",
+    link: "w-fit h-fit",
+    imageStyle: "h-[250px] flex justify-center items-center",
   };
   return (
     <Link to={`/campaign/${campaignKey}`} className={style.link}>
       <div className={style.campaignDiv}>
         <div className={style.singleCampaign}>
           <div className={style.singleCampaignContainer}>
-            <img src={logoLink} alt={"img1"} />
+            <div className={style.imageStyle}>
+              <img src={logoLink} alt={"img1"} />
+            </div>
             <div className={style.campaignName}>
               <p className={style.campaignTitle}>{name}</p>
             </div>
             <div className={style.campaingDesc}>
-              <p>{description}</p>
+              <p>{description.slice(0, 160)}</p>
             </div>
           </div>
         </div>

@@ -6,21 +6,7 @@ export const addCampaignToIpfs = async (
   campaign: ICampaign
 ): Promise<string> => {
   try {
-    const auth =
-      "Basic " +
-      btoa(
-        process.env.REACT_APP_INFURA_PROJECT_ID +
-          ":" +
-          process.env.REACT_APP_INFURA_API_SECRET
-      );
-    const client: IPFSHTTPClient = create({
-      host: "ipfs.infura.io",
-      port: 5001,
-      protocol: "https",
-      headers: {
-        authorization: auth,
-      },
-    });
+    const client = await getIpfsClient();
     if (client) {
       const file = await client.add(JSON.stringify(campaign));
       return file.path;
@@ -59,21 +45,7 @@ export const addStageToIpfs = async (
   stage: IStageIPFSData
 ): Promise<string> => {
   try {
-    const auth =
-      "Basic " +
-      window.btoa(
-        process.env.REACT_APP_INFURA_PROJECT_ID +
-          ":" +
-          process.env.REACT_APP_INFURA_API_SECRET
-      );
-    const client: IPFSHTTPClient = create({
-      host: "ipfs.infura.io",
-      port: 5001,
-      protocol: "https",
-      headers: {
-        authorization: auth,
-      },
-    });
+    const client = await getIpfsClient();
     if (client) {
       const file = await client.add(JSON.stringify(stage));
       return file.path;
@@ -91,9 +63,7 @@ export const getStageData = async (
   let data: IStageIPFSData = {
     name: "",
     deliverables: [""],
-    expiryDate: new Date(),
     stageGoal: 0,
-    dateInString: "",
   };
   data = await fetch(`https://ipfs.io/ipfs/${ipfsKey}`)
     .then((response) => response.json())
@@ -105,4 +75,22 @@ export const getStageData = async (
     });
 
   return data;
+};
+
+const getIpfsClient = async (): Promise<IPFSHTTPClient> => {
+  const auth =
+    "Basic " +
+    btoa(
+      process.env.REACT_APP_INFURA_PROJECT_ID +
+        ":" +
+        process.env.REACT_APP_INFURA_API_SECRET
+    );
+  return create({
+    host: "ipfs.infura.io",
+    port: 5001,
+    protocol: "https",
+    headers: {
+      authorization: auth,
+    },
+  });
 };

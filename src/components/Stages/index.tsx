@@ -138,7 +138,7 @@ function Stage() {
               <div className={style.stageData}>
                 <div className={style.stageTotalMoney}>
                   {stage?.stageContract.totalCommitted} ETH raised of{" "}
-                  {stage?.stage.stageGoal} ETH goal
+                  {stage?.stage?.stageGoal} ETH goal
                 </div>
                 <div className={style.stageTimeLeft}>
                   <div className={style.timeImage}>
@@ -161,7 +161,7 @@ function Stage() {
                   style={{
                     width: stage
                       ? (stage?.stageContract.totalCommitted /
-                          stage?.stage.stageGoal) *
+                          stage?.stage?.stageGoal) *
                           100 +
                         "%"
                       : 0,
@@ -171,7 +171,7 @@ function Stage() {
               </div>
             </div>
             <div className={style.stageDetails}>
-              <div className={style.stageName}>{stage?.stage.name}</div>
+              <div className={style.stageName}>{stage?.stage?.name}</div>
             </div>
             <div className={style.stageBtns}>
               <div className={style.stageDivBtns}>
@@ -256,8 +256,8 @@ function Stage() {
       </div>
 
       <div className={style.timeline}>
-        {stage?.stage.deliverables &&
-          stage?.stage.deliverables.length > 0 &&
+        {stage?.stage?.deliverables &&
+          stage?.stage?.deliverables.length > 0 &&
           stage.stage.deliverables.map((deliverable, idx) => {
             return (
               <p className="module" key={idx}>
