@@ -1,8 +1,12 @@
 import { getDateDifferenceInSeconds } from "./../utils/dateTimeUtils";
 import { toast } from "react-hot-toast";
-import { getContractCampaign } from "./../utils/ContractUtils";
 import { useCallback, useEffect, useState } from "react";
 import { useAccount, useBalance, useSigner } from "wagmi";
+import {
+  getCampaign,
+  getContractCampaign,
+  getStageKey,
+} from "./../utils/ContractUtils";
 import { IStageIPFSData } from "../interfaces/IStage";
 import { addStageToIpfs } from "../utils/ipfsUtils";
 import { useParams } from "react-router-dom";
@@ -94,6 +98,22 @@ export const useStageHandler = () => {
         );
         await tx.wait();
         toast.success("Your transaction was successful");
+        // TODO: we should save the factory address in memory instead of keep getting it every time
+        if (id) {
+          const contract = await getSmartContractWithProvider(
+            DAOSEEDER_FACTORY_ADDRESS,
+            provider,
+            JSON.stringify(DaoSeederFactory.abi)
+          );
+          const data = await getCampaign(id, contract);
+          if (data) {
+            const stageKey = await getStageKey(
+              data.tokenAddress,
+              data.stageCount
+            );
+            window.location.href = `/campaign/${id}/stage/${stageKey}`;
+          }
+        }
       } else {
         toast.error("Please connect your wallet");
       }

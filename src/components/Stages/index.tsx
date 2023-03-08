@@ -19,6 +19,26 @@ function Stage() {
     closeDonateModal,
     donateNowDialog,
     balance,
+    address,
+    showCompleteBtn,
+    completeStage,
+    completeBtnDisable,
+    showClaimToken,
+    claimTokenBtnDisable,
+    claimTokens,
+    showRefundBtn,
+    refundBtnDisable,
+    refundTokens,
+    showCollectFundsBtn,
+    collectFundsBtnDisable,
+    collectFunds,
+    showWithdrawFundsBtn,
+    withdrawFundsBtnDisable,
+    withdrawTokens,
+    showVotingBtn,
+    currBlock,
+    expiryDate,
+    currBlockTime,
   } = useSingleStageHandler();
   const style = {
     campaignDiv:
@@ -38,6 +58,7 @@ function Stage() {
     stageTimeLeft: "flex gap-4 items-center",
     timeImage: "w-[15px]",
     totalTimeLeft: "text-sm",
+    blockTime: "flex flex-col",
     stageProgressBar:
       "w-full bg-transparent rounded-3xl border-light-primary-primary border-[1px] flex items-center mt-4 mb-2 p-px",
     totalProgress:
@@ -58,6 +79,8 @@ function Stage() {
     deliverables:
       "mt-12 text-3xl font-bold text-light-font-lightV1 dark:text-dark-font-lightV1",
     timeline: "my-12 text-light-font-lightV1 dark:text-dark-font-lightV1",
+    disableBtn: "pointer-events-none",
+    expDate: "text-xs",
   };
 
   return (
@@ -91,6 +114,12 @@ function Stage() {
                 {stage?.stageContract.isComplete
                   ? "Stage Completed"
                   : "In Progress"}
+                {showVotingBtn ? "Voting and evaluation" : null}
+                {stage?.stageContract.isComplete
+                  ? stage?.stageContract.isSuccess
+                    ? " (Success) "
+                    : " (Failed) "
+                  : ""}
               </div>
             </div>
             <div className={style.stageGoals}>
@@ -103,8 +132,15 @@ function Stage() {
                   <div className={style.timeImage}>
                     <BsClockHistory />
                   </div>
-                  <div className={style.totalTimeLeft}>
-                    Stage expiration block: {stage?.stageContract.expiryBlock}
+                  <div className={style.blockTime}>
+                    <div className={style.totalTimeLeft}>
+                      Expiration block: {stage?.stageContract.expiryBlock}{" "}
+                      <span className={style.expDate}>({expiryDate})</span>
+                    </div>
+                    <div className={style.totalTimeLeft}>
+                      Current Block: {currBlock}{" "}
+                      <span className={style.expDate}>({currBlockTime})</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -139,9 +175,62 @@ function Stage() {
                 </div>
               </div>
               <div>
-                <div className={style.stageDonateNow} onClick={openModal}>
-                  Add your Vote
-                </div>
+                {stage?.stageContract.projectOwner !== address &&
+                showVotingBtn ? (
+                  <div className={style.stageDonateNow} onClick={openModal}>
+                    Add your Vote
+                  </div>
+                ) : null}
+                {showCompleteBtn ? (
+                  <div
+                    className={`${style.stageDonateNow} ${
+                      completeBtnDisable ? style.disableBtn : ""
+                    }`}
+                    onClick={completeStage}
+                  >
+                    Complete Stage
+                  </div>
+                ) : null}
+                {showClaimToken ? (
+                  <div
+                    className={`${style.stageDonateNow} ${
+                      claimTokenBtnDisable ? style.disableBtn : ""
+                    }`}
+                    onClick={claimTokens}
+                  >
+                    Claim Tokens
+                  </div>
+                ) : null}
+                {showRefundBtn ? (
+                  <div
+                    className={`${style.stageDonateNow} ${
+                      refundBtnDisable ? style.disableBtn : ""
+                    }`}
+                    onClick={refundTokens}
+                  >
+                    Refund Tokens
+                  </div>
+                ) : null}
+                {showCollectFundsBtn ? (
+                  <div
+                    className={`${style.stageDonateNow} ${
+                      collectFundsBtnDisable ? style.disableBtn : ""
+                    }`}
+                    onClick={collectFunds}
+                  >
+                    Collect Funds
+                  </div>
+                ) : null}
+                {showWithdrawFundsBtn ? (
+                  <div
+                    className={`${style.stageDonateNow} ${
+                      withdrawFundsBtnDisable ? style.disableBtn : ""
+                    }`}
+                    onClick={withdrawTokens}
+                  >
+                    Withdraw Tokens
+                  </div>
+                ) : null}
               </div>
             </div>
           </div>
