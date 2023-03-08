@@ -81,7 +81,7 @@ export const useStageHandler = () => {
         const stage: IStageIPFSData = {
           name: stageName,
           deliverables: stageDeliverables,
-          stageGoal: stageGoal,
+          goal: stageGoal,
         };
         const cid = await addStageToIpfs(stage);
         const tx = await contract.createStage(

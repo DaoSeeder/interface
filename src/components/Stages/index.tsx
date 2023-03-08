@@ -7,7 +7,7 @@ import StageDonate from "./StageDonate";
 
 function Stage() {
   const {
-    stage,
+    stageData,
     transferAmount,
     handleInputChange,
     donationAmount,
@@ -119,16 +119,16 @@ function Stage() {
                   />
                 </div>
                 <div className={style.userData}>
-                  <div>{stage?.stageContract.projectOwner}</div>
+                  <div>{stageData?.stageContract.projectOwner}</div>
                 </div>
               </div>
               <div className={style.stageProgress}>
-                {stage?.stageContract.isComplete
+                {stageData?.stageContract.isComplete
                   ? "Stage Completed"
                   : "In Progress"}
                 {showVotingBtn ? "Voting and evaluation" : null}
-                {stage?.stageContract.isComplete
-                  ? stage?.stageContract.isSuccess
+                {stageData?.stageContract.isComplete
+                  ? stageData?.stageContract.isSuccess
                     ? " (Success) "
                     : " (Failed) "
                   : ""}
@@ -137,8 +137,8 @@ function Stage() {
             <div className={style.stageGoals}>
               <div className={style.stageData}>
                 <div className={style.stageTotalMoney}>
-                  {stage?.stageContract.totalCommitted} ETH raised of{" "}
-                  {stage?.stage?.stageGoal} ETH goal
+                  {stageData?.stageContract.totalCommitted} ETH raised of{" "}
+                  {stageData?.stage?.goal} ETH goal
                 </div>
                 <div className={style.stageTimeLeft}>
                   <div className={style.timeImage}>
@@ -146,7 +146,7 @@ function Stage() {
                   </div>
                   <div className={style.blockTime}>
                     <div className={style.totalTimeLeft}>
-                      Expiration block: {stage?.stageContract.expiryBlock}{" "}
+                      Expiration block: {stageData?.stageContract.expiryBlock}{" "}
                       <span className={style.expDate}>({expiryDate})</span>
                     </div>
                     <div className={style.totalTimeLeft}>
@@ -159,9 +159,9 @@ function Stage() {
               <div className={style.stageProgressBar}>
                 <div
                   style={{
-                    width: stage
-                      ? (stage?.stageContract.totalCommitted /
-                          stage?.stage?.stageGoal) *
+                    width: stageData
+                      ? (stageData?.stageContract.totalCommitted /
+                          stageData?.stage?.goal) *
                           100 +
                         "%"
                       : 0,
@@ -171,7 +171,7 @@ function Stage() {
               </div>
             </div>
             <div className={style.stageDetails}>
-              <div className={style.stageName}>{stage?.stage?.name}</div>
+              <div className={style.stageName}>{stageData?.stage?.name}</div>
             </div>
             <div className={style.stageBtns}>
               <div className={style.stageDivBtns}>
@@ -187,7 +187,7 @@ function Stage() {
                 </div>
               </div>
               <div>
-                {stage?.stageContract.projectOwner !== address &&
+                {stageData?.stageContract.projectOwner !== address &&
                 showVotingBtn ? (
                   <div className={style.stageDonateNow} onClick={openModal}>
                     Add your Vote
@@ -256,9 +256,9 @@ function Stage() {
       </div>
 
       <div className={style.timeline}>
-        {stage?.stage?.deliverables &&
-          stage?.stage?.deliverables.length > 0 &&
-          stage.stage.deliverables.map((deliverable, idx) => {
+        {stageData?.stage?.deliverables &&
+          stageData?.stage?.deliverables.length > 0 &&
+          stageData.stage.deliverables.map((deliverable, idx) => {
             return (
               <p className="module" key={idx}>
                 {deliverable}

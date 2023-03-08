@@ -67,7 +67,7 @@ export async function main() {
       const cidStage = await addStageToIpfs(stages[i]);
       const txStage = await daoSeederFactory.createStage(
         campaigns[i].tokenAddress,
-        stages[i].stageGoal,
+        stages[i].goal,
         blockExpiry,
         cidStage
       );

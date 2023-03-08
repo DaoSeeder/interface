@@ -6,7 +6,7 @@
             "Earn Rewards for Supporting Decentralized Privacy. By joining the MetaSafe network, you help everyone in the MetaSafe network—both GRYPHON owners and app subscribers—protect their privacy. As a reward, 70% of MetaSafe’s App subscription fees will be redistributed back to the network.",
             "Power the Future of Cybersecurity As A MetaSafe Miner. The MetaSafe blockchain is powered by thousands of GRYPHON routers. By owning one of these routers, you make decentralized privacy a reality for yourself and everyone around the world."
         ],
-        "stageGoal": 100
+        "goal": 100
     },
     {
         "name": "Implementing blockchain technology in cloud storage",
@@ -17,7 +17,7 @@
             "Marketing",
             "Revolutionising the cloud storage conception"
         ],
-        "stageGoal": 500
+        "goal": 500
     },
     {
         "name": "So how do you become a Blockchain pioneer?",
@@ -31,7 +31,7 @@
             "Flask - a micro web development framework for Python",
             "Spyder - a powerful Python IDE with advanced editing and features"
         ],
-        "stageGoal": 97500
+        "goal": 97500
     },
     {
         "name": "Cryptocurrency mining on a badge?",
@@ -40,7 +40,7 @@
             "It operates on collaborative proof of work proving interactions are authentic",
             "It runs on sneakernet instead of the interwebs"
         ],
-        "stageGoal": 5000
+        "goal": 5000
     },
     {
         "name": "The game is simple to play and ridiculously hard to master",
@@ -49,6 +49,6 @@
             "Coding the game concepts",
             "Adding graphics to the game"
         ],
-        "stageGoal": 7500
+        "goal": 7500
     }
 ]

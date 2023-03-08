@@ -1,6 +1,6 @@
 export interface IStageIPFSData {
   name: string;
-  stageGoal: number;
+  goal: number;
   deliverables: string[];
 }
 

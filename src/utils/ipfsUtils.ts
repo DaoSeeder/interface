@@ -63,7 +63,7 @@ export const getStageData = async (
   let data: IStageIPFSData = {
     name: "",
     deliverables: [""],
-    stageGoal: 0,
+    goal: 0,
   };
   data = await fetch(`https://ipfs.io/ipfs/${ipfsKey}`)
     .then((response) => response.json())
