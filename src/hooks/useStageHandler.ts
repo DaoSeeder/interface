@@ -1,14 +1,13 @@
 import { getDateDifferenceInSeconds } from "./../utils/dateTimeUtils";
 import { toast } from "react-hot-toast";
+import { useCallback, useEffect, useState } from "react";
+import { useAccount, useBalance, useSigner } from "wagmi";
 import {
   getCampaign,
   getContractCampaign,
   getStageKey,
 } from "./../utils/ContractUtils";
-import { useCallback, useEffect } from "react";
-import { useSigner } from "wagmi";
 import { IStageIPFSData } from "../interfaces/IStage";
-import { useState } from "react";
 import { addStageToIpfs } from "../utils/ipfsUtils";
 import { useParams } from "react-router-dom";
 import { useProvider } from "wagmi";
@@ -17,6 +16,11 @@ import { getSmartContractWithProvider } from "../utils/ContractUtils";
 import DaoSeederFactory from "@daoseeder/core/artifacts/contracts/DaoSeederFactory.sol/DaoSeederFactory.json";
 export const useStageHandler = () => {
   const { id } = useParams();
+  const { address } = useAccount();
+
+  const { data: balance } = useBalance({
+    address,
+  });
   const DAOSEEDER_FACTORY_ADDRESS =
     process.env.REACT_APP_DAOSEEDER_FACTORY_ADDRESS;
   const BLOCK_TIME = process.env.REACT_APP_ETHEREUM_BLOCK_TIME;
@@ -105,7 +109,7 @@ export const useStageHandler = () => {
           if (data) {
             const stageKey = await getStageKey(
               data.tokenAddress,
-              data.stageCount - 1
+              data.stageCount
             );
             window.location.href = `/campaign/${id}/stage/${stageKey}`;
           }
@@ -163,5 +167,6 @@ export const useStageHandler = () => {
     expiryDate,
     disableBtn,
     expiryBlock,
+    balance,
   };
 };

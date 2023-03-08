@@ -11,14 +11,18 @@ import toast from "react-hot-toast";
 import StageContract from "@daoseeder/core/artifacts/contracts/Stage.sol/Stage.json";
 import { useParams } from "react-router-dom";
 import DaoSeederFactory from "@daoseeder/core/artifacts/contracts/DaoSeederFactory.sol/DaoSeederFactory.json";
-import { useAccount, useProvider, useSigner } from "wagmi";
+import { useProvider, useSigner, useBalance, useAccount } from "wagmi";
 import { constants, ethers } from "ethers";
 
 export const useSingleStageHandler = () => {
   const { stageId } = useParams();
+  const { address } = useAccount();
+
+  const { data: balance } = useBalance({
+    address,
+  });
   const DAOSEEDER_FACTORY_ADDRESS =
     process.env.REACT_APP_DAOSEEDER_FACTORY_ADDRESS;
-  const { address } = useAccount();
   const provider = useProvider();
   const { data: signer } = useSigner();
   const [stage, setStage] = useState<IStage | null>(null);
@@ -27,6 +31,8 @@ export const useSingleStageHandler = () => {
   const [donationAmount, setDonationAmount] = useState<number>(0);
   const [btnDisable, setBtnDisable] = useState<boolean>(false);
   const [stageAddress, setStageAddress] = useState<string>("");
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isDonateOpen, setIsDonateOpen] = useState<boolean>(false);
   const [showCompleteBtn, setShowCompleteBtn] = useState<boolean>(false);
   const [completeBtnDisable, setCompleteBtnDisable] = useState<boolean>(false);
   const [showClaimToken, setShowClaimToken] = useState<boolean>(false);
@@ -167,6 +173,22 @@ export const useSingleStageHandler = () => {
     }
   }, [address, provider, stageAddress]);
 
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const donateNowDialog = () => {
+    setIsDonateOpen(true);
+  };
+
+  const closeDonateModal = () => {
+    setIsDonateOpen(false);
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
     setDonationAmount(parseFloat(newValue));
@@ -198,6 +220,14 @@ export const useSingleStageHandler = () => {
       });
       await tx.wait();
       toast.success("Your transaction was successful");
+      const obj = stage;
+      if (obj?.stageContract.totalCommitted) {
+        obj.stageContract.totalCommitted += donationAmount;
+      } else if (obj) {
+        obj.stageContract.totalCommitted = donationAmount;
+      }
+      setStage(obj);
+      closeDonateModal();
     } catch (err) {
       if (typeof err === "string") {
         toast.error(err);
@@ -581,6 +611,13 @@ export const useSingleStageHandler = () => {
     setUserVote,
     submitUserVote,
     voteBtnDisable,
+    isOpen,
+    closeModal,
+    openModal,
+    isDonateOpen,
+    closeDonateModal,
+    donateNowDialog,
+    balance,
     address,
     showCompleteBtn,
     completeStage,

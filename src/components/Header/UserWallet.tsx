@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
-import { Fragment } from "react";
 import { truncateAddress } from "../../utils/ContractUtils";
 import { useAccount, useDisconnect } from "wagmi";
 import { AiFillCaretDown } from "react-icons/ai";
