@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import { create, IPFSHTTPClient } from "ipfs-http-client";
+import React, { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
@@ -11,8 +12,10 @@ import IpfsUpload from "./components/IpfsUpload";
 import Stage from "./components/Stages";
 import AddStage from "./components/Stages/AddStage";
 import ThemeSwitcher from "./components/ThemeSwitcher";
+import IpfsContext from "./context/IpfsContext";
 
 function App() {
+  const [ipfsClient, setIpfsClient] = useState<IPFSHTTPClient | null>(null);
   const style = {
     wrapper:
       "w-full flex flex-row justify-center max-w-screen-xl dark:bg-dark-background min-h-screen items-start",
@@ -34,27 +37,51 @@ function App() {
     }
   }, []);
 
+  useEffect(() => {
+    const auth =
+      "Basic " +
+      btoa(
+        process.env.REACT_APP_INFURA_PROJECT_ID +
+          ":" +
+          process.env.REACT_APP_INFURA_API_SECRET
+      );
+    const client = create({
+      host: "ipfs.infura.io",
+      port: 5001,
+      protocol: "https",
+      headers: {
+        authorization: auth,
+      },
+    });
+    setIpfsClient(client);
+  }, []);
+
   return (
-    <div id="app-wrapper" className={style.wrapper}>
-      <Toaster />
-      <ThemeSwitcher />
-      <Router>
-        <div id="router" className={style.router}>
-          <Header />
-          <div id="routes" className={`${style.allRoutes}`}>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/campaigns" element={<Campaigns />} />
-              <Route path="/campaign/:id" element={<SingleCampaign />} />
-              <Route path="/campaign/add" element={<AddCampaign />} />
-              <Route path="/campaign/:id/stage/:stageId" element={<Stage />} />
-              <Route path="/campaign/:id/stage/add" element={<AddStage />} />
-              <Route path="/ipfs" element={<IpfsUpload />} />
-            </Routes>
+    <IpfsContext.Provider value={ipfsClient}>
+      <div id="app-wrapper" className={style.wrapper}>
+        <Toaster />
+        <ThemeSwitcher />
+        <Router>
+          <div id="router" className={style.router}>
+            <Header />
+            <div id="routes" className={`${style.allRoutes}`}>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/campaigns" element={<Campaigns />} />
+                <Route path="/campaign/:id" element={<SingleCampaign />} />
+                <Route path="/campaign/add" element={<AddCampaign />} />
+                <Route
+                  path="/campaign/:id/stage/:stageId"
+                  element={<Stage />}
+                />
+                <Route path="/campaign/:id/stage/add" element={<AddStage />} />
+                <Route path="/ipfs" element={<IpfsUpload />} />
+              </Routes>
+            </div>
           </div>
-        </div>
-      </Router>
-    </div>
+        </Router>
+      </div>
+    </IpfsContext.Provider>
   );
 }
 

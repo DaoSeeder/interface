@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import {
   getCampaignKey,
   getCampaigns,
@@ -11,8 +11,10 @@ import { addCampaignToIpfs } from "../utils/ipfsUtils";
 import { useProvider, useSigner } from "wagmi";
 import DaoSeederFactory from "@daoseeder/core/artifacts/contracts/DaoSeederFactory.sol/DaoSeederFactory.json";
 import toast from "react-hot-toast";
+import IpfsContext from "../context/IpfsContext";
 
 export const useCampaignsHandler = () => {
+  const ipfsClient = useContext(IpfsContext);
   const provider = useProvider();
   const DAOSEEDER_FACTORY_ADDRESS =
     process.env.REACT_APP_DAOSEEDER_FACTORY_ADDRESS;
@@ -49,7 +51,7 @@ export const useCampaignsHandler = () => {
           campaignKey: "",
           stageCount: 0,
         };
-        const cid = await addCampaignToIpfs(campaign);
+        const cid = await addCampaignToIpfs(campaign, ipfsClient);
         if (cid) {
           const tx = await contract.createCampaign(campaignTokenAddress, cid);
           await tx.wait();

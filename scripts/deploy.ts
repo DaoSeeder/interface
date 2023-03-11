@@ -47,7 +47,7 @@ export async function main() {
 
   dotenv.config({ path: `.env.local` });
   for (let i = 0; i < campaigns.length; i++) {
-    const cid = await addCampaignToIpfs(campaigns[i]);
+    const cid = await addCampaignToIpfs(campaigns[i], null);
     if (cid) {
       const tx = await daoSeederFactory.createCampaign(
         campaigns[i].tokenAddress,
@@ -64,7 +64,7 @@ export async function main() {
           parseInt(process.env.REACT_APP_ETHEREUM_BLOCK_TIME || "12")
       );
 
-      const cidStage = await addStageToIpfs(stages[i]);
+      const cidStage = await addStageToIpfs(stages[i], null);
       const txStage = await daoSeederFactory.createStage(
         campaigns[i].tokenAddress,
         stages[i].goal,
