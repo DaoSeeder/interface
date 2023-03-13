@@ -6,21 +6,17 @@ const config: HardhatUserConfig = {
   solidity: "0.8.17",
   networks: {
     hardhat: {
-      chainId: 31337,
+      chainId: 326,
       accounts: {
-        mnemonic: "test test test test test test test test test test test junk",
+        mnemonic: "cat cat cat cat cat cat cat cat cat cat cat cat",
         path: "m/44'/60'/0'/0",
-        initialIndex: 0,
-        count: 20,
-        passphrase: "",
       },
     },
     GSChain: {
       chainId: 326,
       url: "http://localhost:8545",
       accounts: {
-        mnemonic:
-          "myth like bonus scare over problem client lizard pioneer submit female collect",
+        mnemonic: "dog dog dog dog dog dog dog dog dog dog dog dog",
         path: "m/44'/60'/0'/0",
       },
     },

@@ -5,7 +5,7 @@ import {
   getContractCampaign,
   getStageKey,
 } from "./../utils/ContractUtils";
-import { useCallback, useContext, useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useSigner } from "wagmi";
 import { IStageIPFSData } from "../interfaces/IStage";
 import { useState } from "react";
@@ -15,9 +15,8 @@ import { useProvider } from "wagmi";
 import { getSmartContractWithSigner } from "../utils/ContractUtils";
 import { getSmartContractWithProvider } from "../utils/ContractUtils";
 import DaoSeederFactory from "@daoseeder/core/artifacts/contracts/DaoSeederFactory.sol/DaoSeederFactory.json";
-import IpfsContext from "../context/IpfsContext";
+
 export const useStageHandler = () => {
-  const ipfsClient = useContext(IpfsContext);
   const { id } = useParams();
   const DAOSEEDER_FACTORY_ADDRESS =
     process.env.REACT_APP_DAOSEEDER_FACTORY_ADDRESS;
@@ -85,7 +84,7 @@ export const useStageHandler = () => {
           deliverables: stageDeliverables,
           goal: stageGoal,
         };
-        const cid = await addStageToIpfs(stage, ipfsClient);
+        const cid = await addStageToIpfs(stage);
         const tx = await contract.createStage(
           tokenAddress,
           stageGoal,

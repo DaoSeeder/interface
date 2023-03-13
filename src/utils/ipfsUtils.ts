@@ -3,14 +3,10 @@ import { ICampaign } from "../interfaces/ICampaign";
 import { create, IPFSHTTPClient } from "ipfs-http-client";
 
 export const addCampaignToIpfs = async (
-  campaign: ICampaign,
-  ipfsClient: IPFSHTTPClient | null
+  campaign: ICampaign
 ): Promise<string> => {
   try {
-    let client = ipfsClient;
-    if (!client) {
-      client = await getIpfsClient();
-    }
+    const client = await getIpfsClient();
     if (client) {
       const file = await client.add(JSON.stringify(campaign));
       return file.path;
@@ -46,14 +42,10 @@ export const getCampaignData = async (ipfsKey: string): Promise<ICampaign> => {
 };
 
 export const addStageToIpfs = async (
-  stage: IStageIPFSData,
-  ipfsClient: IPFSHTTPClient | null
+  stage: IStageIPFSData
 ): Promise<string> => {
   try {
-    let client = ipfsClient;
-    if (!client) {
-      client = await getIpfsClient();
-    }
+    const client = await getIpfsClient();
     if (client) {
       const file = await client.add(JSON.stringify(stage));
       return file.path;
