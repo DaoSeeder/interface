@@ -12,7 +12,7 @@ const config: HardhatUserConfig = {
         path: "m/44'/60'/0'/0",
       },
     },
-    GSChain: {
+    DSChain: {
       chainId: 326,
       url: "http://localhost:8545",
       accounts: {
