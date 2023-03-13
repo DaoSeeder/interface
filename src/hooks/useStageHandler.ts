@@ -14,6 +14,7 @@ import { useProvider } from "wagmi";
 import { getSmartContractWithSigner } from "../utils/ContractUtils";
 import { getSmartContractWithProvider } from "../utils/ContractUtils";
 import DaoSeederFactory from "@daoseeder/core/artifacts/contracts/DaoSeederFactory.sol/DaoSeederFactory.json";
+
 export const useStageHandler = () => {
   const { id } = useParams();
   const { address } = useAccount();
@@ -84,10 +85,8 @@ export const useStageHandler = () => {
         );
         const stage: IStageIPFSData = {
           name: stageName,
-          expiryDate: expiryDate || new Date(),
           deliverables: stageDeliverables,
-          stageGoal: stageGoal,
-          dateInString: "",
+          goal: stageGoal,
         };
         const cid = await addStageToIpfs(stage);
         const tx = await contract.createStage(

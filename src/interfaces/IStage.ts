@@ -1,9 +1,7 @@
 export interface IStageIPFSData {
   name: string;
-  expiryDate: Date;
-  stageGoal: number;
+  goal: number;
   deliverables: string[];
-  dateInString: string;
 }
 
 export interface IStageContractData {

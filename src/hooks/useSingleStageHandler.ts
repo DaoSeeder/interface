@@ -25,7 +25,7 @@ export const useSingleStageHandler = () => {
     process.env.REACT_APP_DAOSEEDER_FACTORY_ADDRESS;
   const provider = useProvider();
   const { data: signer } = useSigner();
-  const [stage, setStage] = useState<IStage | null>(null);
+  const [stageData, setStageData] = useState<IStage | null>(null);
   const [userVote, setUserVote] = useState<boolean>(false);
   const [voteBtnDisable, setVoteBtnDisable] = useState<boolean>(false);
   const [donationAmount, setDonationAmount] = useState<number>(0);
@@ -106,7 +106,7 @@ export const useSingleStageHandler = () => {
             votingPeriod: parseFloat(votingPeriod.toString()),
           },
         };
-        setStage(obj);
+        setStageData(obj);
 
         const blockNumber: number = await fetchCurrentBlock();
         setCurrBlock(blockNumber);
@@ -220,13 +220,13 @@ export const useSingleStageHandler = () => {
       });
       await tx.wait();
       toast.success("Your transaction was successful");
-      const obj = stage;
+      const obj = stageData;
       if (obj?.stageContract.totalCommitted) {
         obj.stageContract.totalCommitted += donationAmount;
       } else if (obj) {
         obj.stageContract.totalCommitted = donationAmount;
       }
-      setStage(obj);
+      setStageData(obj);
       closeDonateModal();
     } catch (err) {
       if (typeof err === "string") {
@@ -250,7 +250,7 @@ export const useSingleStageHandler = () => {
   };
 
   const submitUserVote = async () => {
-    if (!stage) {
+    if (!stageData) {
       toast.error("No stage found. Please provide a valid stage");
       return;
     }
@@ -301,7 +301,7 @@ export const useSingleStageHandler = () => {
   };
 
   const completeStage = async () => {
-    if (!stage) {
+    if (!stageData) {
       toast.error("No stage found. Please provide a valid stage");
       return;
     }
@@ -318,7 +318,7 @@ export const useSingleStageHandler = () => {
 
     if (
       blockNumber <
-      stage.stageContract.expiryBlock + stage.stageContract.votingPeriod
+      stageData.stageContract.expiryBlock + stageData.stageContract.votingPeriod
     ) {
       toast.error(
         "The stage is still active. Active stage can not be marked as complete"
@@ -357,7 +357,7 @@ export const useSingleStageHandler = () => {
   };
 
   const claimTokens = async () => {
-    if (!stage) {
+    if (!stageData) {
       toast.error("No stage found. Please provide a valid stage");
       return;
     }
@@ -369,13 +369,13 @@ export const useSingleStageHandler = () => {
       toast.error("Please connect you wallet");
       return;
     }
-    if (!stage.stageContract.isComplete) {
+    if (!stageData.stageContract.isComplete) {
       toast.error(
         "The stage is still active. Can not claim tokens on an active stage"
       );
       return;
     }
-    if (!stage.stageContract.isSuccess) {
+    if (!stageData.stageContract.isSuccess) {
       toast.error("Can not claim tokens from a unsuccessful stage");
       return;
     }
@@ -417,7 +417,7 @@ export const useSingleStageHandler = () => {
   };
 
   const refundTokens = async () => {
-    if (!stage) {
+    if (!stageData) {
       toast.error("No stage found. Please provide a valid stage");
       return;
     }
@@ -429,13 +429,13 @@ export const useSingleStageHandler = () => {
       toast.error("Please connect you wallet");
       return;
     }
-    if (!stage.stageContract.isComplete) {
+    if (!stageData.stageContract.isComplete) {
       toast.error(
         "The stage is still active. Can not refund token on an active stage"
       );
       return;
     }
-    if (stage.stageContract.isSuccess) {
+    if (stageData.stageContract.isSuccess) {
       toast.error("Can not refund tokens from a successful stage");
       return;
     }
@@ -475,7 +475,7 @@ export const useSingleStageHandler = () => {
   };
 
   const collectFunds = async () => {
-    if (!stage) {
+    if (!stageData) {
       toast.error("No stage found. Please provide a valid stage");
       return;
     }
@@ -487,17 +487,17 @@ export const useSingleStageHandler = () => {
       toast.error("Please connect you wallet");
       return;
     }
-    if (!stage.stageContract.isComplete) {
+    if (!stageData.stageContract.isComplete) {
       toast.error(
         "The stage is still active. Can not collect funds on active stage"
       );
       return;
     }
-    if (!stage.stageContract.isSuccess) {
+    if (!stageData.stageContract.isSuccess) {
       toast.error("Can not collect funds on an unsuccessful stage");
       return;
     }
-    if (stage.stageContract.projectOwner !== address) {
+    if (stageData.stageContract.projectOwner !== address) {
       toast.error("Only owner can collect the funds");
       return;
     }
@@ -539,7 +539,7 @@ export const useSingleStageHandler = () => {
   };
 
   const withdrawTokens = async () => {
-    if (!stage) {
+    if (!stageData) {
       toast.error("No stage found. Please provide a valid stage");
       return;
     }
@@ -551,17 +551,17 @@ export const useSingleStageHandler = () => {
       toast.error("Please connect you wallet");
       return;
     }
-    if (!stage.stageContract.isComplete) {
+    if (!stageData.stageContract.isComplete) {
       toast.error(
         "The stage is still active. Can not withdraw funds on active stage"
       );
       return;
     }
-    if (stage.stageContract.isSuccess) {
+    if (stageData.stageContract.isSuccess) {
       toast.error("Can not withdraw funds on a successful stage");
       return;
     }
-    if (stage.stageContract.projectOwner !== address) {
+    if (stageData.stageContract.projectOwner !== address) {
       toast.error("Only owner can withdraw the funds");
       return;
     }
@@ -603,7 +603,7 @@ export const useSingleStageHandler = () => {
   };
 
   return {
-    stage,
+    stageData,
     handleInputChange,
     transferAmount,
     donationAmount,

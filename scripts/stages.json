@@ -1,0 +1,54 @@
+[
+    {
+        "name": "MetaSafe Network - Developed With Harmony & Based on Ethereum",
+        "deliverables": [
+            "Anyone Can Develop Apps On MetaSafe’s Open Source Blockchain. The MetaSafe Blockchain is planned to be an open source project, allowing anyone to develop Web 3.0 applications",
+            "Earn Rewards for Supporting Decentralized Privacy. By joining the MetaSafe network, you help everyone in the MetaSafe network—both GRYPHON owners and app subscribers—protect their privacy. As a reward, 70% of MetaSafe’s App subscription fees will be redistributed back to the network.",
+            "Power the Future of Cybersecurity As A MetaSafe Miner. The MetaSafe blockchain is powered by thousands of GRYPHON routers. By owning one of these routers, you make decentralized privacy a reality for yourself and everyone around the world."
+        ],
+        "goal": 100
+    },
+    {
+        "name": "Implementing blockchain technology in cloud storage",
+        "deliverables": [
+            "Creating online and downloadable platform",
+            "Creating an ICO and developing a coin for payments to the miners and getting it listed on all major exchanges",
+            "Creating our servers and buying all the necessary equipment",
+            "Marketing",
+            "Revolutionising the cloud storage conception"
+        ],
+        "goal": 500
+    },
+    {
+        "name": "So how do you become a Blockchain pioneer?",
+        "deliverables": [
+            "JSON - stands for JavaScript Object Notation and it’s a data format",
+            "Ganache - allows to fire up a personal Ethereum blockchain which you can use to run tests, execute commands, and inspect state while controlling how the chain operates",
+            "Postman - the most complete toolchain for API development",
+            "MyEtherWallet - an open source tool for generating Ethererum Wallets & sending transactions",
+            "Remix - the most popular and user-friendly Integrated Development Environment (IDE) for Solidity",
+            "Anaconda - an open source distribution of the Python and R programming languages for large-scale data processing, predictive analytics, and scientific computing, that aims to simplify package management and deployment",
+            "Flask - a micro web development framework for Python",
+            "Spyder - a powerful Python IDE with advanced editing and features"
+        ],
+        "goal": 97500
+    },
+    {
+        "name": "Cryptocurrency mining on a badge?",
+        "deliverables": [
+            "It's not a centralized blockchain like bitcoin but instead a distributed tree of interactions",
+            "It operates on collaborative proof of work proving interactions are authentic",
+            "It runs on sneakernet instead of the interwebs"
+        ],
+        "goal": 5000
+    },
+    {
+        "name": "The game is simple to play and ridiculously hard to master",
+        "deliverables": [
+            "Creating game assets",
+            "Coding the game concepts",
+            "Adding graphics to the game"
+        ],
+        "goal": 7500
+    }
+]
