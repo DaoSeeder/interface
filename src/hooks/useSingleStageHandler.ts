@@ -220,13 +220,13 @@ export const useSingleStageHandler = () => {
       });
       await tx.wait();
       toast.success("Your transaction was successful");
-      const obj = stage;
+      const obj = stageData;
       if (obj?.stageContract.totalCommitted) {
         obj.stageContract.totalCommitted += donationAmount;
       } else if (obj) {
         obj.stageContract.totalCommitted = donationAmount;
       }
-      setStage(obj);
+      setStageData(obj);
       closeDonateModal();
     } catch (err) {
       if (typeof err === "string") {
