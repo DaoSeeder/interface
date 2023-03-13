@@ -75,7 +75,7 @@ function StageDonate({
             >
               <Dialog.Panel className={style.dialogPanel}>
                 <Dialog.Title className={style.dialogHeading} as="h3">
-                  Donate
+                  Commit funds
                 </Dialog.Title>
                 <div className={style.dialogBody}>
                   <div className={style.stageProgress}>
@@ -83,7 +83,7 @@ function StageDonate({
                       className={style.stageProgressLabel}
                       htmlFor="donationInput"
                     >
-                      Donation Amount
+                      Amount to Commit
                     </label>
                     <div className={style.radioContainer}>
                       <div className={style.inputDiv}>
