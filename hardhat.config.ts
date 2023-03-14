@@ -14,9 +14,10 @@ const config: HardhatUserConfig = {
     },
     DSChain: {
       chainId: 326,
-      url: "http://localhost:8545",
+      url: "http://127.0.0.1:8545",
       accounts: {
-        mnemonic: "dog dog dog dog dog dog dog dog dog dog dog dog",
+        mnemonic:
+          "frequent bleak moon urban silent mandate black yellow uphold thumb proof amount",
         path: "m/44'/60'/0'/0",
       },
     },
