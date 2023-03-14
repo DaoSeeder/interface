@@ -19,6 +19,7 @@ function AddStage() {
     disableBtn,
     expiryBlock,
     balance,
+    deliverable,
   } = useStageHandler();
   const style = {
     campaignDiv: "text-light-font-lightV1 mt-4 w-full",
@@ -128,6 +129,7 @@ function AddStage() {
                     name="stageDeliverable"
                     placeholder=" "
                     className={style.mainInput}
+                    value={deliverable}
                     onChange={(e) => {
                       setDeliverable(e.target.value);
                     }}
