@@ -20,7 +20,7 @@ const Header = () => {
       "flex h-full w-full items-center justify-center bg-white dark:bg-dark-background dark:text-dark-font-lightV1 rounded-full px-8 py-2",
     headerBtns: "flex items-center",
     addCampaignBtn:
-      "text-light-font-lightV1 dark:text-dark-font-lightV1 mr-2 rounded-full bg-gradient-to-r from-light-primary-primary to-light-primary-secondary px-3 py-3",
+      "text-light-font-lightV1 dark:text-dark-font-lightV1 mr-2 rounded-full bg-gradient-to-r from-light-primary-primary to-light-primary-secondary px-3 py-2",
     headerLogo: "w-[40px]",
     headerLogoDiv: "flex items-center gap-2",
   };
@@ -83,7 +83,7 @@ const Header = () => {
         <div className={style.headerBtns}>
           <Link to="/campaign/add">
             <div className={style.addCampaignBtn}>
-              <MdAdd />
+              <p>Start a Campaign</p>
             </div>
           </Link>
           <div>
