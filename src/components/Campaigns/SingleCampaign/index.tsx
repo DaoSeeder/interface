@@ -6,6 +6,7 @@ import CampaignList from "../CampaignList";
 import { useSingleCampaignHandler } from "../../../hooks/useSingleCampaignHandler";
 import { Link } from "react-router-dom";
 import { MdAdd } from "react-icons/md";
+import { commonStyles } from "../../../styles/commonStyles";
 
 function SingleCampaign() {
   const { campaign, mediaLinkIdx, prevItem, nextItem, campaigns, allStages } =
@@ -22,7 +23,6 @@ function SingleCampaign() {
     singleCampaignContainer:
       "flex flex-col w-full h-full items-center justify-center bg-gradient-to-b from-[#9A9A9A]/20 to-[#9A9A9A]/10 dark:from-dark-box dark:to-dark-box rounded-md px-6 py-2",
     campaignName: "flex flex-row justify-between mt-4 w-full items-center",
-    campaignTitle: "font-bold mt-4",
     campaignCategory: "text-xs",
     campaignMoney: "text-sm",
     allCampaigns: "mb-12",
@@ -35,13 +35,9 @@ function SingleCampaign() {
     carouselArrows: "flex justify-center items-center gap-4 mt-8 select-none",
     carouselLeft:
       "cursor-pointer w-fit rounded-full bg-gradient-to-r from-light-primary-primary to-light-primary-secondary py-1 px-3 text-light-font-lightV2 font-bold text-lg",
-    campaignHeader:
-      "font-bold text-2xl text-light-font-lightV1 dark:text-dark-font-lightV1 mt-12",
     allStages: "flex items-center",
     stageDetails:
       "font-bold text-2xl text-light-font-lightV1 dark:text-dark-font-lightV1 mt-12 mb-4",
-    campaignWebsite:
-      "flex items-center gap-4 mt-4 text-light-font-lightV1 dark:text-dark-font-lightV1",
     globe: "w-[20px]",
     link: "w-[10px] cursor-pointer",
     eachStage: "flex gap-4 items-center font-semibold w-fit",
@@ -56,7 +52,7 @@ function SingleCampaign() {
   };
   return (
     <>
-      <div className={style.campaignHeader}>
+      <div className={commonStyles.heading}>
         <p>{campaign?.name}</p>
       </div>
       <div className={style.campaignDiv}>
@@ -93,10 +89,10 @@ function SingleCampaign() {
           {">"}
         </div>
       </div>
-      <div className={style.campaignWebsite}>
+      <div className={commonStyles.paragraph}>
         <p>{campaign?.description}</p>
       </div>
-      <div className={style.campaignWebsite}>
+      <div className={commonStyles.paragraph}>
         <AiOutlineGlobal />
         <p>{campaign?.websiteLink}</p>
         <RiShareBoxFill
@@ -106,10 +102,10 @@ function SingleCampaign() {
           }}
         />
       </div>
-      <div className={style.campaignTitle}>
+      <div className={commonStyles.heading}>
         <p>Token Address</p>
       </div>
-      <div className={style.campaignWebsite}>
+      <div className={commonStyles.paragraph}>
         <FaEthereum />
         <p>{campaign?.tokenAddress}</p>
       </div>
@@ -139,6 +135,7 @@ function SingleCampaign() {
       <div className={style.stageDetails}>
         <p>Recent Campaigns</p>
       </div>
+      {/* TODO: The below should all be in one control so that it can be reused. */}
       <div className={`${style.allCampaigns} campaignsMain`}>
         {campaigns &&
           campaigns.map((item, i) => {
