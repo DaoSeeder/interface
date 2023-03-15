@@ -1,6 +1,7 @@
 import React from "react";
 import CampaignList from "./CampaignList";
 import { useCampaignsHandler } from "../../hooks/useCampaignsHandler";
+import { commonStyles } from "../../styles/commonStyles";
 
 function Campaigns() {
   const { campaigns, loadMoreCampaigns, totalLen } = useCampaignsHandler();
@@ -16,7 +17,7 @@ function Campaigns() {
 
   return (
     <div className={style.wrapper}>
-      <div className={style.campaignHeading}>Campaigns</div>
+      <div className={commonStyles.heading}>Campaigns</div>
       <div className={`${style.allCampaigns} campaignsMain`}>
         {campaigns &&
           campaigns.map((item, i) => {
