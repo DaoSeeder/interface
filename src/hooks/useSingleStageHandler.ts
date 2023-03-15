@@ -52,6 +52,7 @@ export const useSingleStageHandler = () => {
   const [currBlock, setCurrBlock] = useState<number>();
   const [expiryDate, setExpiryDate] = useState<string>();
   const [currBlockTime, setCurrBlockTime] = useState<string>();
+  const [showCommitBtn, setShowCommitBtn] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchStageAddress = async () => {
@@ -123,6 +124,10 @@ export const useSingleStageHandler = () => {
 
         setExpiryDate(expirationDate);
         setCurrBlockTime(currestBlockTime);
+
+        if (blockNumber > parseInt(obj.stageContract.expiryBlock.toString())) {
+          setShowCommitBtn(false);
+        }
 
         if (
           blockNumber >= parseInt(obj.stageContract.expiryBlock.toString()) &&
@@ -638,5 +643,6 @@ export const useSingleStageHandler = () => {
     currBlock,
     expiryDate,
     currBlockTime,
+    showCommitBtn,
   };
 };
