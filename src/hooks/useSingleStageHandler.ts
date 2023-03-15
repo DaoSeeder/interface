@@ -229,15 +229,15 @@ export const useSingleStageHandler = () => {
       setStageData(obj);
       closeDonateModal();
     } catch (err) {
-      if (typeof err === "string") {
-        toast.error(err);
-      } else if (err instanceof Error) {
+      if (err instanceof Error) {
         if (err.message.includes("invalid address")) {
           toast.error("Please provide a valid stage address");
         } else if (err.message.includes("user rejected transaction")) {
           toast.error("Transaction rejected");
         } else {
-          toast.error(err.message);
+          toast.error(
+            "An error occurred while processing the transaction. Please try again"
+          );
         }
       } else {
         toast.error(
@@ -282,13 +282,13 @@ export const useSingleStageHandler = () => {
       await tx.wait();
       toast.success("Your transaction was successful");
     } catch (err) {
-      if (typeof err === "string") {
-        toast.error(err);
-      } else if (err instanceof Error) {
+      if (err instanceof Error) {
         if (err.message && err.message.includes("Active()")) {
           toast.error("The stage is still active. You can not add vote");
         } else {
-          toast.error(err.message);
+          toast.error(
+            "An error occurred while processing the transaction. Please try again"
+          );
         }
       } else {
         toast.error(
@@ -338,13 +338,13 @@ export const useSingleStageHandler = () => {
       await tx.wait();
       toast.success("Your transaction was successful");
     } catch (err) {
-      if (typeof err === "string") {
-        toast.error(err);
-      } else if (err instanceof Error) {
+      if (err instanceof Error) {
         if (err.message && err.message.includes("Active()")) {
           toast.error("The stage is still active. You can not add vote");
         } else {
-          toast.error(err.message);
+          toast.error(
+            "An error occurred while processing the transaction. Please try again"
+          );
         }
       } else {
         toast.error(
@@ -392,9 +392,7 @@ export const useSingleStageHandler = () => {
       await tx.wait();
       toast.success("Your transaction was successful");
     } catch (err) {
-      if (typeof err === "string") {
-        toast.error(err);
-      } else if (err instanceof Error) {
+      if (err instanceof Error) {
         if (err.message && err.message.includes("Active()")) {
           toast.error("The stage is still active. You can not add vote");
         } else if (err.message && err.message.includes("Failed()")) {
@@ -404,7 +402,9 @@ export const useSingleStageHandler = () => {
         } else if (err.message && err.message.includes("Actioned()")) {
           toast.error("User has already claimed their tokens");
         } else {
-          toast.error(err.message);
+          toast.error(
+            "An error occurred while processing the transaction. Please try again"
+          );
         }
       } else {
         toast.error(
@@ -452,9 +452,7 @@ export const useSingleStageHandler = () => {
       await tx.wait();
       toast.success("Your transaction was successful");
     } catch (err) {
-      if (typeof err === "string") {
-        toast.error(err);
-      } else if (err instanceof Error) {
+      if (err instanceof Error) {
         if (err.message && err.message.includes("Active()")) {
           toast.error("The stage is still active. You can not add vote");
         } else if (err.message && err.message.includes("Succeeded()")) {
@@ -462,7 +460,9 @@ export const useSingleStageHandler = () => {
         } else if (err.message && err.message.includes("Actioned()")) {
           toast.error("User has already refunded their tokens");
         } else {
-          toast.error(err.message);
+          toast.error(
+            "An error occurred while processing the transaction. Please try again"
+          );
         }
       } else {
         toast.error(
@@ -514,9 +514,7 @@ export const useSingleStageHandler = () => {
       await tx.wait();
       toast.success("Your transaction was successful");
     } catch (err) {
-      if (typeof err === "string") {
-        toast.error(err);
-      } else if (err instanceof Error) {
+      if (err instanceof Error) {
         if (err.message && err.message.includes("NoRights()")) {
           toast.error("User do not have the rights to collect funds");
         } else if (err.message && err.message.includes("Active()")) {
@@ -526,7 +524,9 @@ export const useSingleStageHandler = () => {
         } else if (err.message && err.message.includes("Failed()")) {
           toast.error("Can not collect funds on an unsuccessful stage");
         } else {
-          toast.error(err.message);
+          toast.error(
+            "An error occurred while processing the transaction. Please try again"
+          );
         }
       } else {
         toast.error(
@@ -578,9 +578,7 @@ export const useSingleStageHandler = () => {
       await tx.wait();
       toast.success("Your transaction was successful");
     } catch (err) {
-      if (typeof err === "string") {
-        toast.error(err);
-      } else if (err instanceof Error) {
+      if (err instanceof Error) {
         if (err.message && err.message.includes("NoRights()")) {
           toast.error("User do not have the rights to collect funds");
         } else if (err.message && err.message.includes("Active()")) {
@@ -590,7 +588,9 @@ export const useSingleStageHandler = () => {
         } else if (err.message && err.message.includes("Succeeded()")) {
           toast.error("Can not withdraw funds on a successful stage");
         } else {
-          toast.error(err.message);
+          toast.error(
+            "An error occurred while processing the transaction. Please try again"
+          );
         }
       } else {
         toast.error(
