@@ -136,6 +136,7 @@ export const useStageHandler = () => {
   const addDeliverables = () => {
     if (!deliverable) return;
     setStageDeliverables((mediaLinks) => [...mediaLinks, deliverable]);
+    setDeliverable("");
   };
 
   const removeDeliverables = (id: number) => {
@@ -167,5 +168,6 @@ export const useStageHandler = () => {
     disableBtn,
     expiryBlock,
     balance,
+    deliverable,
   };
 };

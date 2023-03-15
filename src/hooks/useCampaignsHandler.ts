@@ -74,6 +74,7 @@ export const useCampaignsHandler = () => {
   const addMediaLinks = () => {
     if (!campaignLink) return;
     setCampaignMediaLinks((mediaLinks) => [...mediaLinks, campaignLink]);
+    setCampaignLink("");
   };
 
   const removeMediaLinks = (id: number) => {
@@ -146,5 +147,6 @@ export const useCampaignsHandler = () => {
     campaigns,
     loadMoreCampaigns,
     totalLen,
+    campaignLink,
   };
 };

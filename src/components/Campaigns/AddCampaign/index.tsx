@@ -16,6 +16,7 @@ function AddCampaign() {
     setCampaignTokenAddress,
     addCampaign,
     disableBtn,
+    campaignLink,
   } = useCampaignsHandler();
   const style = {
     campaignDiv: "text-light-font-lightV1 mt-4 w-full",
@@ -138,6 +139,7 @@ function AddCampaign() {
                     name="mediaLink"
                     placeholder=" "
                     className={style.mainInput}
+                    value={campaignLink}
                     onChange={(e) => {
                       setCampaignLink(e.target.value);
                     }}
