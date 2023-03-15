@@ -1,5 +1,4 @@
 import React from "react";
-import { MdAdd } from "react-icons/md";
 import { Link } from "react-router-dom";
 import UserWallet from "./UserWallet";
 import Logo from "../../assets/logo_final_new.png";
