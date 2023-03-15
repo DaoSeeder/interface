@@ -96,7 +96,11 @@ export const useSingleCampaignHandler = () => {
 
   // TODO: preload all images
   const prevItem = () => {
-    if (mediaLinkIdx > 0) setMediaLinkIdx(mediaLinkIdx - 1);
+    if (campaign && campaign.mediaLinks.length > 0 && mediaLinkIdx <= 0) {
+      setMediaLinkIdx(campaign.mediaLinks.length - 1);
+    } else {
+      setMediaLinkIdx(mediaLinkIdx - 1);
+    }
   };
 
   // TODO: preload all images
@@ -107,6 +111,8 @@ export const useSingleCampaignHandler = () => {
       mediaLinkIdx < campaign.mediaLinks.length - 1
     ) {
       setMediaLinkIdx(mediaLinkIdx + 1);
+    } else {
+      setMediaLinkIdx(0);
     }
   };
 
