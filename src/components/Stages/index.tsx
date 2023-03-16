@@ -39,6 +39,7 @@ function Stage() {
     currBlock,
     expiryDate,
     currBlockTime,
+    showCommitBtn,
   } = useSingleStageHandler();
   const style = {
     campaignDiv:
@@ -111,9 +112,11 @@ function Stage() {
                 </div>
               </div>
               <div className={style.stageProgress}>
-                {stageData?.stageContract.isComplete
-                  ? "Stage Completed"
-                  : "In Progress"}
+                {!showVotingBtn
+                  ? stageData?.stageContract.isComplete
+                    ? "Stage Completed"
+                    : "In Progress"
+                  : null}
                 {showVotingBtn ? "Voting and evaluation" : null}
                 {stageData?.stageContract.isComplete
                   ? stageData?.stageContract.isSuccess
@@ -163,9 +166,14 @@ function Stage() {
             </div>
             <div className={style.stageBtns}>
               <div className={style.stageDivBtns}>
-                <div className={style.stageDonateNow} onClick={donateNowDialog}>
-                  Commit Funds
-                </div>
+                {showCommitBtn ? (
+                  <div
+                    className={style.stageDonateNow}
+                    onClick={donateNowDialog}
+                  >
+                    Commit Funds
+                  </div>
+                ) : null}
                 <div className={style.shareBtnDiv}>
                   <div className={style.btnShare}>
                     <div className={style.btnShareContainer}>
