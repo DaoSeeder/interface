@@ -11,6 +11,7 @@ import IpfsUpload from "./components/IpfsUpload";
 import Stage from "./components/Stages";
 import AddStage from "./components/Stages/AddStage";
 import ThemeSwitcher from "./components/ThemeSwitcher";
+import Faq from "./components/Faq";
 import LearnMore from "./components/LearnMore";
 
 function App() {
@@ -50,6 +51,7 @@ function App() {
               <Route path="/campaign/add" element={<AddCampaign />} />
               <Route path="/campaign/:id/stage/:stageId" element={<Stage />} />
               <Route path="/campaign/:id/stage/add" element={<AddStage />} />
+              <Route path="/faq" element={<Faq />} />
               <Route path="/ipfs" element={<IpfsUpload />} />
               <Route path="/learn" element={<LearnMore />} />
             </Routes>

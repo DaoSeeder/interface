@@ -56,15 +56,15 @@ const Header = () => {
               <p>Campaigns</p>
             </div>
           </Link>
-          <Link to="/community">
+          <Link to="/faq">
             <div
               className={`${style.headerItem} ${
-                location.pathname === "/community"
+                location.pathname === "/faq"
                   ? style.activeNavItem
                   : style.navItem
               }`}
             >
-              <p>Community</p>
+              <p>FAQ</p>
             </div>
           </Link>
           <Link to="/contact">
