@@ -12,6 +12,7 @@ import Stage from "./components/Stages";
 import AddStage from "./components/Stages/AddStage";
 import ThemeSwitcher from "./components/ThemeSwitcher";
 import Faq from "./components/Faq";
+import LearnMore from "./components/LearnMore";
 
 function App() {
   const style = {
@@ -52,6 +53,7 @@ function App() {
               <Route path="/campaign/:id/stage/add" element={<AddStage />} />
               <Route path="/faq" element={<Faq />} />
               <Route path="/ipfs" element={<IpfsUpload />} />
+              <Route path="/learn" element={<LearnMore />} />
             </Routes>
           </div>
         </div>

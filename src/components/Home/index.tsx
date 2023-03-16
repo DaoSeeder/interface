@@ -2,6 +2,7 @@ import React from "react";
 import Galaxy from "../../assets/galaxy.png";
 import CampaignList from "../Campaigns/CampaignList";
 import { useCampaignsHandler } from "../../hooks/useCampaignsHandler";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const { campaigns } = useCampaignsHandler();
@@ -53,13 +54,13 @@ const Home = () => {
         <div className={style.bannerHeading}>
           <p>World&apos;s first decentralized Crowdfunding platform</p>
         </div>
-        <div className={style.learnMoreBtnDiv}>
+        <Link to="/learn">
           <div className={style.btnLearnMore}>
             <div className={style.btnLearnMoreContainer}>
               <p>Learn More</p>
             </div>
           </div>
-        </div>
+        </Link>
       </div>
       <div className={style.campaignsDiv}>
         <h1 className={style.campaignHeading}>Recent Campaigns</h1>
