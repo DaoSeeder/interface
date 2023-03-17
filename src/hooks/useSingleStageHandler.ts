@@ -91,6 +91,7 @@ export const useSingleStageHandler = () => {
         const totalVotes = await stageContract.totalVotes();
         const totalCommitted = await stageContract.totalCommitted();
         const votingPeriod = await stageContract.votingPeriod();
+        const voted = await stageContract.voted(address);
         const obj: IStage = {
           stage: stageIpfsData,
           stageContract: {
@@ -138,6 +139,8 @@ export const useSingleStageHandler = () => {
         ) {
           setShowVotingBtn(true);
         }
+
+        if (voted) setVoteBtnDisable(true);
 
         if (
           blockNumber >=
@@ -300,9 +303,9 @@ export const useSingleStageHandler = () => {
           "An error occurred while processing the request. Please try again"
         );
       }
+      setVoteBtnDisable(false);
     }
     toast.dismiss(loading);
-    setVoteBtnDisable(false);
   };
 
   const completeStage = async () => {
