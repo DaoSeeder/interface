@@ -199,7 +199,12 @@ function Stage() {
               <div>
                 {stageData?.stageContract.projectOwner !== address &&
                 showVotingBtn ? (
-                  <div className={style.stageDonateNow} onClick={openModal}>
+                  <div
+                    className={`${style.stageDonateNow} ${
+                      voteBtnDisable ? style.disableBtn : ""
+                    }`}
+                    onClick={openModal}
+                  >
                     Add your Vote
                   </div>
                 ) : null}
