@@ -51,6 +51,7 @@ export const useSingleStageHandler = () => {
   const [showVotingBtn, setShowVotingBtn] = useState<boolean>(false);
   const [currBlock, setCurrBlock] = useState<number>();
   const [expiryDate, setExpiryDate] = useState<string>();
+  const [voteEndDate, setVoteEndDate] = useState<string>();
   const [currBlockTime, setCurrBlockTime] = useState<string>();
   const [showCommitBtn, setShowCommitBtn] = useState<boolean>(true);
 
@@ -91,20 +92,23 @@ export const useSingleStageHandler = () => {
         const totalVotes = await stageContract.totalVotes();
         const totalCommitted = await stageContract.totalCommitted();
         const votingPeriod = await stageContract.votingPeriod();
+        const expiryBlockInt = parseInt(expiryBlock.toString());
+        const votingPeriodInt = parseInt(votingPeriod.toString());
         const obj: IStage = {
           stage: stageIpfsData,
           stageContract: {
             isComplete,
             isSuccess,
             startBlock: parseInt(startBlock.toString()),
-            expiryBlock: parseInt(expiryBlock.toString()),
+            expiryBlock: expiryBlockInt,
             yays: parseInt(yays.toString()),
             totalVotes: parseInt(totalVotes.toString()),
             totalCommitted: parseFloat(
               ethers.utils.formatEther(totalCommitted.toString())
             ),
             projectOwner,
-            votingPeriod: parseFloat(votingPeriod.toString()),
+            votingPeriod: votingPeriodInt,
+            voteEndBlock: expiryBlockInt + votingPeriodInt,
           },
         };
         setStageData(obj);
@@ -117,12 +121,18 @@ export const useSingleStageHandler = () => {
           obj.stageContract.expiryBlock
         );
 
+        const voteEndDate = await getDateFromBlockNumber(
+          blockNumber,
+          obj.stageContract.voteEndBlock
+        );
+
         const currestBlockTime = await getDateFromBlockNumber(
           blockNumber,
           blockNumber
         );
 
         setExpiryDate(expirationDate);
+        setVoteEndDate(voteEndDate);
         setCurrBlockTime(currestBlockTime);
 
         if (blockNumber > parseInt(obj.stageContract.expiryBlock.toString())) {
@@ -643,6 +653,7 @@ export const useSingleStageHandler = () => {
     showVotingBtn,
     currBlock,
     expiryDate,
+    voteEndDate,
     currBlockTime,
     showCommitBtn,
   };

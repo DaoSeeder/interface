@@ -38,6 +38,7 @@ function Stage() {
     showVotingBtn,
     currBlock,
     expiryDate,
+    voteEndDate,
     currBlockTime,
     showCommitBtn,
     submitUserVote,
@@ -146,8 +147,12 @@ function Stage() {
                   </div>
                   <div className={style.blockTime}>
                     <div className={style.totalTimeLeft}>
-                      Expiration block: {stageData?.stageContract.expiryBlock}{" "}
+                      Expiration Block: {stageData?.stageContract.expiryBlock}{" "}
                       <span className={style.expDate}>({expiryDate})</span>
+                    </div>
+                    <div className={style.totalTimeLeft}>
+                      Vote End Block: {stageData?.stageContract.voteEndBlock}{" "}
+                      <span className={style.expDate}>({voteEndDate})</span>
                     </div>
                     <div className={style.totalTimeLeft}>
                       Current Block: {currBlock}{" "}
