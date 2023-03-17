@@ -302,6 +302,7 @@ export const useSingleStageHandler = () => {
       }
     }
     toast.dismiss(loading);
+    closeModal();
     setVoteBtnDisable(false);
   };
 

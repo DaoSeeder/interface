@@ -40,6 +40,9 @@ function Stage() {
     expiryDate,
     currBlockTime,
     showCommitBtn,
+    submitUserVote,
+    setUserVote,
+    voteBtnDisable,
   } = useSingleStageHandler();
   const style = {
     campaignDiv:
@@ -86,7 +89,13 @@ function Stage() {
 
   return (
     <>
-      <StageAddVote isOpen={isOpen} closeModal={closeModal} />
+      <StageAddVote
+        isOpen={isOpen}
+        closeModal={closeModal}
+        submitUserVote={submitUserVote}
+        setUserVote={setUserVote}
+        voteBtnDisable={voteBtnDisable}
+      />
       <StageDonate
         isOpen={isDonateOpen}
         closeModal={closeDonateModal}

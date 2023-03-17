@@ -1,15 +1,21 @@
-import React, { Fragment } from "react";
+import React, { Dispatch, SetStateAction, Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { useSingleStageHandler } from "../../hooks/useSingleStageHandler";
 
 type ConnectorModalProps = {
   isOpen: boolean;
   closeModal: (value?: boolean) => void;
+  submitUserVote: () => Promise<void>;
+  setUserVote: Dispatch<SetStateAction<boolean>>;
+  voteBtnDisable: boolean;
 };
 
-function StageAddVote({ isOpen, closeModal }: ConnectorModalProps) {
-  const { setUserVote, submitUserVote, voteBtnDisable } =
-    useSingleStageHandler();
+function StageAddVote({
+  isOpen,
+  closeModal,
+  submitUserVote,
+  setUserVote,
+  voteBtnDisable,
+}: ConnectorModalProps) {
   const style = {
     dialog: "z-[1000] relative",
     overlay: "fixed inset-0 bg-black/50",
@@ -68,7 +74,7 @@ function StageAddVote({ isOpen, closeModal }: ConnectorModalProps) {
                 <div className={style.dialogBody}>
                   <div className={style.stageProgress}>
                     <label className={style.stageProgressLabel}>
-                      Has the project met the stage deliverables? Yes/No
+                      Has the project met the stage deliverables?
                     </label>
                     <div className={style.radioContainer}>
                       <div className={style.radioDiv}>
