@@ -4,9 +4,9 @@ import { ICampaign } from "../../interfaces/ICampaign";
 
 function CampaignList({ name, description, logoLink, campaignKey }: ICampaign) {
   const style = {
-    campaignDiv: "text-light-font-lightV1 dark:text-dark-font-lightV1",
+    campaignDiv: "text-light-font-lightV1 dark:text-dark-font-lightV1 h-full",
     singleCampaign:
-      "cursor-pointer w-fit rounded-md bg-gradient-to-r from-white to-white dark:from-transparent dark:to-transparent p-[2px] drop-shadow-xl",
+      "cursor-pointer w-fit rounded-md bg-gradient-to-r from-white to-white dark:from-transparent dark:to-transparent p-[2px] drop-shadow-xl h-full",
     singleCampaignContainer:
       "flex flex-col h-full bg-gradient-to-b from-[#9A9A9A]/20 to-[#9A9A9A]/10 dark:from-dark-box dark:to-dark-box rounded-md px-6 py-2",
     campaignName: "flex flex-row justify-between mt-4 w-full",
@@ -18,7 +18,7 @@ function CampaignList({ name, description, logoLink, campaignKey }: ICampaign) {
     campaignTimeLeft: "text-xs",
     campaingDesc: "text-sm my-4",
     campaignData: "flex justify-between w-full mb-4",
-    link: "w-fit h-fit",
+    link: "w-fit h-full",
     imageStyle: "h-[250px] flex justify-center items-center",
   };
   return (
