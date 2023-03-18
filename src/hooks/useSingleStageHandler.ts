@@ -9,12 +9,13 @@ import {
 } from "./../utils/ContractUtils";
 import toast from "react-hot-toast";
 import StageContract from "@daoseeder/core/artifacts/contracts/Stage.sol/Stage.json";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import DaoSeederFactory from "@daoseeder/core/artifacts/contracts/DaoSeederFactory.sol/DaoSeederFactory.json";
 import { useProvider, useSigner, useBalance, useAccount } from "wagmi";
 import { constants, ethers } from "ethers";
 
 export const useSingleStageHandler = () => {
+  const { state } = useLocation();
   const { stageId } = useParams();
   const { address } = useAccount();
 
@@ -76,25 +77,56 @@ export const useSingleStageHandler = () => {
   useEffect(() => {
     const fetchStage = async () => {
       if (parseInt(stageAddress, 16) != 0) {
-        const stageContract = await getSmartContractWithProvider(
-          stageAddress,
-          provider,
-          JSON.stringify(StageContract.abi)
-        );
-        const stageIpfsKey = await stageContract.ipfsKey();
-        const expiryBlock = await stageContract.expiryBlock();
-        const startBlock = await stageContract.startBlock();
-        const isComplete = await stageContract.isComplete();
-        const projectOwner = await stageContract.projectOwner();
-        const stageIpfsData = await getStageData(stageIpfsKey);
-        const isSuccess = await stageContract.isSuccess();
-        const yays = await stageContract.yays();
-        const totalVotes = await stageContract.totalVotes();
-        const totalCommitted = await stageContract.totalCommitted();
-        const votingPeriod = await stageContract.votingPeriod();
-        const expiryBlockInt = parseInt(expiryBlock.toString());
-        const votingPeriodInt = parseInt(votingPeriod.toString());
-        const voted = await stageContract.voted(address);
+        let stageIpfsKey;
+        let expiryBlock;
+        let startBlock;
+        let isComplete;
+        let projectOwner;
+        let stageIpfsData;
+        let isSuccess;
+        let yays;
+        let totalVotes;
+        let totalCommitted;
+        let votingPeriod;
+        let expiryBlockInt;
+        let votingPeriodInt;
+        let voted;
+
+        if (state) {
+          isComplete = state.stageContract.isComplete;
+          isSuccess = state.stageContract.isSuccess;
+          startBlock = state.stageContract.startBlock;
+          expiryBlock = state.stageContract.expiryBlock;
+          yays = state.stageContract.yays;
+          totalVotes = state.stageContract.totalVotes;
+          totalCommitted = state.stageContract.totalCommitted;
+          projectOwner = state.stageContract.projectOwner;
+          votingPeriod = state.stageContract.votingPeriod;
+          stageIpfsData = state.stage;
+          expiryBlockInt = parseInt(expiryBlock.toString());
+          votingPeriodInt = parseInt(votingPeriod.toString());
+          voted = false;
+        } else {
+          const stageContract = await getSmartContractWithProvider(
+            stageAddress,
+            provider,
+            JSON.stringify(StageContract.abi)
+          );
+          stageIpfsKey = await stageContract.ipfsKey();
+          expiryBlock = await stageContract.expiryBlock();
+          startBlock = await stageContract.startBlock();
+          isComplete = await stageContract.isComplete();
+          projectOwner = await stageContract.projectOwner();
+          stageIpfsData = await getStageData(stageIpfsKey);
+          isSuccess = await stageContract.isSuccess();
+          yays = await stageContract.yays();
+          totalVotes = await stageContract.totalVotes();
+          totalCommitted = await stageContract.totalCommitted();
+          votingPeriod = await stageContract.votingPeriod();
+          expiryBlockInt = parseInt(expiryBlock.toString());
+          votingPeriodInt = parseInt(votingPeriod.toString());
+          voted = await stageContract.voted(address);
+        }
         const obj: IStage = {
           stage: stageIpfsData,
           stageContract: {
@@ -189,7 +221,7 @@ export const useSingleStageHandler = () => {
     if (stageAddress) {
       fetchStage();
     }
-  }, [address, provider, stageAddress]);
+  }, [address, provider, stageAddress, state]);
 
   const closeModal = () => {
     setIsOpen(false);

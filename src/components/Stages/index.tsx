@@ -118,18 +118,18 @@ function Stage() {
                   />
                 </div>
                 <div className={style.userData}>
-                  <div>{stageData?.stageContract.projectOwner}</div>
+                  <div>{stageData?.stageContract?.projectOwner}</div>
                 </div>
               </div>
               <div className={style.stageProgress}>
                 {!showVotingBtn
-                  ? stageData?.stageContract.isComplete
+                  ? stageData?.stageContract?.isComplete
                     ? "Stage Completed"
                     : "In Progress"
                   : null}
                 {showVotingBtn ? "Voting and evaluation" : null}
-                {stageData?.stageContract.isComplete
-                  ? stageData?.stageContract.isSuccess
+                {stageData?.stageContract?.isComplete
+                  ? stageData?.stageContract?.isSuccess
                     ? " (Success) "
                     : " (Failed) "
                   : ""}
@@ -138,8 +138,8 @@ function Stage() {
             <div className={style.stageGoals}>
               <div className={style.stageData}>
                 <div className={style.stageTotalMoney}>
-                  {stageData?.stageContract.totalCommitted} {balance?.symbol}{" "}
-                  raised of {stageData?.stage.goal} {balance?.symbol} goal
+                  {stageData?.stageContract?.totalCommitted} {balance?.symbol}{" "}
+                  raised of {stageData?.stage?.goal} {balance?.symbol} goal
                 </div>
                 <div className={style.stageTimeLeft}>
                   <div className={style.timeImage}>
@@ -147,11 +147,11 @@ function Stage() {
                   </div>
                   <div className={style.blockTime}>
                     <div className={style.totalTimeLeft}>
-                      Expiration Block: {stageData?.stageContract.expiryBlock}{" "}
+                      Expiration Block: {stageData?.stageContract?.expiryBlock}{" "}
                       <span className={style.expDate}>({expiryDate})</span>
                     </div>
                     <div className={style.totalTimeLeft}>
-                      Vote End Block: {stageData?.stageContract.voteEndBlock}{" "}
+                      Vote End Block: {stageData?.stageContract?.voteEndBlock}{" "}
                       <span className={style.expDate}>({voteEndDate})</span>
                     </div>
                     <div className={style.totalTimeLeft}>
@@ -165,7 +165,7 @@ function Stage() {
                 <div
                   style={{
                     width: stageData
-                      ? (stageData?.stageContract.totalCommitted /
+                      ? (stageData?.stageContract?.totalCommitted /
                           stageData?.stage?.goal) *
                           100 +
                         "%"
@@ -197,7 +197,7 @@ function Stage() {
                 </div>
               </div>
               <div>
-                {stageData?.stageContract.projectOwner !== address &&
+                {stageData?.stageContract?.projectOwner !== address &&
                 showVotingBtn ? (
                   <div
                     className={`${style.stageDonateNow} ${
