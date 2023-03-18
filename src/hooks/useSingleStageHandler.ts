@@ -75,7 +75,7 @@ export const useSingleStageHandler = () => {
 
   useEffect(() => {
     const fetchStage = async () => {
-      if (stageAddress) {
+      if (parseInt(stageAddress, 16) != 0) {
         const stageContract = await getSmartContractWithProvider(
           stageAddress,
           provider,

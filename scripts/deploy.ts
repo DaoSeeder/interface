@@ -3,6 +3,7 @@ import { ethers } from "hardhat";
 import DaoSeederFactoryJSON from "@daoseeder/core/artifacts/contracts/DaoSeederFactory.sol/DaoSeederFactory.json";
 import StageJSON from "@daoseeder/core/artifacts/contracts/Stage.sol/Stage.json";
 import CampaignManagerJSON from "@daoseeder/core/artifacts/contracts/CampaignManager.sol/CampaignManager.json";
+import TestERC20JSON from "@daoseeder/core/artifacts/contracts/test/TestERC20.sol/TestERC20.json";
 import { addCampaignToIpfs, addStageToIpfs } from "../src/utils/ipfsUtils";
 import dotenv from "dotenv";
 import campaigns from "./campaigns.json";
@@ -46,13 +47,19 @@ export async function main() {
   // daoSeederFactory
 
   dotenv.config({ path: `.env.local` });
+  const TestERC20 = new ethers.ContractFactory(
+    TestERC20JSON.abi,
+    TestERC20JSON.bytecode,
+    owner
+  );
   for (let i = 0; i < campaigns.length; i++) {
+    const testERC20 = await TestERC20.deploy("Test Token", "TOK" + i);
+    console.log("TOK" + i + " Address: ", testERC20.address);
+    campaigns[i].tokenAddress = testERC20.address;
     const cid = await addCampaignToIpfs(campaigns[i]);
     if (cid) {
-      const tx = await daoSeederFactory.createCampaign(
-        campaigns[i].tokenAddress,
-        cid
-      );
+      console.log("ipfs cid", cid);
+      const tx = await daoSeederFactory.createCampaign(testERC20.address, cid);
       await tx.wait();
 
       const date = new Date();
@@ -66,7 +73,7 @@ export async function main() {
 
       const cidStage = await addStageToIpfs(stages[i]);
       const txStage = await daoSeederFactory.createStage(
-        campaigns[i].tokenAddress,
+        testERC20.address,
         stages[i].goal,
         blockExpiry,
         cidStage
