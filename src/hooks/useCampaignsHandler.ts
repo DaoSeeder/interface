@@ -68,7 +68,6 @@ export const useCampaignsHandler = () => {
               stageCount: 0,
             },
           });
-          // window.location.href = `/campaign/${campaignKey}`;
         } else {
           toast.error("Ipfs did not return a valid value. Please try again");
         }
