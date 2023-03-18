@@ -28,6 +28,7 @@ export const useSingleCampaignHandler = () => {
 
   useEffect(() => {
     if (state) {
+      const loading = toast.loading("Fetching campaign...");
       const data: ICampaign = {
         name: state.name,
         logoLink: "",
@@ -39,6 +40,7 @@ export const useSingleCampaignHandler = () => {
         stageCount: 0,
       };
       setCampaign(data);
+      toast.dismiss(loading);
     }
   }, [state]);
 
@@ -71,6 +73,7 @@ export const useSingleCampaignHandler = () => {
 
   useEffect(() => {
     const fetchSingleCampaign = async () => {
+      const loading = toast.loading("Fetching campaign...");
       try {
         if (provider && DAOSEEDER_FACTORY_ADDRESS && id) {
           const contract = await getSmartContractWithProvider(
@@ -90,6 +93,7 @@ export const useSingleCampaignHandler = () => {
           "An error occurred while fetching campaign. Please try again"
         );
       }
+      toast.dismiss(loading);
     };
     if (id && DAOSEEDER_FACTORY_ADDRESS && provider && !state) {
       fetchSingleCampaign();
