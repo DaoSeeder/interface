@@ -6,9 +6,9 @@ const config: HardhatUserConfig = {
   solidity: "0.8.17",
   networks: {
     hardhat: {
-      chainId: 326,
+      chainId: 31337,
       accounts: {
-        mnemonic: "cat cat cat cat cat cat cat cat cat cat cat cat",
+        // mnemonic: "cat cat cat cat cat cat cat cat cat cat cat cat",
         path: "m/44'/60'/0'/0",
       },
     },

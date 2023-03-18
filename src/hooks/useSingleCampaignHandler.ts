@@ -1,7 +1,7 @@
 import { getStageKey } from "./../utils/ContractUtils";
 import { ICampaignStage } from "./../interfaces/IStage";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import {
   getCampaign,
   getCampaigns,
@@ -13,6 +13,8 @@ import DaoSeederFactory from "@daoseeder/core/artifacts/contracts/DaoSeederFacto
 import { ICampaign } from "../interfaces/ICampaign";
 
 export const useSingleCampaignHandler = () => {
+  const { state } = useLocation();
+
   const { id } = useParams();
   const DAOSEEDER_FACTORY_ADDRESS =
     process.env.REACT_APP_DAOSEEDER_FACTORY_ADDRESS;
@@ -23,6 +25,23 @@ export const useSingleCampaignHandler = () => {
   const [campaigns, setCampaigns] = useState<ICampaign[]>([]);
   const [mediaLinkIdx, setMediaLinkIdx] = useState<number>(0);
   const [allStages, setAllStages] = useState<ICampaignStage[] | null>(null);
+
+  useEffect(() => {
+    if (state) {
+      const data: ICampaign = {
+        name: state.name,
+        logoLink: "",
+        description: state.description,
+        websiteLink: state.websiteLink,
+        mediaLinks: state.mediaLinks,
+        tokenAddress: state.tokenAddress,
+        campaignKey: "",
+        stageCount: 0,
+      };
+      setCampaign(data);
+    }
+  }, [state]);
+
   useEffect(() => {
     const fetchCampaigns = async () => {
       try {
@@ -72,10 +91,10 @@ export const useSingleCampaignHandler = () => {
         );
       }
     };
-    if (id && DAOSEEDER_FACTORY_ADDRESS && provider) {
+    if (id && DAOSEEDER_FACTORY_ADDRESS && provider && !state) {
       fetchSingleCampaign();
     }
-  }, [DAOSEEDER_FACTORY_ADDRESS, id, provider]);
+  }, [DAOSEEDER_FACTORY_ADDRESS, id, provider, state]);
 
   useEffect(() => {
     const fetchStageData = async () => {

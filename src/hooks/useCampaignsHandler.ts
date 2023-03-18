@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   getCampaignKey,
   getCampaigns,
@@ -12,6 +13,7 @@ import DaoSeederFactory from "@daoseeder/core/artifacts/contracts/DaoSeederFacto
 import toast from "react-hot-toast";
 
 export const useCampaignsHandler = () => {
+  const navigate = useNavigate();
   const provider = useProvider();
   const DAOSEEDER_FACTORY_ADDRESS =
     process.env.REACT_APP_DAOSEEDER_FACTORY_ADDRESS;
@@ -54,7 +56,19 @@ export const useCampaignsHandler = () => {
           await tx.wait();
           toast.success("Your transaction was successful");
           const campaignKey = getCampaignKey(campaignTokenAddress);
-          window.location.href = `/campaign/${campaignKey}`;
+          navigate(`/campaign/${campaignKey}`, {
+            state: {
+              name: campaignName,
+              description: campaignDescription,
+              logoLink: campaignLogoLink,
+              websiteLink: campaignWebsiteLink,
+              mediaLinks: campaignMediaLinks,
+              tokenAddress: campaignTokenAddress,
+              campaignKey: "",
+              stageCount: 0,
+            },
+          });
+          // window.location.href = `/campaign/${campaignKey}`;
         } else {
           toast.error("Ipfs did not return a valid value. Please try again");
         }
