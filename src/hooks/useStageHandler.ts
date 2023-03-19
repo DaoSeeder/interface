@@ -15,6 +15,7 @@ import { getSmartContractWithSigner } from "../utils/ContractUtils";
 import { getSmartContractWithProvider } from "../utils/ContractUtils";
 import DaoSeederFactory from "@daoseeder/core/artifacts/contracts/DaoSeederFactory.sol/DaoSeederFactory.json";
 import { ethers } from "ethers";
+import IERC20 from "@daoseeder/core/artifacts/contracts/test/TestERC20.sol/TestERC20.json";
 
 export const useStageHandler = () => {
   const { id } = useParams();
@@ -75,6 +76,26 @@ export const useStageHandler = () => {
   }, [DAOSEEDER_FACTORY_ADDRESS, fetchCampaign, fetchFirstTime, id, provider]);
 
   const addStage = async () => {
+    let erc20Contract = null;
+    if (stageERC > 0 && signer) {
+      erc20Contract = await getSmartContractWithSigner(
+        tokenAddress,
+        signer,
+        JSON.stringify(IERC20.abi)
+      );
+      const balanceBN = await erc20Contract.balanceOf(address);
+      const decimals = await erc20Contract.decimals();
+      const formattedBalance = parseFloat(
+        ethers.utils.formatUnits(balanceBN, decimals)
+      );
+
+      console.log(formattedBalance);
+
+      if (formattedBalance < stageERC) {
+        toast.error("Insufficient funds to fund the stage");
+        return;
+      }
+    }
     setDisableBtn(true);
     const loading = toast.loading("Saving...");
     try {
@@ -113,12 +134,19 @@ export const useStageHandler = () => {
               data.stageCount
             );
             const stage = await contract.getStage(stageKey);
-            if (stage && stageERC > 0) {
-              const transaction = await signer.sendTransaction({
-                to: stage,
-                value: ethers.utils.parseEther(stageERC.toString()),
-              });
-              transaction.wait();
+            try {
+              if (stage && stageERC > 0 && erc20Contract) {
+                const decimals = await erc20Contract.decimals();
+                const amount = ethers.utils.parseUnits(
+                  stageERC.toString(),
+                  decimals
+                );
+                await erc20Contract.transfer(stage, amount);
+              }
+            } catch (err) {
+              console.log(
+                "An error occurred while transferring funds to stage\n" + err
+              );
             }
             window.location.href = `/campaign/${id}/stage/${stageKey}`;
           }

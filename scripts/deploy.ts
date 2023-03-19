@@ -81,6 +81,8 @@ export async function main() {
       await txStage.wait();
     }
   }
+  const testERC20 = await TestERC20.deploy("Test ERC20", "TestERC20");
+  console.log("Test ERC20 token", testERC20.address);
 }
 
 main().catch((error) => {
