@@ -127,7 +127,7 @@ export const useStageHandler = () => {
                 totalVotes: 0,
                 totalCommitted: 0,
                 projectOwner: address?.toString() || "",
-                votingPeriod: 0,
+                votingPeriod: 57600,
                 voteEndBlock: 0,
               },
             };

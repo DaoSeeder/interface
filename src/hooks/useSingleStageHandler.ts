@@ -77,34 +77,33 @@ export const useSingleStageHandler = () => {
   useEffect(() => {
     const fetchStage = async () => {
       if (parseInt(stageAddress, 16) != 0) {
-        let stageIpfsKey;
-        let expiryBlock;
-        let startBlock;
-        let isComplete;
-        let projectOwner;
-        let stageIpfsData;
-        let isSuccess;
-        let yays;
-        let totalVotes;
-        let totalCommitted;
-        let votingPeriod;
-        let expiryBlockInt;
-        let votingPeriodInt;
-        let voted;
+        let stageIpfsKey,
+          expiryBlock,
+          startBlock,
+          isComplete,
+          projectOwner,
+          stageIpfsData,
+          isSuccess,
+          yays,
+          totalVotes,
+          totalCommitted,
+          votingPeriod,
+          voted;
 
         if (state) {
-          isComplete = state.stageContract.isComplete;
-          isSuccess = state.stageContract.isSuccess;
-          startBlock = state.stageContract.startBlock;
-          expiryBlock = state.stageContract.expiryBlock;
-          yays = state.stageContract.yays;
-          totalVotes = state.stageContract.totalVotes;
-          totalCommitted = state.stageContract.totalCommitted;
-          projectOwner = state.stageContract.projectOwner;
-          votingPeriod = state.stageContract.votingPeriod;
+          const stageContract = state.stageContract;
+          isComplete = stageContract.isComplete;
+          isSuccess = stageContract.isSuccess;
+          startBlock = parseInt(stageContract.startBlock.toString());
+          expiryBlock = parseInt(stageContract.expiryBlock.toString());
+          yays = parseInt(stageContract.yays.toString());
+          totalVotes = parseInt(stageContract.totalVotes.toString());
+          totalCommitted = parseFloat(
+            ethers.utils.formatEther(stageContract.totalCommitted.toString())
+          );
+          projectOwner = stageContract.projectOwner;
+          votingPeriod = parseInt(stageContract.votingPeriod.toString());
           stageIpfsData = state.stage;
-          expiryBlockInt = parseInt(expiryBlock.toString());
-          votingPeriodInt = parseInt(votingPeriod.toString());
           voted = false;
         } else {
           const stageContract = await getSmartContractWithProvider(
@@ -113,18 +112,22 @@ export const useSingleStageHandler = () => {
             JSON.stringify(StageContract.abi)
           );
           stageIpfsKey = await stageContract.ipfsKey();
-          expiryBlock = await stageContract.expiryBlock();
-          startBlock = await stageContract.startBlock();
+          expiryBlock = parseInt(await stageContract.expiryBlock().toString());
+          startBlock = parseInt(await stageContract.startBlock().toString());
           isComplete = await stageContract.isComplete();
           projectOwner = await stageContract.projectOwner();
           stageIpfsData = await getStageData(stageIpfsKey);
           isSuccess = await stageContract.isSuccess();
-          yays = await stageContract.yays();
-          totalVotes = await stageContract.totalVotes();
-          totalCommitted = await stageContract.totalCommitted();
-          votingPeriod = await stageContract.votingPeriod();
-          expiryBlockInt = parseInt(expiryBlock.toString());
-          votingPeriodInt = parseInt(votingPeriod.toString());
+          yays = parseInt(await stageContract.yays().toString());
+          totalVotes = parseInt(await stageContract.totalVotes().toString());
+          totalCommitted = parseFloat(
+            ethers.utils.formatEther(
+              await stageContract.totalCommitted().toString()
+            )
+          );
+          votingPeriod = parseInt(
+            await stageContract.votingPeriod().toString()
+          );
           voted = await stageContract.voted(address);
         }
         const obj: IStage = {
@@ -132,16 +135,14 @@ export const useSingleStageHandler = () => {
           stageContract: {
             isComplete,
             isSuccess,
-            startBlock: parseInt(startBlock.toString()),
-            expiryBlock: expiryBlockInt,
-            yays: parseInt(yays.toString()),
-            totalVotes: parseInt(totalVotes.toString()),
-            totalCommitted: parseFloat(
-              ethers.utils.formatEther(totalCommitted.toString())
-            ),
+            startBlock,
+            expiryBlock,
+            yays,
+            totalVotes,
+            totalCommitted,
             projectOwner,
-            votingPeriod: votingPeriodInt,
-            voteEndBlock: expiryBlockInt + votingPeriodInt,
+            votingPeriod,
+            voteEndBlock: expiryBlock + votingPeriod,
           },
         };
         setStageData(obj);

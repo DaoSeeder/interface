@@ -8,7 +8,7 @@ const config: HardhatUserConfig = {
     hardhat: {
       chainId: 31337,
       accounts: {
-        mnemonic: "cat cat cat cat cat cat cat cat cat cat cat cat",
+        // mnemonic: "cat cat cat cat cat cat cat cat cat cat cat cat",
         path: "m/44'/60'/0'/0",
       },
     },
