@@ -101,3 +101,9 @@ export const getCampaignKey = (projectToken: string) => {
   const hash = ethers.utils.keccak256(encodedParams);
   return hash;
 };
+
+export const checkLinkValidity = (link: string): boolean => {
+  const pattern =
+    /^https?:\/\/(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,63}(?:\/[^\s]*)?$/;
+  return pattern.test(link);
+};

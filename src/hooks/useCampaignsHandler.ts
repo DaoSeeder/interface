@@ -1,3 +1,4 @@
+import { checkLinkValidity } from "./../utils/ContractUtils";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -11,6 +12,7 @@ import { addCampaignToIpfs } from "../utils/ipfsUtils";
 import { useProvider, useSigner } from "wagmi";
 import DaoSeederFactory from "@daoseeder/core/artifacts/contracts/DaoSeederFactory.sol/DaoSeederFactory.json";
 import toast from "react-hot-toast";
+import { constants, utils } from "ethers";
 
 export const useCampaignsHandler = () => {
   const navigate = useNavigate();
@@ -31,6 +33,39 @@ export const useCampaignsHandler = () => {
   const [campaigns, setCampaigns] = useState<ICampaign[]>([]);
 
   const addCampaign = async () => {
+    if (
+      !campaignTokenAddress ||
+      constants.AddressZero === campaignTokenAddress ||
+      !utils.isAddress(campaignTokenAddress)
+    ) {
+      toast.error("Please enter a valid token address");
+      return;
+    }
+
+    if (!checkLinkValidity(campaignLogoLink)) {
+      toast.error(
+        "Please enter a valid logo link. A valid link looks like\nhttps://www.daoseeder.com\nhttp://www.daoseeder.com"
+      );
+      return;
+    }
+
+    if (!checkLinkValidity(campaignWebsiteLink)) {
+      toast.error(
+        "Please enter a valid website link. A valid link looks like\nhttps://www.daoseeder.com\nhttp://www.daoseeder.com"
+      );
+      return;
+    }
+
+    for (let i = 0; i < campaignMediaLinks.length; i++) {
+      if (!checkLinkValidity(campaignMediaLinks[i])) {
+        toast.error(
+          "Invalid media link entered. Please check and try again.\n" +
+            campaignMediaLinks[i] +
+            "\nA valid link looks like\nhttps://www.daoseeder.com\nhttp://www.daoseeder.com"
+        );
+        return;
+      }
+    }
     setDisableBtn(true);
     const loading = toast.loading("Saving...");
     try {
