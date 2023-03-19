@@ -14,6 +14,7 @@ import { useProvider } from "wagmi";
 import { getSmartContractWithSigner } from "../utils/ContractUtils";
 import { getSmartContractWithProvider } from "../utils/ContractUtils";
 import DaoSeederFactory from "@daoseeder/core/artifacts/contracts/DaoSeederFactory.sol/DaoSeederFactory.json";
+import { ethers } from "ethers";
 
 export const useStageHandler = () => {
   const { id } = useParams();
@@ -36,6 +37,7 @@ export const useStageHandler = () => {
   const [tokenAddress, setTokenAddress] = useState<string>("");
   const [disableBtn, setDisableBtn] = useState<boolean>(false);
   const [expiryBlock, setExpiryBlock] = useState<number>(0);
+  const [stageERC, setStageERC] = useState<number>(0);
 
   const fetchCampaign = useCallback(async () => {
     try {
@@ -110,6 +112,14 @@ export const useStageHandler = () => {
               data.tokenAddress,
               data.stageCount
             );
+            const stage = await contract.getStage(stageKey);
+            if (stage && stageERC > 0) {
+              const transaction = await signer.sendTransaction({
+                to: stage,
+                value: ethers.utils.parseEther(stageERC.toString()),
+              });
+              transaction.wait();
+            }
             window.location.href = `/campaign/${id}/stage/${stageKey}`;
           }
         }
@@ -169,5 +179,6 @@ export const useStageHandler = () => {
     expiryBlock,
     balance,
     deliverable,
+    setStageERC,
   };
 };
