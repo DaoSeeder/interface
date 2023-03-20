@@ -32,28 +32,28 @@ export const useCampaignsHandler = () => {
   const [fetchFirstTime, setFetchFirstTime] = useState<boolean>(true);
   const [campaigns, setCampaigns] = useState<ICampaign[]>([]);
 
-  const addCampaign = async () => {
+  const validateLinks = (): boolean => {
     if (
       !campaignTokenAddress ||
       constants.AddressZero === campaignTokenAddress ||
       !utils.isAddress(campaignTokenAddress)
     ) {
       toast.error("Please enter a valid token address");
-      return;
+      return false;
     }
 
     if (!checkLinkValidity(campaignLogoLink)) {
       toast.error(
         "Please enter a valid logo link. A valid link looks like\nhttps://www.daoseeder.com\nhttp://www.daoseeder.com"
       );
-      return;
+      return false;
     }
 
     if (!checkLinkValidity(campaignWebsiteLink)) {
       toast.error(
         "Please enter a valid website link. A valid link looks like\nhttps://www.daoseeder.com\nhttp://www.daoseeder.com"
       );
-      return;
+      return false;
     }
 
     for (let i = 0; i < campaignMediaLinks.length; i++) {
@@ -63,9 +63,15 @@ export const useCampaignsHandler = () => {
             campaignMediaLinks[i] +
             "\nA valid link looks like\nhttps://www.daoseeder.com\nhttp://www.daoseeder.com"
         );
-        return;
+        return false;
       }
     }
+    return true;
+  };
+
+  const addCampaign = async () => {
+    if (!validateLinks()) return;
+
     setDisableBtn(true);
     const loading = toast.loading("Saving...");
     try {
