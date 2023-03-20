@@ -20,7 +20,6 @@ function AddStage() {
     expiryBlock,
     balance,
     deliverable,
-    setStageERC,
   } = useStageHandler();
   const style = {
     campaignDiv: "text-light-font-lightV1 mt-4 w-full",
@@ -169,25 +168,6 @@ function AddStage() {
                       </div>
                     );
                   })}
-              </div>
-
-              <div className={`${style.inputDiv} ${style.targetInputMargin}`}>
-                <input
-                  type="number"
-                  name="stageERC"
-                  placeholder=" "
-                  className={style.mainInput}
-                  onChange={(e) => {
-                    setStageERC(parseFloat(e.target.value));
-                  }}
-                />
-                <label
-                  id="inputLabel"
-                  htmlFor="stageERC"
-                  className={style.inputLabel}
-                >
-                  Commit ERC20 Amount
-                </label>
               </div>
 
               <div className={style.categoriesBtnDiv}>
