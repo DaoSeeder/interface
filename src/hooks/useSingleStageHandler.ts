@@ -711,7 +711,6 @@ export const useSingleStageHandler = () => {
     const data = await getCampaign(id, contract);
     const loading = toast.loading("Loading...");
     if (data) {
-      console.log(data.tokenAddress);
       setErcBtnDisable(true);
       const erc20Contract = await getSmartContractWithSigner(
         data.tokenAddress,
