@@ -711,16 +711,20 @@ export const useSingleStageHandler = () => {
     const data = await getCampaign(id, contract);
     const loading = toast.loading("Loading...");
     if (data) {
-      setErcBtnDisable(true);
-      const erc20Contract = await getSmartContractWithSigner(
-        data.tokenAddress,
-        signer,
-        JSON.stringify(IERC20.abi)
-      );
-      const decimals = await erc20Contract.decimals();
-      const amount = ethers.utils.parseUnits(ercAmount.toString(), decimals);
-      await erc20Contract.transfer(stageAddress, amount);
-      toast.success("Your transaction was successful");
+      try {
+        setErcBtnDisable(true);
+        const erc20Contract = await getSmartContractWithSigner(
+          data.tokenAddress,
+          signer,
+          JSON.stringify(IERC20.abi)
+        );
+        const decimals = await erc20Contract.decimals();
+        const amount = ethers.utils.parseUnits(ercAmount.toString(), decimals);
+        await erc20Contract.transfer(stageAddress, amount);
+        toast.success("Your transaction was successful");
+      } catch (err) {
+        toast.error("An error occurred while processing the request");
+      }
     } else {
       toast.error("No campaign found");
     }
