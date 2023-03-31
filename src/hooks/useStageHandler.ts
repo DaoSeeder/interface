@@ -129,6 +129,8 @@ export const useStageHandler = () => {
                 projectOwner: address?.toString() || "",
                 votingPeriod: 57600,
                 voteEndBlock: 0,
+                tokensCommitted: 0,
+                totalSupply: 0,
               },
             };
             navigate(`/campaign/${id}/stage/${stageKey}`, {
