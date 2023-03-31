@@ -120,14 +120,12 @@ export const useSingleStageHandler = () => {
           isSuccess = await stageContract.isSuccess();
           yays = parseInt(await stageContract.yays().toString());
           totalVotes = parseInt(await stageContract.totalVotes().toString());
+          const totalCommittedBn = await stageContract.totalCommitted();
           totalCommitted = parseFloat(
-            ethers.utils.formatEther(
-              await stageContract.totalCommitted().toString()
-            )
+            ethers.utils.formatEther(totalCommittedBn.toString())
           );
-          votingPeriod = parseInt(
-            await stageContract.votingPeriod().toString()
-          );
+          const votingPeriodBn = await stageContract.votingPeriod();
+          votingPeriod = parseInt(votingPeriodBn.toString());
           voted = await stageContract.voted(address);
         }
         const obj: IStage = {
