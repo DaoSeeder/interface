@@ -117,8 +117,10 @@ export const useSingleStageHandler = () => {
             JSON.stringify(StageContract.abi)
           );
           stageIpfsKey = await stageContract.ipfsKey();
-          expiryBlock = parseInt(await stageContract.expiryBlock().toString());
-          startBlock = parseInt(await stageContract.startBlock().toString());
+          const expiryBlockBn = await stageContract.expiryBlock();
+          expiryBlock = parseInt(expiryBlockBn.toString());
+          const startBlockBn = await stageContract.startBlock();
+          startBlock = parseInt(startBlockBn.toString());
           isComplete = await stageContract.isComplete();
           projectOwner = await stageContract.projectOwner();
           stageIpfsData = await getStageData(stageIpfsKey);
