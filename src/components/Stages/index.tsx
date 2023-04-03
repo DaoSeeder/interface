@@ -45,6 +45,7 @@ function Stage() {
     setUserVote,
     voteBtnDisable,
     tokensCommittedEth,
+    maxVoteWeight,
   } = useSingleStageHandler();
   const style = {
     campaignDiv:
@@ -97,6 +98,7 @@ function Stage() {
         submitUserVote={submitUserVote}
         setUserVote={setUserVote}
         voteBtnDisable={voteBtnDisable}
+        maxVoteWeight={maxVoteWeight}
       />
       <StageDonate
         isOpen={isDonateOpen}

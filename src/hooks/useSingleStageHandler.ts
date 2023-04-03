@@ -57,9 +57,10 @@ export const useSingleStageHandler = () => {
   const [currBlockTime, setCurrBlockTime] = useState<string>();
   const [showCommitBtn, setShowCommitBtn] = useState<boolean>(true);
   const [tokensCommittedEth, setTokensCommittedEth] = useState<string>();
+  const [maxVoteWeight, setMaxVoteWeight] = useState<number>();
 
   useEffect(() => {
-    const fetchStageAddress = async () => {
+    const fetchFactoryData = async () => {
       if (stageId && provider && DAOSEEDER_FACTORY_ADDRESS) {
         const contract = await getSmartContractWithProvider(
           DAOSEEDER_FACTORY_ADDRESS,
@@ -68,11 +69,13 @@ export const useSingleStageHandler = () => {
         );
         const stage = await contract.getStage(stageId);
         setStageAddress(stage);
+        const maxVoteWeight_ = await contract.maxVoteWeight();
+        setMaxVoteWeight(maxVoteWeight_);
       }
     };
 
     if (stageId && provider) {
-      fetchStageAddress();
+      fetchFactoryData();
     }
   }, [DAOSEEDER_FACTORY_ADDRESS, provider, stageId]);
 
@@ -748,5 +751,6 @@ export const useSingleStageHandler = () => {
     currBlockTime,
     showCommitBtn,
     tokensCommittedEth,
+    maxVoteWeight,
   };
 };
