@@ -13,7 +13,7 @@ import StageContract from "@daoseeder/core/artifacts/contracts/Stage.sol/Stage.j
 import { useLocation, useParams } from "react-router-dom";
 import DaoSeederFactory from "@daoseeder/core/artifacts/contracts/DaoSeederFactory.sol/DaoSeederFactory.json";
 import { useProvider, useSigner, useBalance, useAccount } from "wagmi";
-import { constants, ethers } from "ethers";
+import { constants, ethers, utils } from "ethers";
 import IERC20 from "@daoseeder/core/artifacts/contracts/test/TestERC20.sol/TestERC20.json";
 
 export const useSingleStageHandler = () => {
@@ -60,24 +60,6 @@ export const useSingleStageHandler = () => {
   const [openERCModal, setOpenERCModal] = useState<boolean>(false);
   const [ercAmount, setERCAmount] = useState<number>(0);
   const [ercBtnDisable, setErcBtnDisable] = useState<boolean>(false);
-
-  useEffect(() => {
-    const fetchStageAddress = async () => {
-      if (stageId && provider && DAOSEEDER_FACTORY_ADDRESS) {
-        const contract = await getSmartContractWithProvider(
-          DAOSEEDER_FACTORY_ADDRESS,
-          provider,
-          JSON.stringify(DaoSeederFactory.abi)
-        );
-        const stage = await contract.getStage(stageId);
-        setStageAddress(stage);
-      }
-    };
-
-    if (stageId && provider) {
-      fetchStageAddress();
-    }
-  }, [DAOSEEDER_FACTORY_ADDRESS, provider, stageId]);
 
   useEffect(() => {
     const fetchStageAddress = async () => {
@@ -275,7 +257,11 @@ export const useSingleStageHandler = () => {
       toast.error("Please enter a valid amount");
       return;
     }
-    if (!stageAddress || constants.AddressZero === stageAddress) {
+    if (
+      !stageAddress ||
+      constants.AddressZero === stageAddress ||
+      !utils.isAddress(stageAddress)
+    ) {
       toast.error("Please enter a valid stage address");
       return;
     }
@@ -330,7 +316,11 @@ export const useSingleStageHandler = () => {
       toast.error("No stage found. Please provide a valid stage");
       return;
     }
-    if (!stageAddress || constants.AddressZero === stageAddress) {
+    if (
+      !stageAddress ||
+      constants.AddressZero === stageAddress ||
+      !utils.isAddress(stageAddress)
+    ) {
       toast.error("Please enter a valid stage address");
       return;
     }
@@ -382,7 +372,11 @@ export const useSingleStageHandler = () => {
       toast.error("No stage found. Please provide a valid stage");
       return;
     }
-    if (!stageAddress || constants.AddressZero === stageAddress) {
+    if (
+      !stageAddress ||
+      constants.AddressZero === stageAddress ||
+      !utils.isAddress(stageAddress)
+    ) {
       toast.error("Please enter a valid stage address");
       return;
     }
@@ -438,7 +432,11 @@ export const useSingleStageHandler = () => {
       toast.error("No stage found. Please provide a valid stage");
       return;
     }
-    if (!stageAddress || constants.AddressZero === stageAddress) {
+    if (
+      !stageAddress ||
+      constants.AddressZero === stageAddress ||
+      !utils.isAddress(stageAddress)
+    ) {
       toast.error("Please enter a valid stage address");
       return;
     }
@@ -498,7 +496,11 @@ export const useSingleStageHandler = () => {
       toast.error("No stage found. Please provide a valid stage");
       return;
     }
-    if (!stageAddress || constants.AddressZero === stageAddress) {
+    if (
+      !stageAddress ||
+      constants.AddressZero === stageAddress ||
+      !utils.isAddress(stageAddress)
+    ) {
       toast.error("Please enter a valid stage address");
       return;
     }
@@ -556,7 +558,11 @@ export const useSingleStageHandler = () => {
       toast.error("No stage found. Please provide a valid stage");
       return;
     }
-    if (!stageAddress || constants.AddressZero === stageAddress) {
+    if (
+      !stageAddress ||
+      constants.AddressZero === stageAddress ||
+      !utils.isAddress(stageAddress)
+    ) {
       toast.error("Please enter a valid stage address");
       return;
     }
@@ -620,7 +626,11 @@ export const useSingleStageHandler = () => {
       toast.error("No stage found. Please provide a valid stage");
       return;
     }
-    if (!stageAddress || constants.AddressZero === stageAddress) {
+    if (
+      !stageAddress ||
+      constants.AddressZero === stageAddress ||
+      !utils.isAddress(stageAddress)
+    ) {
       toast.error("Please enter a valid stage address");
       return;
     }

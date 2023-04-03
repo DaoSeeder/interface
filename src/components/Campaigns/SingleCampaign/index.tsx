@@ -98,7 +98,7 @@ function SingleCampaign() {
         <RiShareBoxFill
           className={style.openIcon}
           onClick={() => {
-            `${window.open("//" + campaign?.websiteLink)}`;
+            `${window.open(campaign?.websiteLink)}`;
           }}
         />
       </div>

@@ -7,15 +7,16 @@ import {
   getContractCampaign,
   getStageKey,
 } from "./../utils/ContractUtils";
-import { IStageIPFSData } from "../interfaces/IStage";
+import { IStage, IStageIPFSData } from "../interfaces/IStage";
 import { addStageToIpfs } from "../utils/ipfsUtils";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useProvider } from "wagmi";
 import { getSmartContractWithSigner } from "../utils/ContractUtils";
 import { getSmartContractWithProvider } from "../utils/ContractUtils";
 import DaoSeederFactory from "@daoseeder/core/artifacts/contracts/DaoSeederFactory.sol/DaoSeederFactory.json";
 
 export const useStageHandler = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const { address } = useAccount();
 
@@ -110,7 +111,31 @@ export const useStageHandler = () => {
               data.tokenAddress,
               data.stageCount
             );
-            window.location.href = `/campaign/${id}/stage/${stageKey}`;
+
+            const obj: IStage = {
+              stage: {
+                goal: stageGoal,
+                name: stageName,
+                deliverables: stageDeliverables,
+              },
+              stageContract: {
+                isComplete: false,
+                isSuccess: false,
+                startBlock: 0,
+                expiryBlock: expiryBlock,
+                yays: 0,
+                totalVotes: 0,
+                totalCommitted: 0,
+                projectOwner: address?.toString() || "",
+                votingPeriod: 57600,
+                voteEndBlock: 0,
+              },
+            };
+            navigate(`/campaign/${id}/stage/${stageKey}`, {
+              state: {
+                ...obj,
+              },
+            });
           }
         }
       } else {
