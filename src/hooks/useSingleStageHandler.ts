@@ -9,6 +9,7 @@ import {
 } from "./../utils/ContractUtils";
 import toast from "react-hot-toast";
 import StageContract from "@daoseeder/core/artifacts/contracts/Stage.sol/Stage.json";
+import IERC20 from "@openzeppelin/contracts/build/contracts/IERC20.json";
 import { useParams, useLocation } from "react-router-dom";
 import DaoSeederFactory from "@daoseeder/core/artifacts/contracts/DaoSeederFactory.sol/DaoSeederFactory.json";
 import { useProvider, useSigner, useBalance, useAccount } from "wagmi";
@@ -55,6 +56,7 @@ export const useSingleStageHandler = () => {
   const [voteEndDate, setVoteEndDate] = useState<string>();
   const [currBlockTime, setCurrBlockTime] = useState<string>();
   const [showCommitBtn, setShowCommitBtn] = useState<boolean>(true);
+  const [tokensCommittedEth, setTokensCommittedEth] = useState<string>();
 
   useEffect(() => {
     const fetchStageAddress = async () => {
@@ -88,7 +90,10 @@ export const useSingleStageHandler = () => {
           totalVotes,
           totalCommitted,
           votingPeriod,
-          voted;
+          voted,
+          tokensCommitted,
+          totalSupply,
+          tokensPercent;
 
         if (state) {
           const stageContract = state.stageContract;
@@ -105,6 +110,9 @@ export const useSingleStageHandler = () => {
           votingPeriod = parseInt(stageContract.votingPeriod.toString());
           stageIpfsData = state.stage;
           voted = false;
+          tokensCommitted = stageContract.tokensCommitted;
+          totalSupply = stageContract.totalSupply;
+          tokensPercent = stageContract.tokensPercent;
         } else {
           const stageContract = await getSmartContractWithProvider(
             stageAddress,
@@ -112,23 +120,39 @@ export const useSingleStageHandler = () => {
             JSON.stringify(StageContract.abi)
           );
           stageIpfsKey = await stageContract.ipfsKey();
-          expiryBlock = parseInt(await stageContract.expiryBlock().toString());
-          startBlock = parseInt(await stageContract.startBlock().toString());
+          const expiryBlockBn = await stageContract.expiryBlock();
+          expiryBlock = parseInt(expiryBlockBn.toString());
+          const startBlockBn = await stageContract.startBlock();
+          startBlock = parseInt(startBlockBn.toString());
           isComplete = await stageContract.isComplete();
           projectOwner = await stageContract.projectOwner();
           stageIpfsData = await getStageData(stageIpfsKey);
           isSuccess = await stageContract.isSuccess();
           yays = parseInt(await stageContract.yays().toString());
           totalVotes = parseInt(await stageContract.totalVotes().toString());
+          const totalCommittedBn = await stageContract.totalCommitted();
           totalCommitted = parseFloat(
-            ethers.utils.formatEther(
-              await stageContract.totalCommitted().toString()
-            )
+            ethers.utils.formatEther(totalCommittedBn.toString())
           );
-          votingPeriod = parseInt(
-            await stageContract.votingPeriod().toString()
-          );
+          const votingPeriodBn = await stageContract.votingPeriod();
+          votingPeriod = parseInt(votingPeriodBn.toString());
           voted = await stageContract.voted(address);
+          const projectToken = await stageContract.projectToken();
+          const tokenContract = getSmartContractWithProvider(
+            projectToken,
+            provider,
+            JSON.stringify(IERC20.abi)
+          );
+          const tokensCommittedBn = await tokenContract.balanceOf(
+            stageContract.address
+          );
+          tokensCommitted = parseInt(tokensCommittedBn.toString());
+          setTokensCommittedEth(utils.formatEther(tokensCommittedBn));
+          const totalSupplyBn = await tokenContract.totalSupply();
+          totalSupply = parseInt(totalSupplyBn.toString());
+          tokensPercent = !totalSupply
+            ? 0
+            : (tokensCommitted * 100) / totalSupply;
         }
         const obj: IStage = {
           stage: stageIpfsData,
@@ -143,6 +167,9 @@ export const useSingleStageHandler = () => {
             projectOwner,
             votingPeriod,
             voteEndBlock: expiryBlock + votingPeriod,
+            tokensCommitted,
+            totalSupply,
+            tokensPercent,
           },
         };
         setStageData(obj);
@@ -720,5 +747,6 @@ export const useSingleStageHandler = () => {
     voteEndDate,
     currBlockTime,
     showCommitBtn,
+    tokensCommittedEth,
   };
 };

@@ -15,6 +15,9 @@ export interface IStageContractData {
   projectOwner: string;
   votingPeriod: number;
   voteEndBlock: number;
+  tokensCommitted: number;
+  totalSupply: number;
+  tokensPercent: number;
 }
 
 export interface IStage {

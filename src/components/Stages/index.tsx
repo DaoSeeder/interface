@@ -44,6 +44,7 @@ function Stage() {
     submitUserVote,
     setUserVote,
     voteBtnDisable,
+    tokensCommittedEth,
   } = useSingleStageHandler();
   const style = {
     campaignDiv:
@@ -138,8 +139,15 @@ function Stage() {
             <div className={style.stageGoals}>
               <div className={style.stageData}>
                 <div className={style.stageTotalMoney}>
-                  {stageData?.stageContract?.totalCommitted} {balance?.symbol}{" "}
-                  raised of {stageData?.stage?.goal} {balance?.symbol} goal
+                  <div>
+                    {stageData?.stageContract?.totalCommitted} {balance?.symbol}{" "}
+                    raised of {stageData?.stage?.goal} {balance?.symbol} goal
+                  </div>
+                  <div>
+                    Token reward committed: {tokensCommittedEth} (
+                    {stageData?.stageContract?.tokensPercent.toFixed(1)}% of
+                    supply)
+                  </div>
                 </div>
                 <div className={style.stageTimeLeft}>
                   <div className={style.timeImage}>
