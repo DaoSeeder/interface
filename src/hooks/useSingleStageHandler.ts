@@ -56,6 +56,7 @@ export const useSingleStageHandler = () => {
   const [voteEndDate, setVoteEndDate] = useState<string>();
   const [currBlockTime, setCurrBlockTime] = useState<string>();
   const [showCommitBtn, setShowCommitBtn] = useState<boolean>(true);
+  const [tokensCommittedEth, setTokensCommittedEth] = useState<string>();
 
   useEffect(() => {
     const fetchStageAddress = async () => {
@@ -91,7 +92,8 @@ export const useSingleStageHandler = () => {
           votingPeriod,
           voted,
           tokensCommitted,
-          totalSupply;
+          totalSupply,
+          tokensPercent;
 
         if (state) {
           const stageContract = state.stageContract;
@@ -110,6 +112,7 @@ export const useSingleStageHandler = () => {
           voted = false;
           tokensCommitted = stageContract.tokensCommitted;
           totalSupply = stageContract.totalSupply;
+          tokensPercent = stageContract.tokensPercent;
         } else {
           const stageContract = await getSmartContractWithProvider(
             stageAddress,
@@ -144,10 +147,12 @@ export const useSingleStageHandler = () => {
             stageContract.address
           );
           tokensCommitted = parseInt(tokensCommittedBn.toString());
-          console.log("tokensCommitted", tokensCommitted);
+          setTokensCommittedEth(utils.formatEther(tokensCommittedBn));
           const totalSupplyBn = await tokenContract.totalSupply();
-          totalSupply = totalSupplyBn.toString();
-          console.log("tokenSupply", totalSupply);
+          totalSupply = parseInt(totalSupplyBn.toString());
+          tokensPercent = !totalSupply
+            ? 0
+            : (tokensCommitted * 100) / totalSupply;
         }
         const obj: IStage = {
           stage: stageIpfsData,
@@ -164,6 +169,7 @@ export const useSingleStageHandler = () => {
             voteEndBlock: expiryBlock + votingPeriod,
             tokensCommitted,
             totalSupply,
+            tokensPercent,
           },
         };
         setStageData(obj);
@@ -741,5 +747,6 @@ export const useSingleStageHandler = () => {
     voteEndDate,
     currBlockTime,
     showCommitBtn,
+    tokensCommittedEth,
   };
 };

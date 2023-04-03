@@ -17,6 +17,7 @@ export interface IStageContractData {
   voteEndBlock: number;
   tokensCommitted: number;
   totalSupply: number;
+  tokensPercent: number;
 }
 
 export interface IStage {

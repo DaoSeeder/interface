@@ -131,6 +131,7 @@ export const useStageHandler = () => {
                 voteEndBlock: 0,
                 tokensCommitted: 0,
                 totalSupply: 0,
+                tokensPercent: 0,
               },
             };
             navigate(`/campaign/${id}/stage/${stageKey}`, {
