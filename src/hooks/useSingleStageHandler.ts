@@ -3,20 +3,22 @@ import { IStage } from "./../interfaces/IStage";
 import { getStageData } from "./../utils/ipfsUtils";
 import {
   fetchCurrentBlock,
+  getCampaign,
   getDateFromBlockNumber,
   getSmartContractWithProvider,
   getSmartContractWithSigner,
 } from "./../utils/ContractUtils";
 import toast from "react-hot-toast";
 import StageContract from "@daoseeder/core/artifacts/contracts/Stage.sol/Stage.json";
-import { useParams, useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import DaoSeederFactory from "@daoseeder/core/artifacts/contracts/DaoSeederFactory.sol/DaoSeederFactory.json";
 import { useProvider, useSigner, useBalance, useAccount } from "wagmi";
 import { constants, ethers, utils } from "ethers";
+import IERC20 from "@daoseeder/core/artifacts/contracts/test/TestERC20.sol/TestERC20.json";
 
 export const useSingleStageHandler = () => {
   const { state } = useLocation();
-  const { stageId } = useParams();
+  const { id, stageId } = useParams();
   const { address } = useAccount();
 
   const { data: balance } = useBalance({
@@ -55,6 +57,9 @@ export const useSingleStageHandler = () => {
   const [voteEndDate, setVoteEndDate] = useState<string>();
   const [currBlockTime, setCurrBlockTime] = useState<string>();
   const [showCommitBtn, setShowCommitBtn] = useState<boolean>(true);
+  const [openERCModal, setOpenERCModal] = useState<boolean>(false);
+  const [ercAmount, setERCAmount] = useState<number>(0);
+  const [ercBtnDisable, setErcBtnDisable] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchStageAddress = async () => {
@@ -112,21 +117,23 @@ export const useSingleStageHandler = () => {
             JSON.stringify(StageContract.abi)
           );
           stageIpfsKey = await stageContract.ipfsKey();
-          expiryBlock = parseInt(await stageContract.expiryBlock().toString());
-          startBlock = parseInt(await stageContract.startBlock().toString());
+          expiryBlock = parseInt(
+            (await stageContract.expiryBlock()).toString()
+          );
+          startBlock = parseInt((await stageContract.startBlock()).toString());
           isComplete = await stageContract.isComplete();
           projectOwner = await stageContract.projectOwner();
           stageIpfsData = await getStageData(stageIpfsKey);
           isSuccess = await stageContract.isSuccess();
-          yays = parseInt(await stageContract.yays().toString());
-          totalVotes = parseInt(await stageContract.totalVotes().toString());
+          yays = parseInt((await stageContract.yays()).toString());
+          totalVotes = parseInt((await stageContract.totalVotes()).toString());
           totalCommitted = parseFloat(
             ethers.utils.formatEther(
-              await stageContract.totalCommitted().toString()
+              (await stageContract.totalCommitted()).toString()
             )
           );
           votingPeriod = parseInt(
-            await stageContract.votingPeriod().toString()
+            (await stageContract.votingPeriod()).toString()
           );
           voted = await stageContract.voted(address);
         }
@@ -682,6 +689,60 @@ export const useSingleStageHandler = () => {
     toast.dismiss(loading);
   };
 
+  const openERC20Modal = () => {
+    setOpenERCModal(true);
+  };
+
+  const closeERC20Modal = () => {
+    setOpenERCModal(false);
+  };
+
+  const commitERCAmount = async () => {
+    if (!signer) {
+      toast.error("Please connect you wallet");
+      return;
+    }
+
+    if (!DAOSEEDER_FACTORY_ADDRESS) {
+      toast.error("No factory address found");
+      return;
+    }
+
+    if (!id) {
+      toast.error("No campaign id found");
+      return;
+    }
+
+    const contract = getSmartContractWithProvider(
+      DAOSEEDER_FACTORY_ADDRESS,
+      provider,
+      JSON.stringify(DaoSeederFactory.abi)
+    );
+    const data = await getCampaign(id, contract);
+    const loading = toast.loading("Loading...");
+    if (data) {
+      try {
+        setErcBtnDisable(true);
+        const erc20Contract = await getSmartContractWithSigner(
+          data.tokenAddress,
+          signer,
+          JSON.stringify(IERC20.abi)
+        );
+        const decimals = await erc20Contract.decimals();
+        const amount = ethers.utils.parseUnits(ercAmount.toString(), decimals);
+        await erc20Contract.transfer(stageAddress, amount);
+        toast.success("Your transaction was successful");
+      } catch (err) {
+        toast.error("An error occurred while processing the request");
+      }
+    } else {
+      toast.error("No campaign found");
+    }
+    setErcBtnDisable(false);
+    toast.dismiss(loading);
+    closeERC20Modal();
+  };
+
   return {
     stageData,
     handleInputChange,
@@ -720,5 +781,11 @@ export const useSingleStageHandler = () => {
     voteEndDate,
     currBlockTime,
     showCommitBtn,
+    openERC20Modal,
+    closeERC20Modal,
+    openERCModal,
+    setERCAmount,
+    ercBtnDisable,
+    commitERCAmount,
   };
 };
