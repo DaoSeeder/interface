@@ -5,8 +5,17 @@ import StageAddVote from "./StageAddVote";
 import { useSingleStageHandler } from "../../hooks/useSingleStageHandler";
 import StageDonate from "./StageDonate";
 import CommitERCTokenModal from "./CommitERCTokenModal";
+import {
+  FacebookShareButton,
+  FacebookIcon,
+  TwitterShareButton,
+  TwitterIcon,
+} from "react-share";
+import HelmetMetaData from "../HelmetMetaData";
+import { useLocation } from "react-router-dom";
 
 function Stage() {
+  const location = useLocation();
   const {
     stageData,
     transferAmount,
@@ -85,7 +94,7 @@ function Stage() {
     stageDivBtns: "flex",
     stageDonateNow:
       "bg-gradient-to-r from-light-primary-primary to-light-primary-secondary rounded-3xl py-2 px-8 text-light-font-lightV2 dark:text-dark-font-lightV2 cursor-pointer flex justify-center items-center",
-    shareBtnDiv: "text-light-font-lightV1 dark:text-dark-font-lightV1 ml-2",
+    shareBtnDiv: "flex gap-2 ml-2",
     btnShare:
       "cursor-pointer w-fit rounded-full bg-gradient-to-r from-light-primary-primary to-light-primary-secondary p-[2px]",
     btnShareContainer:
@@ -99,6 +108,13 @@ function Stage() {
 
   return (
     <>
+      {stageData?.stage ? (
+        <HelmetMetaData
+          title={stageData.stage.name}
+          image={""}
+          description={""}
+        ></HelmetMetaData>
+      ) : null}
       <StageAddVote
         isOpen={isOpen}
         closeModal={closeModal}
@@ -213,11 +229,16 @@ function Stage() {
                   </div>
                 ) : null}
                 <div className={style.shareBtnDiv}>
-                  <div className={style.btnShare}>
-                    <div className={style.btnShareContainer}>
-                      <p>Share</p>
-                    </div>
-                  </div>
+                  <FacebookShareButton
+                    url={window.location.hostname + location.pathname}
+                  >
+                    <FacebookIcon size={36} />
+                  </FacebookShareButton>
+                  <TwitterShareButton
+                    url={window.location.hostname + location.pathname}
+                  >
+                    <TwitterIcon size={36} />
+                  </TwitterShareButton>
                 </div>
               </div>
               <div>
