@@ -4,6 +4,7 @@ import { BsClockHistory } from "react-icons/bs";
 import StageAddVote from "./StageAddVote";
 import { useSingleStageHandler } from "../../hooks/useSingleStageHandler";
 import StageDonate from "./StageDonate";
+import CommitERCTokenModal from "./CommitERCTokenModal";
 
 function Stage() {
   const {
@@ -44,6 +45,12 @@ function Stage() {
     submitUserVote,
     setUserVote,
     voteBtnDisable,
+    openERC20Modal,
+    closeERC20Modal,
+    openERCModal,
+    setERCAmount,
+    ercBtnDisable,
+    commitERCAmount,
     tokensCommittedEth,
   } = useSingleStageHandler();
   const style = {
@@ -105,6 +112,13 @@ function Stage() {
         donationAmount={donationAmount}
         sendTransaction={transferAmount}
         btnDisable={btnDisable}
+      />
+      <CommitERCTokenModal
+        isOpen={openERCModal}
+        closeModal={closeERC20Modal}
+        commitERCAmount={commitERCAmount}
+        setERCAmount={setERCAmount}
+        ercBtnDisable={ercBtnDisable}
       />
       <div className={style.campaignDiv}>
         <div className={style.mainCampaign}>
@@ -267,6 +281,14 @@ function Stage() {
                   </div>
                 ) : null}
               </div>
+              {stageData?.stageContract?.projectOwner === address ? (
+                <div
+                  className={`${style.stageDonateNow}`}
+                  onClick={openERC20Modal}
+                >
+                  Commit ERC20
+                </div>
+              ) : null}
             </div>
           </div>
         </div>
