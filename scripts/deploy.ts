@@ -9,6 +9,8 @@ import dotenv from "dotenv";
 import campaigns from "./campaigns.json";
 import stages from "./stages.json";
 import { getDateDifferenceInSeconds } from "../src/utils/dateTimeUtils";
+import { getStageKey } from "../src/utils/ContractUtils";
+import { BigNumber } from "ethers";
 
 export async function main() {
   const [owner] = await ethers.getSigners();
@@ -79,6 +81,15 @@ export async function main() {
         cidStage
       );
       await txStage.wait();
+      const key = getStageKey(testERC20.address, 1);
+      const stageAddress = await daoSeederFactory.getStage(key);
+      console.log("owner", owner.address);
+      console.log("stageAddress", stageAddress);
+      const amt = BigNumber.from(5000).mul(
+        BigNumber.from(10).pow(BigNumber.from(18))
+      );
+      await testERC20.approve(owner.address, amt);
+      await testERC20.transferFrom(owner.address, stageAddress, amt);
     }
   }
 }
