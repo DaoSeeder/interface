@@ -13,6 +13,7 @@ import AddStage from "./components/Stages/AddStage";
 import ThemeSwitcher from "./components/ThemeSwitcher";
 import Faq from "./components/Faq";
 import LearnMore from "./components/LearnMore";
+import Faucet from "./components/Faucet";
 
 function App() {
   const style = {
@@ -54,6 +55,7 @@ function App() {
               <Route path="/faq" element={<Faq />} />
               <Route path="/ipfs" element={<IpfsUpload />} />
               <Route path="/learn" element={<LearnMore />} />
+              <Route path="/faucet" element={<Faucet />} />
             </Routes>
           </div>
         </div>
