@@ -7,6 +7,7 @@ type ConnectorModalProps = {
   submitUserVote: () => Promise<void>;
   setUserVote: Dispatch<SetStateAction<boolean>>;
   voteBtnDisable: boolean;
+  maxVoteWeight: number | undefined;
 };
 
 function StageAddVote({
@@ -15,6 +16,7 @@ function StageAddVote({
   submitUserVote,
   setUserVote,
   voteBtnDisable,
+  maxVoteWeight,
 }: ConnectorModalProps) {
   const style = {
     dialog: "z-[1000] relative",
@@ -26,10 +28,10 @@ function StageAddVote({
     dialogHeading:
       "text-lg font-bold leading-6 text-light-font-lightV1 dark:text-dark-font-lightV1",
     dialogBody: "mt-4",
-    stageProgress:
+    voteForm:
       "flex flex-col text-sm text-light-font-lightV1 dark:text-dark-font-lightV1 mb-4",
-    stageProgressLabel: "mt-4",
-    radioContainer: "flex items-center mt-2",
+    voteText: "text-sm",
+    radioContainer: "flex items-center mt-4",
     radioDiv: "flex rounded-lg",
     radioBtn: "radio text-center py-2 px-4 cursor-pointer",
     inProgressBtn: "rounded-l-lg",
@@ -72,10 +74,17 @@ function StageAddVote({
                   Add your Vote
                 </Dialog.Title>
                 <div className={style.dialogBody}>
-                  <div className={style.stageProgress}>
-                    <label className={style.stageProgressLabel}>
+                  <div className={style.voteForm}>
+                    <div className={style.voteText}>
                       Has the project met the stage deliverables?
-                    </label>
+                    </div>
+                    <div>
+                      {maxVoteWeight
+                        ? "(Note: max vote weight is " +
+                          (maxVoteWeight * 100) / 100000 +
+                          "%)"
+                        : ""}
+                    </div>
                     <div className={style.radioContainer}>
                       <div className={style.radioDiv}>
                         <input
