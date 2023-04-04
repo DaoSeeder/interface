@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { TfiAnnouncement } from "react-icons/tfi";
+import { Link } from "react-router-dom";
 
 function Marquee() {
   const style = {
@@ -18,15 +19,19 @@ function Marquee() {
   }, [visibleDivIndex]);
 
   return (
-    <div className={style.marquee}>
-      <TfiAnnouncement />
-      <span style={{ display: visibleDivIndex === 0 ? "block" : "none" }}>
-        This app is currently in testing. Thank you for your patience!
-      </span>
-      <span style={{ display: visibleDivIndex === 1 ? "block" : "none" }}>
-        Please use DaoSeeder testnet to connect to the site for testing!
-      </span>
-    </div>
+    <Link to="/faucet">
+      <div className={style.marquee}>
+        <TfiAnnouncement />
+        <span style={{ display: visibleDivIndex === 0 ? "block" : "none" }}>
+          This app is currently in testing. Thank you for your patience! Click
+          for more info.
+        </span>
+        <span style={{ display: visibleDivIndex === 1 ? "block" : "none" }}>
+          Please use DaoSeeder testnet to connect to the site for testing! Click
+          for more info.
+        </span>
+      </div>
+    </Link>
   );
 }
 
