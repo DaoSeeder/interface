@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import { AiOutlineLoading } from "react-icons/ai";
 
 type StageDonatePorps = {
   isOpen: boolean;
@@ -37,15 +38,16 @@ function StageDonate({
     inProgressBtn: "rounded-l-lg",
     completedBtn: "rounded-r-lg",
     categoriesBtnDiv: "text-light-font-lightV1 w-full flex justify-end mt-4",
-    btnCategories:
-      "cursor-pointer w-fit rounded-full bg-gradient-to-r from-light-primary-primary to-light-primary-secondary p-[2px]",
+    btnCategories: "cursor-pointer w-fit rounded-full p-[2px]",
     btnCategoriesContainerActive:
       "flex h-full items-center justify-center text-light-font-lightV2 back rounded-full px-6 py-2",
     inputDiv:
       "relative border-b-2 focus-within:border-blue-500 w-full dark:text-dark-font-lightV1",
     mainInput:
       "block w-full appearance-none focus:outline-none bg-transparent dark:text-dark-font-lightV1",
-    disableBtn: "pointer-events-none",
+    disableBtn: "pointer-events-none bg-disabled",
+    enableBtn:
+      "bg-gradient-to-r from-light-primary-primary to-light-primary-secondary",
   };
 
   return (
@@ -101,14 +103,18 @@ function StageDonate({
                     <div className={style.categoriesBtnDiv}>
                       <div
                         className={`${style.btnCategories} ${
-                          btnDisable ? style.disableBtn : ""
+                          btnDisable ? style.disableBtn : style.enableBtn
                         }`}
                         onClick={() => {
                           sendTransaction();
                         }}
                       >
                         <div className={style.btnCategoriesContainerActive}>
-                          <p>Submit</p>
+                          {btnDisable ? (
+                            <AiOutlineLoading className="animate-spin w-12 h-6" />
+                          ) : (
+                            <p>Submit</p>
+                          )}
                         </div>
                       </div>
                     </div>

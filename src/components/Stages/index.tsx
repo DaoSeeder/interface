@@ -5,6 +5,7 @@ import StageAddVote from "./StageAddVote";
 import { useSingleStageHandler } from "../../hooks/useSingleStageHandler";
 import StageDonate from "./StageDonate";
 import CommitERCTokenModal from "./CommitERCTokenModal";
+import { AiOutlineLoading } from "react-icons/ai";
 
 function Stage() {
   const {
@@ -93,7 +94,9 @@ function Stage() {
     deliverables:
       "mt-12 text-3xl font-bold text-light-font-lightV1 dark:text-dark-font-lightV1",
     timeline: "my-12 text-light-font-lightV1 dark:text-dark-font-lightV1",
-    disableBtn: "pointer-events-none",
+    disableBtn: "pointer-events-none bg-disabled",
+    enableBtn:
+      "bg-gradient-to-r from-light-primary-primary to-light-primary-secondary",
     expDate: "text-xs",
   };
 
@@ -225,61 +228,89 @@ function Stage() {
                 showVotingBtn ? (
                   <div
                     className={`${style.stageDonateNow} ${
-                      voteBtnDisable ? style.disableBtn : ""
+                      voteBtnDisable ? style.disableBtn : style.enableBtn
                     }`}
                     onClick={openModal}
                   >
-                    Add your Vote
+                    {voteBtnDisable ? (
+                      <AiOutlineLoading className="animate-spin w-12 h-6" />
+                    ) : (
+                      <p>Add your Vote</p>
+                    )}
                   </div>
                 ) : null}
                 {showCompleteBtn ? (
                   <div
                     className={`${style.stageDonateNow} ${
-                      completeBtnDisable ? style.disableBtn : ""
+                      completeBtnDisable ? style.disableBtn : style.enableBtn
                     }`}
                     onClick={completeStage}
                   >
-                    Complete Stage
+                    {completeBtnDisable ? (
+                      <AiOutlineLoading className="animate-spin w-12 h-6" />
+                    ) : (
+                      <p>Complete Stage</p>
+                    )}
                   </div>
                 ) : null}
                 {showClaimToken ? (
                   <div
                     className={`${style.stageDonateNow} ${
-                      claimTokenBtnDisable ? style.disableBtn : ""
+                      claimTokenBtnDisable ? style.disableBtn : style.enableBtn
                     }`}
                     onClick={claimTokens}
                   >
-                    Claim Tokens
+                    {claimTokenBtnDisable ? (
+                      <AiOutlineLoading className="animate-spin w-12 h-6" />
+                    ) : (
+                      <p>Claim Tokens</p>
+                    )}
                   </div>
                 ) : null}
                 {showRefundBtn ? (
                   <div
                     className={`${style.stageDonateNow} ${
-                      refundBtnDisable ? style.disableBtn : ""
+                      refundBtnDisable ? style.disableBtn : style.enableBtn
                     }`}
                     onClick={refundTokens}
                   >
-                    Refund Tokens
+                    {refundBtnDisable ? (
+                      <AiOutlineLoading className="animate-spin w-12 h-6" />
+                    ) : (
+                      <p>Refund Tokens</p>
+                    )}
                   </div>
                 ) : null}
                 {showCollectFundsBtn ? (
                   <div
                     className={`${style.stageDonateNow} ${
-                      collectFundsBtnDisable ? style.disableBtn : ""
+                      collectFundsBtnDisable
+                        ? style.disableBtn
+                        : style.enableBtn
                     }`}
                     onClick={collectFunds}
                   >
-                    Collect Funds
+                    {collectFundsBtnDisable ? (
+                      <AiOutlineLoading className="animate-spin w-12 h-6" />
+                    ) : (
+                      <p>Collect Funds</p>
+                    )}
                   </div>
                 ) : null}
                 {showWithdrawFundsBtn ? (
                   <div
                     className={`${style.stageDonateNow} ${
-                      withdrawFundsBtnDisable ? style.disableBtn : ""
+                      withdrawFundsBtnDisable
+                        ? style.disableBtn
+                        : style.enableBtn
                     }`}
                     onClick={withdrawTokens}
                   >
-                    Withdraw Tokens
+                    {withdrawFundsBtnDisable ? (
+                      <AiOutlineLoading className="animate-spin w-12 h-6" />
+                    ) : (
+                      <p>Withdraw Tokens</p>
+                    )}
                   </div>
                 ) : null}
               </div>

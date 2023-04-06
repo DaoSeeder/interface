@@ -1,5 +1,5 @@
 import React from "react";
-import { AiOutlineMinusCircle } from "react-icons/ai";
+import { AiOutlineLoading, AiOutlineMinusCircle } from "react-icons/ai";
 import { MdAddCircleOutline } from "react-icons/md";
 import { useCampaignsHandler } from "../../../hooks/useCampaignsHandler";
 
@@ -37,14 +37,15 @@ function AddCampaign() {
     campaignHeading:
       "mt-12 text-2xl font-bold w-full dark:text-dark-font-lightV2",
     categoriesBtnDiv: "text-light-font-lightV1 w-full flex justify-end mb-8",
-    btnCategories:
-      "cursor-pointer w-fit rounded-full bg-gradient-to-r from-light-primary-primary to-light-primary-secondary p-[2px]",
+    btnCategories: "cursor-pointer w-fit rounded-full p-[2px]",
     btnCategoriesContainerActive:
       "flex h-full items-center justify-center text-light-font-lightV2 back rounded-full px-6 py-2",
     allMediaLinks: "mb-8",
     singleMedia: "flex justify-between w-full dark:text-dark-font-lightV1 mb-2",
     eachMedia: "border-b-2 w-full mr-4",
-    disableBtn: "pointer-events-none",
+    disableBtn: "pointer-events-none bg-disabled",
+    enableBtn:
+      "bg-gradient-to-r from-light-primary-primary to-light-primary-secondary",
   };
   return (
     <>
@@ -202,14 +203,18 @@ function AddCampaign() {
               <div className={style.categoriesBtnDiv}>
                 <div
                   className={`${style.btnCategories} ${
-                    disableBtn ? style.disableBtn : ""
+                    disableBtn ? style.disableBtn : style.enableBtn
                   }`}
                   onClick={() => {
                     addCampaign();
                   }}
                 >
                   <div className={style.btnCategoriesContainerActive}>
-                    <p>Submit</p>
+                    {disableBtn ? (
+                      <AiOutlineLoading className="animate-spin w-12 h-6" />
+                    ) : (
+                      <p>Submit</p>
+                    )}
                   </div>
                 </div>
               </div>

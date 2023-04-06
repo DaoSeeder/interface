@@ -150,6 +150,8 @@ export const useStageHandler = () => {
           toast.error(
             "Unauthorized access to campaign denied. User is not the owner of this campaign"
           );
+        } else if (e.message.includes("rejected")) {
+          toast.error("User rejected the transaction.");
         } else {
           toast.error(e.message);
         }

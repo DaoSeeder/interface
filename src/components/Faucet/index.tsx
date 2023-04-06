@@ -1,5 +1,6 @@
 import React from "react";
 import { useFauctHandler } from "../../hooks/useFaucetHandler";
+import { AiOutlineLoading } from "react-icons/ai";
 
 function Faucet() {
   const { disableBtn, requestEth } = useFauctHandler();
@@ -10,8 +11,10 @@ function Faucet() {
     faucetHeading: "text-2xl font-bold",
     faucetText: "font-light text-xs mt-2",
     faucetBtn:
-      "text-light-font-lightV1 dark:text-dark-font-lightV1 mt-4 rounded-full bg-gradient-to-r from-light-primary-primary to-light-primary-secondary px-3 py-2",
-    disableButton: "pointer-events-none",
+      "text-light-font-lightV1 dark:text-dark-font-lightV1 mt-4 rounded-full px-3 py-2",
+    disableButton: "pointer-events-none bg-disabled",
+    enableBtn:
+      "bg-gradient-to-r from-light-primary-primary to-light-primary-secondary",
   };
   return (
     <div className={style.faucet}>
@@ -30,13 +33,17 @@ function Faucet() {
         <div>
           <button
             className={`${style.faucetBtn} ${
-              disableBtn ? style.disableButton : ""
+              disableBtn ? style.disableButton : style.enableBtn
             }`}
             onClick={() => {
               requestEth();
             }}
           >
-            Request Funds
+            {disableBtn ? (
+              <AiOutlineLoading className="animate-spin w-12 h-6" />
+            ) : (
+              <p>Request Funds</p>
+            )}
           </button>
         </div>
       </div>
