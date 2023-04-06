@@ -6,7 +6,7 @@ import { useSingleStageHandler } from "../../hooks/useSingleStageHandler";
 import StageDonate from "./StageDonate";
 import CommitERCTokenModal from "./CommitERCTokenModal";
 
-function Stage() {
+const Stage = () => {
   const {
     stageData,
     transferAmount,
@@ -315,6 +315,6 @@ function Stage() {
       </div>
     </>
   );
-}
+};
 
 export default Stage;

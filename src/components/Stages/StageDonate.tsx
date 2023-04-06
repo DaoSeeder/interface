@@ -10,14 +10,14 @@ type StageDonatePorps = {
   btnDisable: boolean;
 };
 
-function StageDonate({
+const StageDonate = ({
   isOpen,
   closeModal,
   handleInputChange,
   donationAmount,
   sendTransaction,
   btnDisable,
-}: StageDonatePorps) {
+}: StageDonatePorps) => {
   const style = {
     dialog: "z-[1000] relative",
     overlay: "fixed inset-0 bg-black/50",
@@ -121,6 +121,6 @@ function StageDonate({
       </Dialog>
     </Transition>
   );
-}
+};
 
 export default StageDonate;

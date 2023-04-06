@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { MdAdd } from "react-icons/md";
 import { commonStyles } from "../../../styles/commonStyles";
 
-function SingleCampaign() {
+const SingleCampaign = () => {
   const { campaign, mediaLinkIdx, prevItem, nextItem, campaigns, allStages } =
     useSingleCampaignHandler();
   const style = {
@@ -156,6 +156,6 @@ function SingleCampaign() {
       </div>
     </>
   );
-}
+};
 
 export default SingleCampaign;

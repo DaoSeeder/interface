@@ -1,7 +1,7 @@
 import React from "react";
 import { useFauctHandler } from "../../hooks/useFaucetHandler";
 
-function Faucet() {
+const Faucet = () => {
   const { disableBtn, requestEth } = useFauctHandler();
   const style = {
     faucet: "mt-8 flex justify-center w-full",
@@ -42,6 +42,6 @@ function Faucet() {
       </div>
     </div>
   );
-}
+};
 
 export default Faucet;

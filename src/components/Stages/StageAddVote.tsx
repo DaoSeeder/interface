@@ -10,14 +10,14 @@ type ConnectorModalProps = {
   maxVoteWeight: number | undefined;
 };
 
-function StageAddVote({
+const StageAddVote = ({
   isOpen,
   closeModal,
   submitUserVote,
   setUserVote,
   voteBtnDisable,
   maxVoteWeight,
-}: ConnectorModalProps) {
+}: ConnectorModalProps) => {
   const style = {
     dialog: "z-[1000] relative",
     overlay: "fixed inset-0 bg-black/50",
@@ -146,6 +146,6 @@ function StageAddVote({
       </Dialog>
     </Transition>
   );
-}
+};
 
 export default StageAddVote;

@@ -3,7 +3,7 @@ import { AiOutlineMinusCircle } from "react-icons/ai";
 import { MdAddCircleOutline } from "react-icons/md";
 import { useCampaignsHandler } from "../../../hooks/useCampaignsHandler";
 
-function AddCampaign() {
+const AddCampaign = () => {
   const {
     campaignMediaLinks,
     addMediaLinks,
@@ -219,6 +219,6 @@ function AddCampaign() {
       </div>
     </>
   );
-}
+};
 
 export default AddCampaign;

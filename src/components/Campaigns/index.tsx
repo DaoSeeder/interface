@@ -3,7 +3,7 @@ import CampaignList from "./CampaignList";
 import { useCampaignsHandler } from "../../hooks/useCampaignsHandler";
 import { commonStyles } from "../../styles/commonStyles";
 
-function Campaigns() {
+const Campaigns = () => {
   const { campaigns, loadMoreCampaigns, totalLen } = useCampaignsHandler();
   const style = {
     allCampaigns: "my-12",
@@ -50,6 +50,6 @@ function Campaigns() {
       ) : null}
     </div>
   );
-}
+};
 
 export default Campaigns;
