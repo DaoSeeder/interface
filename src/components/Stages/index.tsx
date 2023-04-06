@@ -5,6 +5,7 @@ import StageAddVote from "./StageAddVote";
 import { useSingleStageHandler } from "../../hooks/useSingleStageHandler";
 import StageDonate from "./StageDonate";
 import CommitERCTokenModal from "./CommitERCTokenModal";
+import { Link } from "react-router-dom";
 
 function Stage() {
   const {
@@ -53,6 +54,7 @@ function Stage() {
     commitERCAmount,
     tokensCommittedEth,
     maxVoteWeight,
+    id: campaignId,
   } = useSingleStageHandler();
   const style = {
     campaignDiv:
@@ -95,6 +97,8 @@ function Stage() {
     timeline: "my-12 text-light-font-lightV1 dark:text-dark-font-lightV1",
     disableBtn: "pointer-events-none",
     expDate: "text-xs",
+    rtnCampaign:
+      "text-light-font-lightV1 dark:text-dark-font-lightV1 text-sm underline",
   };
 
   return (
@@ -123,6 +127,11 @@ function Stage() {
         ercBtnDisable={ercBtnDisable}
       />
       <div className={style.campaignDiv}>
+        {campaignId && (
+          <Link to={`/campaign/${campaignId}`} className={style.rtnCampaign}>
+            Return to campaign
+          </Link>
+        )}
         <div className={style.mainCampaign}>
           <div className={style.singleCampaignContainer}>
             <div className={style.topBar}>
@@ -209,7 +218,7 @@ function Stage() {
                     className={style.stageDonateNow}
                     onClick={donateNowDialog}
                   >
-                    Commit Funds
+                    Support This Project
                   </div>
                 ) : null}
                 <div className={style.shareBtnDiv}>

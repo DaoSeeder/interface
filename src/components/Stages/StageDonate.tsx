@@ -75,7 +75,7 @@ function StageDonate({
             >
               <Dialog.Panel className={style.dialogPanel}>
                 <Dialog.Title className={style.dialogHeading} as="h3">
-                  Commit funds
+                  Support This Project
                 </Dialog.Title>
                 <div className={style.dialogBody}>
                   <div className={style.stageProgress}>

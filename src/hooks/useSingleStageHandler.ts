@@ -816,5 +816,6 @@ export const useSingleStageHandler = () => {
     commitERCAmount,
     tokensCommittedEth,
     maxVoteWeight,
+    id,
   };
 };
