@@ -1,7 +1,7 @@
 import React from "react";
 import { commonStyles } from "../../styles/commonStyles";
 
-function Faq() {
+const Faq = () => {
   const style = {
     wrapper: "mt-8",
   };
@@ -30,6 +30,6 @@ function Faq() {
       </div>
     </div>
   );
-}
+};
 
 export default Faq;

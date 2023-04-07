@@ -2,7 +2,7 @@ import React from "react";
 import { BsMoonFill } from "react-icons/bs";
 import { BiSun } from "react-icons/bi";
 
-function ThemeSwitcher() {
+const ThemeSwitcher = () => {
   const style = {
     themeIcon: "text-xl m-2",
     themeIconMoon: "text-xl m-2 text-light-font-lightV2",
@@ -43,6 +43,6 @@ function ThemeSwitcher() {
       </div>
     </div>
   );
-}
+};
 
 export default ThemeSwitcher;

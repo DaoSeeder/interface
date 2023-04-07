@@ -5,7 +5,7 @@ import { useStageHandler } from "../../../hooks/useStageHandler";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-function AddStage() {
+const AddStage = () => {
   const {
     setStageName,
     setDeliverable,
@@ -190,6 +190,6 @@ function AddStage() {
       </div>
     </>
   );
-}
+};
 
 export default AddStage;

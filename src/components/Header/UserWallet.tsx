@@ -38,12 +38,12 @@ const UserWallet = () => {
 
   const { isConnected } = useAccount();
 
-  function closeModal() {
+  const closeModal = () => {
     setIsOpen(false);
-  }
-  function openModal() {
+  };
+  const openModal = () => {
     setIsOpen(true);
-  }
+  };
 
   return (
     <>

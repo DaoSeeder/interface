@@ -1,7 +1,7 @@
 import React from "react";
 import { commonStyles } from "../../styles/commonStyles";
 
-function LearnMore() {
+const LearnMore = () => {
   const style = {
     wrapper: "mt-8",
   };
@@ -30,6 +30,6 @@ function LearnMore() {
       </div>
     </div>
   );
-}
+};
 
 export default LearnMore;

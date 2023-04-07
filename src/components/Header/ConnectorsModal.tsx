@@ -8,7 +8,7 @@ type ConnectorModalProps = {
   closeModal: (value?: boolean) => void;
 };
 
-function ConnectorsModal({ isOpen, closeModal }: ConnectorModalProps) {
+const ConnectorsModal = ({ isOpen, closeModal }: ConnectorModalProps) => {
   const style = {
     dialog: "z-[1000] relative",
     overlay: "fixed inset-0 bg-black/50",
@@ -87,6 +87,6 @@ function ConnectorsModal({ isOpen, closeModal }: ConnectorModalProps) {
       </Dialog>
     </Transition>
   );
-}
+};
 
 export default ConnectorsModal;

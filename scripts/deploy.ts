@@ -12,7 +12,7 @@ import { getDateDifferenceInSeconds } from "../src/utils/dateTimeUtils";
 import { getStageKey } from "../src/utils/ContractUtils";
 import { BigNumber } from "ethers";
 
-export async function main() {
+export const main = async () => {
   const [owner] = await ethers.getSigners();
   console.log(`user with address ${owner.address} logged in`);
   const DaoSeederFactory = new ethers.ContractFactory(
@@ -92,7 +92,7 @@ export async function main() {
       await testERC20.transferFrom(owner.address, stageAddress, amt);
     }
   }
-}
+};
 
 main().catch((error) => {
   console.error(error);

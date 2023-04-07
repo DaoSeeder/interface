@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { create } from "ipfs-http-client";
 
-function IpfsUpload() {
+const IpfsUpload = () => {
   const [cid, setCid] = useState<string[]>([]);
   const [inputVal, setInputVal] = useState<string>("");
   const dataFunc = async () => {
@@ -48,6 +48,6 @@ function IpfsUpload() {
       ))}
     </>
   );
-}
+};
 
 export default IpfsUpload;

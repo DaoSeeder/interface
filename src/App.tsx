@@ -16,7 +16,7 @@ import LearnMore from "./components/LearnMore";
 import Faucet from "./components/Faucet";
 import Contact from "./components/Contact";
 
-function App() {
+const App = () => {
   const style = {
     wrapper:
       "w-full flex flex-row justify-center max-w-screen-xl dark:bg-dark-background min-h-screen items-start",
@@ -64,6 +64,6 @@ function App() {
       </Router>
     </div>
   );
-}
+};
 
 export default App;
