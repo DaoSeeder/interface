@@ -5,17 +5,8 @@ import StageAddVote from "./StageAddVote";
 import { useSingleStageHandler } from "../../hooks/useSingleStageHandler";
 import StageDonate from "./StageDonate";
 import CommitERCTokenModal from "./CommitERCTokenModal";
-import {
-  FacebookShareButton,
-  FacebookIcon,
-  TwitterShareButton,
-  TwitterIcon,
-} from "react-share";
-import HelmetMetaData from "../HelmetMetaData";
-import { useLocation } from "react-router-dom";
 
 function Stage() {
-  const location = useLocation();
   const {
     stageData,
     transferAmount,
@@ -62,6 +53,7 @@ function Stage() {
     commitERCAmount,
     tokensCommittedEth,
     maxVoteWeight,
+    copyLink,
   } = useSingleStageHandler();
   const style = {
     campaignDiv:
@@ -108,13 +100,6 @@ function Stage() {
 
   return (
     <>
-      {stageData?.stage ? (
-        <HelmetMetaData
-          title={stageData.stage.name}
-          image={""}
-          description={""}
-        ></HelmetMetaData>
-      ) : null}
       <StageAddVote
         isOpen={isOpen}
         closeModal={closeModal}
@@ -229,16 +214,11 @@ function Stage() {
                   </div>
                 ) : null}
                 <div className={style.shareBtnDiv}>
-                  <FacebookShareButton
-                    url={window.location.hostname + location.pathname}
-                  >
-                    <FacebookIcon size={36} />
-                  </FacebookShareButton>
-                  <TwitterShareButton
-                    url={window.location.hostname + location.pathname}
-                  >
-                    <TwitterIcon size={36} />
-                  </TwitterShareButton>
+                  <div className={style.btnShare} onClick={copyLink}>
+                    <div className={style.btnShareContainer}>
+                      <p>Share</p>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div>

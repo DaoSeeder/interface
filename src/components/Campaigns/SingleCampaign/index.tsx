@@ -7,17 +7,17 @@ import { useSingleCampaignHandler } from "../../../hooks/useSingleCampaignHandle
 import { Link } from "react-router-dom";
 import { MdAdd } from "react-icons/md";
 import { commonStyles } from "../../../styles/commonStyles";
-import {
-  FacebookIcon,
-  FacebookShareButton,
-  TwitterIcon,
-  TwitterShareButton,
-} from "react-share";
-import HelmetMetaData from "../../HelmetMetaData";
 
 function SingleCampaign() {
-  const { campaign, mediaLinkIdx, prevItem, nextItem, campaigns, allStages } =
-    useSingleCampaignHandler();
+  const {
+    campaign,
+    mediaLinkIdx,
+    prevItem,
+    nextItem,
+    campaigns,
+    allStages,
+    copyLink,
+  } = useSingleCampaignHandler();
   const style = {
     campaignDiv:
       "text-light-font-lightV1 dark:text-dark-font-lightV1 mt-4 w-full",
@@ -56,18 +56,15 @@ function SingleCampaign() {
     addCampaignBtn:
       "w-fit text-light-font-lightV1 dark:text-dark-font-lightV1 ml-2 rounded-full bg-gradient-to-r from-light-primary-primary to-light-primary-secondary px-1 py-1",
     linkBtn: "w-fit",
-    shareBtnDiv: "flex gap-2 items-end my-4",
+    shareBtnDiv: "text-light-font-lightV1 dark:text-dark-font-lightV1 ml-2",
+    btnShare:
+      "cursor-pointer w-fit rounded-full bg-gradient-to-r from-light-primary-primary to-light-primary-secondary p-[2px]",
+    btnShareContainer:
+      "flex h-full w-full items-center justify-center bg-[#FFFFFF] dark:bg-dark-background dark:text-dark-font-lightV1 rounded-full px-8 py-2",
     shareNow: "text-light-font-lightV1 dark:text-dark-font-lightV1 p-0 m-0",
   };
   return (
     <>
-      {campaign ? (
-        <HelmetMetaData
-          title={campaign?.name}
-          image={campaign?.mediaLinks.length > 0 ? campaign?.mediaLinks[0] : ""}
-          description={campaign?.description}
-        ></HelmetMetaData>
-      ) : null}
       <div className={commonStyles.heading}>
         <p>{campaign?.name}</p>
       </div>
@@ -106,13 +103,11 @@ function SingleCampaign() {
         </div>
       </div>
       <div className={style.shareBtnDiv}>
-        <p className={style.shareNow}>Share Now:</p>
-        <FacebookShareButton url={window.location.hostname + location.pathname}>
-          <FacebookIcon size={36} />
-        </FacebookShareButton>
-        <TwitterShareButton url={window.location.hostname + location.pathname}>
-          <TwitterIcon size={36} />
-        </TwitterShareButton>
+        <div className={style.btnShare} onClick={copyLink}>
+          <div className={style.btnShareContainer}>
+            <p>Share</p>
+          </div>
+        </div>
       </div>
       <div className={commonStyles.paragraph}>
         <p>{campaign?.description}</p>
