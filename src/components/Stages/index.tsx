@@ -6,6 +6,7 @@ import { useSingleStageHandler } from "../../hooks/useSingleStageHandler";
 import StageDonate from "./StageDonate";
 import CommitERCTokenModal from "./CommitERCTokenModal";
 import { Link } from "react-router-dom";
+import { BiArrowBack } from "react-icons/bi";
 
 function Stage() {
   const {
@@ -98,7 +99,7 @@ function Stage() {
     disableBtn: "pointer-events-none",
     expDate: "text-xs",
     rtnCampaign:
-      "text-light-font-lightV1 dark:text-dark-font-lightV1 text-sm underline",
+      "w-fit p-2 rounded-2xl text-light-font-lightV1 dark:text-dark-font-lightV1 text-sm cursor-pointer mb-4 hover:bg-gray-400 hover:dark:bg-dark-border-light",
   };
 
   return (
@@ -127,13 +128,16 @@ function Stage() {
         ercBtnDisable={ercBtnDisable}
       />
       <div className={style.campaignDiv}>
-        {campaignId && (
-          <Link to={`/campaign/${campaignId}`} className={style.rtnCampaign}>
-            Return to campaign
-          </Link>
-        )}
         <div className={style.mainCampaign}>
           <div className={style.singleCampaignContainer}>
+            {campaignId && (
+              <Link
+                to={`/campaign/${campaignId}`}
+                className={style.rtnCampaign}
+              >
+                <BiArrowBack />
+              </Link>
+            )}
             <div className={style.topBar}>
               <div className={style.userDetails}>
                 <div>
