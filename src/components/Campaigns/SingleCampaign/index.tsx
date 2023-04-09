@@ -23,7 +23,8 @@ const SingleCampaign = () => {
     singleCampaignContainer:
       "flex flex-col w-full h-full items-center justify-center bg-gradient-to-b from-[#9A9A9A]/20 to-[#9A9A9A]/10 dark:from-dark-box dark:to-dark-box rounded-md px-6 py-2",
     campaignName: "flex flex-row justify-between mt-4 w-full items-center",
-    campaignCategory: "text-xs",
+    campaignCategory: "text-xs w-full flex justify-end absolute top-2 right-2",
+    category: "capitalize bg-light-primary-primary p-1 text-dark-font-lightV1",
     campaignMoney: "text-sm",
     allCampaigns: "mb-12",
     campaignMoneyRaised: "text-xs",
@@ -58,6 +59,11 @@ const SingleCampaign = () => {
       <div className={style.campaignDiv}>
         <div className={style.mainCampaign}>
           <div className={style.campaignImageContainer}>
+            <div className={style.campaignCategory}>
+              {campaign?.category && (
+                <p className={style.category}>{campaign.category}</p>
+              )}
+            </div>
             {/* TODO: get cross origin error solution */}
             <div
               className={style.campaingImage}
