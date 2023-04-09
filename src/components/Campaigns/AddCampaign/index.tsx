@@ -2,6 +2,7 @@ import React from "react";
 import { AiOutlineMinusCircle } from "react-icons/ai";
 import { MdAddCircleOutline } from "react-icons/md";
 import { useCampaignsHandler } from "../../../hooks/useCampaignsHandler";
+import Select, { CSSObjectWithLabel } from "react-select";
 
 const AddCampaign = () => {
   const {
@@ -17,6 +18,9 @@ const AddCampaign = () => {
     addCampaign,
     disableBtn,
     campaignLink,
+    campaignCategory,
+    setCampaignCategory,
+    categories,
   } = useCampaignsHandler();
   const style = {
     campaignDiv: "text-light-font-lightV1 mt-4 w-full",
@@ -45,7 +49,34 @@ const AddCampaign = () => {
     singleMedia: "flex justify-between w-full dark:text-dark-font-lightV1 mb-2",
     eachMedia: "border-b-2 w-full mr-4",
     disableBtn: "pointer-events-none",
+    categoryLabel: "dark:text-dark-font-lightV1",
+    selectCategory: "mt-4 dark:text-dark-font-lightV1",
   };
+
+  const customStyles = {
+    control: (base: CSSObjectWithLabel) => ({
+      ...base,
+      background:
+        localStorage.theme && localStorage.theme === "dark"
+          ? "#262626"
+          : "#F9F9F9",
+    }),
+    menu: (base: CSSObjectWithLabel) => ({
+      ...base,
+      background:
+        localStorage.theme && localStorage.theme === "dark"
+          ? "#262626"
+          : "#F9F9F9",
+    }),
+    menuList: (base: CSSObjectWithLabel) => ({
+      ...base,
+      background:
+        localStorage.theme && localStorage.theme === "dark"
+          ? "#262626"
+          : "#F9F9F9",
+    }),
+  };
+
   return (
     <>
       <div className={"createCampaignMainContainer"}>
@@ -126,6 +157,23 @@ const AddCampaign = () => {
                 >
                   Logo Link
                 </label>
+              </div>
+              <div className={`${style.inputMargin}`}>
+                <label
+                  id="inputLabel"
+                  htmlFor="campaignCategory"
+                  className={style.categoryLabel}
+                >
+                  Category
+                </label>
+                <Select
+                  className={style.selectCategory}
+                  styles={customStyles}
+                  name="campaignCategory"
+                  defaultValue={campaignCategory}
+                  onChange={setCampaignCategory}
+                  options={categories}
+                />
               </div>
               <div className={style.mediaLinksHeading}>
                 <p>Media Links</p>

@@ -141,3 +141,19 @@ input:checked ~ .radio {
   -webkit-appearance: none;
   margin: 0;
 }
+
+#react-select-3-input {
+  color: #0a0a0a !important;
+}
+
+[class*="-singleValue"] {
+  color: #0a0a0a !important;
+}
+
+.dark #react-select-3-input {
+  color: #ffffff !important;
+}
+
+.dark [class*="-singleValue"] {
+  color: #ffffff !important;
+}

@@ -7,23 +7,25 @@ const CampaignList = ({
   description,
   logoLink,
   campaignKey,
+  category,
 }: ICampaign) => {
   const style = {
     campaignDiv: "text-light-font-lightV1 dark:text-dark-font-lightV1 h-full",
     singleCampaign:
-      "cursor-pointer w-fit rounded-md bg-gradient-to-r from-white to-white dark:from-transparent dark:to-transparent p-[2px] drop-shadow-xl h-full",
+      "cursor-pointer w-full rounded-md bg-gradient-to-r from-white to-white dark:from-transparent dark:to-transparent p-[2px] drop-shadow-xl h-full",
     singleCampaignContainer:
       "flex flex-col h-full bg-gradient-to-b from-[#9A9A9A]/20 to-[#9A9A9A]/10 dark:from-dark-box dark:to-dark-box rounded-md px-6 py-2",
     campaignName: "flex flex-row justify-between mt-4 w-full",
     campaignTitle: "font-bold",
-    campaignCategory: "text-xs",
+    campaignCategory: "text-xs w-full flex justify-end",
+    category: "capitalize bg-light-primary-primary p-1 text-dark-font-lightV1",
     campaignMoney: "text-sm",
     campaignMoneyRaised: "text-xs",
     campaignTime: "text-sm",
     campaignTimeLeft: "text-xs",
     campaingDesc: "text-sm my-4",
     campaignData: "flex justify-between w-full mb-4",
-    link: "w-fit h-full",
+    link: "w-full h-full",
     imageStyle: "h-[250px] flex justify-center items-center",
   };
   return (
@@ -31,6 +33,9 @@ const CampaignList = ({
       <div className={style.campaignDiv}>
         <div className={style.singleCampaign}>
           <div className={style.singleCampaignContainer}>
+            <div className={style.campaignCategory}>
+              {category && <p className={style.category}>{category}</p>}
+            </div>
             <div className={style.imageStyle}>
               <img src={logoLink} alt={"img1"} />
             </div>

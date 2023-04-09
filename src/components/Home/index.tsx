@@ -5,7 +5,8 @@ import { useCampaignsHandler } from "../../hooks/useCampaignsHandler";
 import { Link } from "react-router-dom";
 
 const Home = () => {
-  const { campaigns } = useCampaignsHandler();
+  const { campaigns, sortByCategory, activeTab, categories } =
+    useCampaignsHandler();
   const style = {
     learnMoreBtnDiv: "text-light-font-lightV1",
     btnLearnMore:
@@ -68,48 +69,48 @@ const Home = () => {
           <div className={style.browse}>
             <p>Browse</p>
           </div>
-          <div className={style.categoriesBtnDiv}>
+          <div
+            className={style.categoriesBtnDiv}
+            onClick={() => {
+              sortByCategory("All");
+            }}
+          >
             <div className={style.btnCategories}>
-              <div className={style.btnCategoriesContainerActive}>
+              <div
+                className={
+                  activeTab === "All"
+                    ? style.btnCategoriesContainerActive
+                    : style.btnCategoriesContainer
+                }
+              >
                 <p>All</p>
               </div>
             </div>
           </div>
-          <div className={style.categoriesBtnDiv}>
-            <div className={style.btnCategories}>
-              <div className={style.btnCategoriesContainer}>
-                <p>eCommerce</p>
-              </div>
-            </div>
-          </div>
-          <div className={style.categoriesBtnDiv}>
-            <div className={style.btnCategories}>
-              <div className={style.btnCategoriesContainer}>
-                <p>Business</p>
-              </div>
-            </div>
-          </div>
-          <div className={style.categoriesBtnDiv}>
-            <div className={style.btnCategories}>
-              <div className={style.btnCategoriesContainer}>
-                <p>Blog</p>
-              </div>
-            </div>
-          </div>
-          <div className={style.categoriesBtnDiv}>
-            <div className={style.btnCategories}>
-              <div className={style.btnCategoriesContainer}>
-                <p>Non-Profit</p>
-              </div>
-            </div>
-          </div>
-          <div className={style.categoriesBtnDiv}>
-            <div className={style.btnCategories}>
-              <div className={style.btnCategoriesContainer}>
-                <p>Personal</p>
-              </div>
-            </div>
-          </div>
+          {categories &&
+            categories.map((c, idx) => {
+              return (
+                <div
+                  key={idx}
+                  className={style.categoriesBtnDiv}
+                  onClick={() => {
+                    sortByCategory(c.value);
+                  }}
+                >
+                  <div className={style.btnCategories}>
+                    <div
+                      className={
+                        activeTab === c.value
+                          ? style.btnCategoriesContainerActive
+                          : style.btnCategoriesContainer
+                      }
+                    >
+                      <p>{c.value}</p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
         </div>
       </div>
       <div className={`${style.allCampaigns} campaignsMain`}>
@@ -126,6 +127,7 @@ const Home = () => {
                 tokenAddress={item.tokenAddress}
                 campaignKey={item.campaignKey}
                 stageCount={item.stageCount}
+                category={item.category}
               />
             );
           })}
