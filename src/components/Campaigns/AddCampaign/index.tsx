@@ -2,7 +2,6 @@ import React from "react";
 import { AiOutlineMinusCircle } from "react-icons/ai";
 import { MdAddCircleOutline } from "react-icons/md";
 import { useCampaignsHandler } from "../../../hooks/useCampaignsHandler";
-import Select, { CSSObjectWithLabel } from "react-select";
 
 const AddCampaign = () => {
   const {
@@ -49,32 +48,10 @@ const AddCampaign = () => {
     singleMedia: "flex justify-between w-full dark:text-dark-font-lightV1 mb-2",
     eachMedia: "border-b-2 w-full mr-4",
     disableBtn: "pointer-events-none",
-    categoryLabel: "dark:text-dark-font-lightV1",
-    selectCategory: "mt-4 dark:text-dark-font-lightV1",
-  };
-
-  const customStyles = {
-    control: (base: CSSObjectWithLabel) => ({
-      ...base,
-      background:
-        localStorage.theme && localStorage.theme === "dark"
-          ? "#262626"
-          : "#F9F9F9",
-    }),
-    menu: (base: CSSObjectWithLabel) => ({
-      ...base,
-      background:
-        localStorage.theme && localStorage.theme === "dark"
-          ? "#262626"
-          : "#F9F9F9",
-    }),
-    menuList: (base: CSSObjectWithLabel) => ({
-      ...base,
-      background:
-        localStorage.theme && localStorage.theme === "dark"
-          ? "#262626"
-          : "#F9F9F9",
-    }),
+    categoryLabel: "dark:text-dark-font-lightV1 mb-2",
+    selectCategory:
+      "dark:text-dark-font-lightV1 dark:bg-dark-box border-2 border-[#E5E7EB] bg-transparent p-0 m-0 outline-none relative inline-block w-full",
+    selectBox: "flex flex-col w-full",
   };
 
   return (
@@ -158,7 +135,7 @@ const AddCampaign = () => {
                   Logo Link
                 </label>
               </div>
-              <div className={`${style.inputMargin}`}>
+              <div className={`${style.selectBox} ${style.inputMargin}`}>
                 <label
                   id="inputLabel"
                   htmlFor="campaignCategory"
@@ -166,14 +143,25 @@ const AddCampaign = () => {
                 >
                   Category
                 </label>
-                <Select
+                <select
                   className={style.selectCategory}
-                  styles={customStyles}
                   name="campaignCategory"
-                  defaultValue={campaignCategory}
-                  onChange={setCampaignCategory}
-                  options={categories}
-                />
+                  id="campaignCategory"
+                  value={campaignCategory}
+                  onChange={(e) => setCampaignCategory(e.target.value)}
+                >
+                  <option value="" disabled>
+                    Select a category
+                  </option>
+                  {categories &&
+                    categories.map((category, idx) => {
+                      return (
+                        <option key={idx} value={category.value}>
+                          {category.label}
+                        </option>
+                      );
+                    })}
+                </select>
               </div>
               <div className={style.mediaLinksHeading}>
                 <p>Media Links</p>

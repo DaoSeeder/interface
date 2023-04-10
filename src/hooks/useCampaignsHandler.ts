@@ -13,7 +13,6 @@ import { useProvider, useSigner } from "wagmi";
 import DaoSeederFactory from "@daoseeder/core/artifacts/contracts/DaoSeederFactory.sol/DaoSeederFactory.json";
 import toast from "react-hot-toast";
 import { constants, utils } from "ethers";
-import { SingleValue } from "react-select";
 
 export const useCampaignsHandler = () => {
   const navigate = useNavigate();
@@ -34,8 +33,7 @@ export const useCampaignsHandler = () => {
   const [campaigns, setCampaigns] = useState<ICampaign[]>([]);
   const [activeTab, setActiveTab] = useState<string>("All");
   const [allCampaigns, setAllCampaigns] = useState<ICampaign[]>([]);
-  const [campaignCategory, setCampaignCategory] =
-    useState<SingleValue<{ value: string; label: string } | null>>(null);
+  const [campaignCategory, setCampaignCategory] = useState<string>("");
   const categories = [
     { value: "DeFi", label: "DeFi" },
     { value: "Apps", label: "Apps" },
@@ -101,7 +99,7 @@ export const useCampaignsHandler = () => {
           tokenAddress: campaignTokenAddress,
           campaignKey: "",
           stageCount: 0,
-          category: campaignCategory?.value || "",
+          category: campaignCategory || "",
         };
         const cid = await addCampaignToIpfs(campaign);
         if (cid) {
@@ -119,7 +117,7 @@ export const useCampaignsHandler = () => {
               tokenAddress: campaignTokenAddress,
               campaignKey: "",
               stageCount: 0,
-              category: campaignCategory?.value || "",
+              category: campaignCategory || "",
             },
           });
         } else {
