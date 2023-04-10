@@ -18,7 +18,7 @@ import { constants, ethers, utils } from "ethers";
 
 export const useSingleStageHandler = () => {
   const { state } = useLocation();
-  const { id, stageId } = useParams();
+  const { id: campaignId, stageId } = useParams();
   const { address } = useAccount();
 
   const { data: balance } = useBalance({
@@ -735,7 +735,7 @@ export const useSingleStageHandler = () => {
       return;
     }
 
-    if (!id) {
+    if (!campaignId) {
       toast.error("No campaign id found");
       return;
     }
@@ -745,7 +745,7 @@ export const useSingleStageHandler = () => {
       provider,
       JSON.stringify(DaoSeederFactory.abi)
     );
-    const data = await getCampaign(id, contract);
+    const data = await getCampaign(campaignId, contract);
     const loading = toast.loading("Loading...");
     if (data) {
       try {
@@ -816,6 +816,6 @@ export const useSingleStageHandler = () => {
     commitERCAmount,
     tokensCommittedEth,
     maxVoteWeight,
-    id,
+    campaignId,
   };
 };

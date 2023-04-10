@@ -55,7 +55,7 @@ function Stage() {
     commitERCAmount,
     tokensCommittedEth,
     maxVoteWeight,
-    id: campaignId,
+    campaignId,
   } = useSingleStageHandler();
   const style = {
     campaignDiv:
