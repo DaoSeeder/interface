@@ -22,7 +22,6 @@
     "react-icons": "^4.7.1",
     "react-router-dom": "^6.6.2",
     "react-scripts": "5.0.1",
-    "react-share": "^4.4.1",
     "typescript": "*",
     "wagmi": "^0.10.14",
     "web-vitals": "^2.1.0"
