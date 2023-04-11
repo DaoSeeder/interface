@@ -9,8 +9,15 @@ import { MdAdd } from "react-icons/md";
 import { commonStyles } from "../../../styles/commonStyles";
 
 const SingleCampaign = () => {
-  const { campaign, mediaLinkIdx, prevItem, nextItem, campaigns, allStages } =
-    useSingleCampaignHandler();
+  const {
+    campaign,
+    mediaLinkIdx,
+    prevItem,
+    nextItem,
+    campaigns,
+    allStages,
+    copyLink,
+  } = useSingleCampaignHandler();
   const style = {
     campaignDiv:
       "text-light-font-lightV1 dark:text-dark-font-lightV1 mt-4 w-full",
@@ -49,6 +56,12 @@ const SingleCampaign = () => {
     addCampaignBtn:
       "w-fit text-light-font-lightV1 dark:text-dark-font-lightV1 ml-2 rounded-full bg-gradient-to-r from-light-primary-primary to-light-primary-secondary px-1 py-1",
     linkBtn: "w-fit",
+    shareBtnDiv: "text-light-font-lightV1 dark:text-dark-font-lightV1 ml-2",
+    btnShare:
+      "cursor-pointer w-fit rounded-full bg-gradient-to-r from-light-primary-primary to-light-primary-secondary p-[2px]",
+    btnShareContainer:
+      "flex h-full w-full items-center justify-center bg-[#FFFFFF] dark:bg-dark-background dark:text-dark-font-lightV1 rounded-full px-8 py-2",
+    shareNow: "text-light-font-lightV1 dark:text-dark-font-lightV1 p-0 m-0",
   };
   return (
     <>
@@ -87,6 +100,13 @@ const SingleCampaign = () => {
           }}
         >
           {">"}
+        </div>
+      </div>
+      <div className={style.shareBtnDiv}>
+        <div className={style.btnShare} onClick={copyLink}>
+          <div className={style.btnShareContainer}>
+            <p>Share</p>
+          </div>
         </div>
       </div>
       <div className={commonStyles.paragraph}>

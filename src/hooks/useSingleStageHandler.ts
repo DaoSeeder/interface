@@ -770,6 +770,11 @@ export const useSingleStageHandler = () => {
     closeERC20Modal();
   };
 
+  const copyLink = () => {
+    window.navigator.clipboard.writeText(window.location.href);
+    toast.success("Link Copied Successfully");
+  };
+
   return {
     stageData,
     handleInputChange,
@@ -817,5 +822,6 @@ export const useSingleStageHandler = () => {
     tokensCommittedEth,
     maxVoteWeight,
     campaignId,
+    copyLink,
   };
 };

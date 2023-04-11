@@ -139,5 +139,18 @@ export const useSingleCampaignHandler = () => {
     }
   };
 
-  return { campaign, mediaLinkIdx, prevItem, nextItem, campaigns, allStages };
+  const copyLink = () => {
+    window.navigator.clipboard.writeText(window.location.href);
+    toast.success("Link copied successfully");
+  };
+
+  return {
+    campaign,
+    mediaLinkIdx,
+    prevItem,
+    nextItem,
+    campaigns,
+    allStages,
+    copyLink,
+  };
 };

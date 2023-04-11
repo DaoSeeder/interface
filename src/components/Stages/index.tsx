@@ -56,6 +56,7 @@ const Stage = () => {
     tokensCommittedEth,
     maxVoteWeight,
     campaignId,
+    copyLink,
   } = useSingleStageHandler();
   const style = {
     campaignDiv:
@@ -88,7 +89,7 @@ const Stage = () => {
     stageDivBtns: "flex",
     stageDonateNow:
       "bg-gradient-to-r from-light-primary-primary to-light-primary-secondary rounded-3xl py-2 px-8 text-light-font-lightV2 dark:text-dark-font-lightV2 cursor-pointer flex justify-center items-center",
-    shareBtnDiv: "text-light-font-lightV1 dark:text-dark-font-lightV1 ml-2",
+    shareBtnDiv: "flex gap-2 ml-2",
     btnShare:
       "cursor-pointer w-fit rounded-full bg-gradient-to-r from-light-primary-primary to-light-primary-secondary p-[2px]",
     btnShareContainer:
@@ -226,7 +227,7 @@ const Stage = () => {
                   </div>
                 ) : null}
                 <div className={style.shareBtnDiv}>
-                  <div className={style.btnShare}>
+                  <div className={style.btnShare} onClick={copyLink}>
                     <div className={style.btnShareContainer}>
                       <p>Share</p>
                     </div>
