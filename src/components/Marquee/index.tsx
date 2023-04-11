@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { TfiAnnouncement } from "react-icons/tfi";
 import { Link } from "react-router-dom";
 
-function Marquee() {
+const Marquee = () => {
   const style = {
     marquee:
       "flex items-center gap-2 text-dark-font-lightV1 bg-gradient-to-r from-light-primary-primary to-light-primary-secondary mb-4 -mt-6 p-2",
@@ -33,6 +33,6 @@ function Marquee() {
       </div>
     </Link>
   );
-}
+};
 
 export default Marquee;

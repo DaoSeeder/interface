@@ -4,7 +4,7 @@ import { AiTwotoneMail } from "react-icons/ai";
 import { BsFacebook } from "react-icons/bs";
 import { FaTwitterSquare } from "react-icons/fa";
 
-function Contact() {
+const Contact = () => {
   const style = {
     wrapper: "mt-8",
     icons: "",
@@ -45,6 +45,6 @@ function Contact() {
       </div>
     </div>
   );
-}
+};
 
 export default Contact;

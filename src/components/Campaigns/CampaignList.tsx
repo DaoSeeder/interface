@@ -2,7 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { ICampaign } from "../../interfaces/ICampaign";
 
-function CampaignList({ name, description, logoLink, campaignKey }: ICampaign) {
+const CampaignList = ({
+  name,
+  description,
+  logoLink,
+  campaignKey,
+}: ICampaign) => {
   const style = {
     campaignDiv: "text-light-font-lightV1 dark:text-dark-font-lightV1 h-full",
     singleCampaign:
@@ -40,6 +45,6 @@ function CampaignList({ name, description, logoLink, campaignKey }: ICampaign) {
       </div>
     </Link>
   );
-}
+};
 
 export default CampaignList;

@@ -5,8 +5,10 @@ import StageAddVote from "./StageAddVote";
 import { useSingleStageHandler } from "../../hooks/useSingleStageHandler";
 import StageDonate from "./StageDonate";
 import CommitERCTokenModal from "./CommitERCTokenModal";
+import { Link } from "react-router-dom";
+import { BiArrowBack } from "react-icons/bi";
 
-function Stage() {
+const Stage = () => {
   const {
     stageData,
     transferAmount,
@@ -53,6 +55,7 @@ function Stage() {
     commitERCAmount,
     tokensCommittedEth,
     maxVoteWeight,
+    campaignId,
     copyLink,
   } = useSingleStageHandler();
   const style = {
@@ -96,6 +99,8 @@ function Stage() {
     timeline: "my-12 text-light-font-lightV1 dark:text-dark-font-lightV1",
     disableBtn: "pointer-events-none",
     expDate: "text-xs",
+    rtnCampaign:
+      "w-fit p-2 rounded-2xl text-light-font-lightV1 dark:text-dark-font-lightV1 text-sm cursor-pointer mb-4 hover:bg-gray-400 hover:dark:bg-dark-border-light",
   };
 
   return (
@@ -126,6 +131,14 @@ function Stage() {
       <div className={style.campaignDiv}>
         <div className={style.mainCampaign}>
           <div className={style.singleCampaignContainer}>
+            {campaignId && (
+              <Link
+                to={`/campaign/${campaignId}`}
+                className={style.rtnCampaign}
+              >
+                <BiArrowBack />
+              </Link>
+            )}
             <div className={style.topBar}>
               <div className={style.userDetails}>
                 <div>
@@ -210,7 +223,7 @@ function Stage() {
                     className={style.stageDonateNow}
                     onClick={donateNowDialog}
                   >
-                    Commit Funds
+                    Support This Project
                   </div>
                 ) : null}
                 <div className={style.shareBtnDiv}>
@@ -316,6 +329,6 @@ function Stage() {
       </div>
     </>
   );
-}
+};
 
 export default Stage;
