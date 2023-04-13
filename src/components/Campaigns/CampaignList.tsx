@@ -36,9 +36,15 @@ const CampaignList = ({
             <div className={style.campaignCategory}>
               {category && <p className={style.category}>{category}</p>}
             </div>
-            <div className={style.imageStyle}>
-              <img src={logoLink} alt={"img1"} />
-            </div>
+            <div
+              className={style.imageStyle}
+              style={{
+                backgroundImage: `url(${logoLink})`,
+                backgroundSize: "contain",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center center",
+              }}
+            ></div>
             <div className={style.campaignName}>
               <p className={style.campaignTitle}>{name}</p>
             </div>
