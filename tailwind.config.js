@@ -5,6 +5,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        disabled: "#88D4C1",
         error: "#ff3333",
         light: {
           primary: {
