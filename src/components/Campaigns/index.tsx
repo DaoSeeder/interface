@@ -32,6 +32,7 @@ const Campaigns = () => {
                 tokenAddress={item.tokenAddress}
                 campaignKey={item.campaignKey}
                 stageCount={item.stageCount}
+                category={item.category}
               />
             );
           })}

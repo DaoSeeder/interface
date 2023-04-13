@@ -38,6 +38,7 @@ export const useSingleCampaignHandler = () => {
         tokenAddress: state.tokenAddress,
         campaignKey: "",
         stageCount: 0,
+        category: state.category,
       };
       setCampaign(data);
       toast.dismiss(loading);

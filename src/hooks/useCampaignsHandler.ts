@@ -31,6 +31,15 @@ export const useCampaignsHandler = () => {
   const [totalLen, setTotalLen] = useState<number>(0);
   const [fetchFirstTime, setFetchFirstTime] = useState<boolean>(true);
   const [campaigns, setCampaigns] = useState<ICampaign[]>([]);
+  const [activeTab, setActiveTab] = useState<string>("All");
+  const [allCampaigns, setAllCampaigns] = useState<ICampaign[]>([]);
+  const [campaignCategory, setCampaignCategory] = useState<string>("");
+  const categories = [
+    { value: "DeFi", label: "DeFi" },
+    { value: "Apps", label: "Apps" },
+    { value: "Tools", label: "Tools" },
+    { value: "Wallets", label: "Wallets" },
+  ];
 
   const validateLinks = (): boolean => {
     if (
@@ -90,6 +99,7 @@ export const useCampaignsHandler = () => {
           tokenAddress: campaignTokenAddress,
           campaignKey: "",
           stageCount: 0,
+          category: campaignCategory || "",
         };
         const cid = await addCampaignToIpfs(campaign);
         if (cid) {
@@ -107,6 +117,7 @@ export const useCampaignsHandler = () => {
               tokenAddress: campaignTokenAddress,
               campaignKey: "",
               stageCount: 0,
+              category: campaignCategory || "",
             },
           });
         } else {
@@ -153,6 +164,7 @@ export const useCampaignsHandler = () => {
             setTotalLen(arrLength - 6);
             const data = await getCampaigns(contract, len, arrLength);
             setCampaigns(data);
+            setAllCampaigns(data);
           }
         }
       } catch (err) {
@@ -186,6 +198,26 @@ export const useCampaignsHandler = () => {
     }
   };
 
+  const sortByCategory = (category: string) => {
+    let filteredCampaigns = allCampaigns;
+
+    switch (category) {
+      case "DeFi":
+      case "Apps":
+      case "Wallets":
+      case "Tools":
+        filteredCampaigns = allCampaigns.filter(
+          (campaign) => campaign.category === category
+        );
+        break;
+      default:
+        break;
+    }
+
+    setActiveTab(category);
+    setCampaigns(filteredCampaigns);
+  };
+
   return {
     setCampaignName,
     setCampaignLogoLink,
@@ -202,5 +234,10 @@ export const useCampaignsHandler = () => {
     loadMoreCampaigns,
     totalLen,
     campaignLink,
+    campaignCategory,
+    setCampaignCategory,
+    categories,
+    sortByCategory,
+    activeTab,
   };
 };

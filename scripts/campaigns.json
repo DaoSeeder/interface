@@ -10,7 +10,8 @@
         ],
         "tokenAddress": "",
         "campaignKey": "",
-        "stageCount": 0
+        "stageCount": 0,
+        "category": "DeFi"
     },
     {
         "name": "Blockchain Cloud Storage",
@@ -22,7 +23,8 @@
         ],
         "tokenAddress": "",
         "campaignKey": "",
-        "stageCount": 0
+        "stageCount": 0,
+        "category": "Apps"
     },
     {
         "name": "Blockchain A-Z™: Learn How To Build Your Own Blockchain",
@@ -35,7 +37,8 @@
         ],
         "tokenAddress": "",
         "campaignKey": "",
-        "stageCount": 0
+        "stageCount": 0,
+        "category": "Tools"
     },
     {
         "name": "Mr Blinky Bling DEFCON 26 Indie Badge",
@@ -47,7 +50,8 @@
         ],
         "tokenAddress": "",
         "campaignKey": "",
-        "stageCount": 0
+        "stageCount": 0,
+        "category": "Wallets"
     },
     {
         "name": "Splinterlands UNTAMED! A Blockchain Trading Card Game!",
@@ -61,6 +65,7 @@
         ],
         "tokenAddress": "",
         "campaignKey": "",
-        "stageCount": 0
+        "stageCount": 0,
+        "category": "DeFi"
     }
 ]
