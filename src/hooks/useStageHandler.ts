@@ -52,6 +52,9 @@ export const useStageHandler = () => {
             "No Campaign found please. Please enter correct campaign key"
           );
         } else {
+          if (data.owner !== address) {
+            window.location.href = "/";
+          }
           if (data.projectToken) {
             setTokenAddress(data.projectToken);
           }
@@ -64,7 +67,7 @@ export const useStageHandler = () => {
         toast.error(e.message);
       }
     }
-  }, [DAOSEEDER_FACTORY_ADDRESS, id, provider]);
+  }, [DAOSEEDER_FACTORY_ADDRESS, id, provider, address]);
 
   useEffect(() => {
     if (id && fetchFirstTime && DAOSEEDER_FACTORY_ADDRESS && provider) {
@@ -197,5 +200,6 @@ export const useStageHandler = () => {
     expiryBlock,
     balance,
     deliverable,
+    address,
   };
 };
