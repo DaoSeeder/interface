@@ -7,4 +7,5 @@ export interface ICampaign {
   tokenAddress: string;
   campaignKey: string;
   stageCount: number;
+  owner: string;
 }

@@ -47,6 +47,7 @@ export const getCampaign = async (
   const campaignData = await getContractCampaign(campaignKey, contract);
   const ipfsCampaign: ICampaign = await getCampaignData(campaignData.ipfsKey);
   ipfsCampaign.stageCount = campaignData.stageCount;
+  ipfsCampaign.owner = campaignData.owner;
   return ipfsCampaign;
 };
 

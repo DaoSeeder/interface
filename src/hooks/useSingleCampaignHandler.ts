@@ -7,13 +7,14 @@ import {
   getCampaigns,
   getSmartContractWithProvider,
 } from "../utils/ContractUtils";
-import { useProvider } from "wagmi";
+import { useAccount, useProvider } from "wagmi";
 import toast from "react-hot-toast";
 import DaoSeederFactory from "@daoseeder/core/artifacts/contracts/DaoSeederFactory.sol/DaoSeederFactory.json";
 import { ICampaign } from "../interfaces/ICampaign";
 
 export const useSingleCampaignHandler = () => {
   const { state } = useLocation();
+  const { address } = useAccount();
 
   const { id } = useParams();
   const DAOSEEDER_FACTORY_ADDRESS =
@@ -38,6 +39,7 @@ export const useSingleCampaignHandler = () => {
         tokenAddress: state.tokenAddress,
         campaignKey: "",
         stageCount: 0,
+        owner: state.owner,
       };
       setCampaign(data);
       toast.dismiss(loading);
@@ -152,5 +154,6 @@ export const useSingleCampaignHandler = () => {
     campaigns,
     allStages,
     copyLink,
+    address,
   };
 };

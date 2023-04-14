@@ -17,6 +17,7 @@ const SingleCampaign = () => {
     campaigns,
     allStages,
     copyLink,
+    address,
   } = useSingleCampaignHandler();
   const style = {
     campaignDiv:
@@ -131,11 +132,13 @@ const SingleCampaign = () => {
       </div>
       <div className={`${style.stageDetails} ${style.allStages}`}>
         <p>Stages</p>
-        <Link to="stage/add" className={style.linkBtn}>
-          <div className={style.addCampaignBtn}>
-            <MdAdd />
-          </div>
-        </Link>
+        {address === campaign?.owner && (
+          <Link to="stage/add" className={style.linkBtn}>
+            <div className={style.addCampaignBtn}>
+              <MdAdd />
+            </div>
+          </Link>
+        )}
       </div>
       <div className={style.stages}>
         {allStages && allStages.length > 0
@@ -170,6 +173,7 @@ const SingleCampaign = () => {
                 tokenAddress={item.tokenAddress}
                 campaignKey={item.campaignKey}
                 stageCount={item.stageCount}
+                owner={item.owner}
               />
             );
           })}

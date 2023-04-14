@@ -7,6 +7,7 @@ import {
   getDateFromBlockNumber,
   getSmartContractWithProvider,
   getSmartContractWithSigner,
+  getStageKey,
 } from "./../utils/ContractUtils";
 import toast from "react-hot-toast";
 import StageContract from "@daoseeder/core/artifacts/contracts/Stage.sol/Stage.json";
@@ -62,6 +63,7 @@ export const useSingleStageHandler = () => {
   const [ercBtnDisable, setErcBtnDisable] = useState<boolean>(false);
   const [tokensCommittedEth, setTokensCommittedEth] = useState<string>();
   const [maxVoteWeight, setMaxVoteWeight] = useState<number>();
+  const [campaignTitle, setCampaignTitle] = useState<string>("");
 
   useEffect(() => {
     const fetchFactoryData = async () => {
@@ -257,6 +259,32 @@ export const useSingleStageHandler = () => {
       fetchStage();
     }
   }, [address, provider, stageAddress, state]);
+
+  useEffect(() => {
+    const fetchStageData = async () => {
+      if (DAOSEEDER_FACTORY_ADDRESS && campaignId) {
+        const contract = await getSmartContractWithProvider(
+          DAOSEEDER_FACTORY_ADDRESS,
+          provider,
+          JSON.stringify(DaoSeederFactory.abi)
+        );
+        const data = await getCampaign(campaignId, contract);
+        if (data && parseInt(data.stageCount.toString()) > 0) {
+          for (let i = 1; i <= parseInt(data.stageCount.toString()); i++) {
+            const stageKey = await getStageKey(data.tokenAddress, i);
+            if (stageKey === stageId) {
+              setCampaignTitle(data.name + " - Stage (" + i + ")");
+              break;
+            }
+          }
+        }
+      }
+    };
+
+    if (DAOSEEDER_FACTORY_ADDRESS && campaignId && stageId) {
+      fetchStageData();
+    }
+  }, [DAOSEEDER_FACTORY_ADDRESS, campaignId, provider, stageId]);
 
   const closeModal = () => {
     setIsOpen(false);
@@ -823,5 +851,6 @@ export const useSingleStageHandler = () => {
     maxVoteWeight,
     campaignId,
     copyLink,
+    campaignTitle,
   };
 };

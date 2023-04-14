@@ -9,7 +9,7 @@ import {
 } from "../utils/ContractUtils";
 import { ICampaign } from "../interfaces/ICampaign";
 import { addCampaignToIpfs } from "../utils/ipfsUtils";
-import { useProvider, useSigner } from "wagmi";
+import { useAccount, useProvider, useSigner } from "wagmi";
 import DaoSeederFactory from "@daoseeder/core/artifacts/contracts/DaoSeederFactory.sol/DaoSeederFactory.json";
 import toast from "react-hot-toast";
 import { constants, utils } from "ethers";
@@ -17,6 +17,7 @@ import { constants, utils } from "ethers";
 export const useCampaignsHandler = () => {
   const navigate = useNavigate();
   const provider = useProvider();
+  const { address } = useAccount();
   const DAOSEEDER_FACTORY_ADDRESS =
     process.env.REACT_APP_DAOSEEDER_FACTORY_ADDRESS;
   const { data: signer } = useSigner();
@@ -90,6 +91,7 @@ export const useCampaignsHandler = () => {
           tokenAddress: campaignTokenAddress,
           campaignKey: "",
           stageCount: 0,
+          owner: "",
         };
         const cid = await addCampaignToIpfs(campaign);
         if (cid) {
@@ -107,6 +109,7 @@ export const useCampaignsHandler = () => {
               tokenAddress: campaignTokenAddress,
               campaignKey: "",
               stageCount: 0,
+              owner: address,
             },
           });
         } else {

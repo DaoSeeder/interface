@@ -57,6 +57,7 @@ const Stage = () => {
     maxVoteWeight,
     campaignId,
     copyLink,
+    campaignTitle,
   } = useSingleStageHandler();
   const style = {
     campaignDiv:
@@ -146,10 +147,11 @@ const Stage = () => {
                     className={style.userImage}
                     src={Avatar}
                     alt={"userIcon"}
+                    title={"Owner: " + stageData?.stageContract?.projectOwner}
                   />
                 </div>
                 <div className={style.userData}>
-                  <div>{stageData?.stageContract?.projectOwner}</div>
+                  <div>{campaignTitle}</div>
                 </div>
               </div>
               <div className={style.stageProgress}>
