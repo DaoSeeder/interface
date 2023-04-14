@@ -1,6 +1,7 @@
 import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
 import "@nomiclabs/hardhat-ethers";
+import secrets = require("./secrets.json");
 
 const config: HardhatUserConfig = {
   solidity: "0.8.17",
@@ -8,17 +9,16 @@ const config: HardhatUserConfig = {
     hardhat: {
       chainId: 31337,
       accounts: {
-        // mnemonic: "cat cat cat cat cat cat cat cat cat cat cat cat",
-        path: "m/44'/60'/0'/0",
+        mnemonic: secrets.mnemonic,
+        path: secrets.path,
       },
     },
     DSChain: {
       chainId: 326,
       url: "http://127.0.0.1:8545",
       accounts: {
-        mnemonic:
-          "frequent bleak moon urban silent mandate black yellow uphold thumb proof amount",
-        path: "m/44'/60'/0'/0",
+        mnemonic: secrets.mnemonic,
+        path: secrets.path,
       },
     },
   },
