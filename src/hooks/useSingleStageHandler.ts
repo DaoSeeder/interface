@@ -5,6 +5,7 @@ import {
   fetchCurrentBlock,
   getCampaign,
   getDateFromBlockNumber,
+  getNetworkName,
   getSmartContractWithProvider,
   getSmartContractWithSigner,
 } from "./../utils/ContractUtils";
@@ -19,7 +20,7 @@ import { constants, ethers, utils } from "ethers";
 export const useSingleStageHandler = () => {
   const { state } = useLocation();
   const { id: campaignId, stageId } = useParams();
-  const { address } = useAccount();
+  const { address, isConnected } = useAccount();
 
   const { data: balance } = useBalance({
     address,
@@ -62,6 +63,27 @@ export const useSingleStageHandler = () => {
   const [ercBtnDisable, setErcBtnDisable] = useState<boolean>(false);
   const [tokensCommittedEth, setTokensCommittedEth] = useState<string>();
   const [maxVoteWeight, setMaxVoteWeight] = useState<number>();
+
+  useEffect(() => {
+    async function getCurrencySymbol() {
+      try {
+        if (isConnected && window.ethereum) {
+          const chainId = await window.ethereum.request({
+            method: "eth_chainId",
+          });
+          console.log(parseInt(chainId));
+          console.log(getNetworkName(parseInt(chainId).toString()));
+        }
+      } catch (err) {
+        console.error(err);
+        console.log("ERROR");
+      }
+    }
+
+    if (isConnected) {
+      getCurrencySymbol();
+    }
+  }, [isConnected]);
 
   useEffect(() => {
     const fetchFactoryData = async () => {

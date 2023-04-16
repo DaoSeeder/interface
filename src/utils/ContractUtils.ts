@@ -2,6 +2,8 @@ import { ICampaign } from "./../interfaces/ICampaign";
 import { getCampaignData } from "../utils/ipfsUtils";
 import { Provider } from "@ethersproject/providers";
 import { Contract, ethers, Signer } from "ethers";
+import ChainData from "../configs/chainconfig.json";
+import { IChainList } from "../interfaces/IChainList";
 
 export const truncateAddress = (address: string): string => {
   const first = address.substring(0, 5);
@@ -106,4 +108,9 @@ export const checkLinkValidity = (link: string): boolean => {
   const pattern =
     /^https?:\/\/(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,63}(?:\/[^\s]*)?$/;
   return pattern.test(link);
+};
+
+export const getNetworkName = (networkId: string): string => {
+  const chainList: IChainList = ChainData;
+  return chainList[networkId];
 };
