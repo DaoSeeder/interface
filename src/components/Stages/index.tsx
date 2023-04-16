@@ -22,7 +22,7 @@ const Stage = () => {
     closeDonateModal,
     donateNowDialog,
     balance,
-    address,
+    userAddress,
     showCompleteBtn,
     completeStage,
     completeBtnDisable,
@@ -237,7 +237,7 @@ const Stage = () => {
                 </div>
               </div>
               <div>
-                {stageData?.stageContract?.projectOwner !== address &&
+                {stageData?.stageContract?.projectOwner !== userAddress &&
                 showVotingBtn ? (
                   <div
                     className={`${style.stageDonateNow} ${
@@ -299,7 +299,7 @@ const Stage = () => {
                   </div>
                 ) : null}
               </div>
-              {stageData?.stageContract?.projectOwner === address ? (
+              {stageData?.stageContract?.projectOwner === userAddress ? (
                 <div
                   className={`${style.stageDonateNow}`}
                   onClick={openERC20Modal}
