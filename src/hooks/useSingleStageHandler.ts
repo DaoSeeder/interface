@@ -29,10 +29,7 @@ export const useSingleStageHandler = () => {
   const provider = useProvider();
   const { data: signer } = useSigner();
   const [stageData, setStageData] = useState<IStage | null>(null);
-  const [userVote, setUserVote] = useState<boolean>(false);
   const [voteBtnDisable, setVoteBtnDisable] = useState<boolean>(false);
-  const [donationAmount, setDonationAmount] = useState<number>(0);
-  const [btnDisable, setBtnDisable] = useState<boolean>(false);
   const [stageAddress, setStageAddress] = useState<string>("");
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isDonateOpen, setIsDonateOpen] = useState<boolean>(false);
@@ -258,140 +255,12 @@ export const useSingleStageHandler = () => {
     }
   }, [address, provider, stageAddress, state]);
 
-  const closeModal = () => {
-    setIsOpen(false);
-  };
-
   const openModal = () => {
     setIsOpen(true);
   };
 
   const donateNowDialog = () => {
     setIsDonateOpen(true);
-  };
-
-  const closeDonateModal = () => {
-    setIsDonateOpen(false);
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = e.target.value;
-    setDonationAmount(parseFloat(newValue));
-  };
-
-  const transferAmount = async () => {
-    if (donationAmount <= 0) {
-      toast.error("Please enter a valid amount");
-      return;
-    }
-    if (
-      !stageAddress ||
-      constants.AddressZero === stageAddress ||
-      !utils.isAddress(stageAddress)
-    ) {
-      toast.error("Please enter a valid stage address");
-      return;
-    }
-    if (!signer) {
-      toast.error("Please connect you wallet");
-      return;
-    }
-    setBtnDisable(true);
-    const loading = toast.loading("Loading...");
-    try {
-      const stageContract = await getSmartContractWithSigner(
-        stageAddress,
-        signer,
-        JSON.stringify(StageContract.abi)
-      );
-      const tx = await stageContract.commitFunds({
-        value: ethers.utils.parseEther(donationAmount.toString()),
-      });
-      await tx.wait();
-      toast.success("Your transaction was successful");
-      const obj = stageData;
-      if (obj?.stageContract.totalCommitted) {
-        obj.stageContract.totalCommitted += donationAmount;
-      } else if (obj) {
-        obj.stageContract.totalCommitted = donationAmount;
-      }
-      setStageData(obj);
-      closeDonateModal();
-    } catch (err) {
-      if (err instanceof Error) {
-        if (err.message.includes("invalid address")) {
-          toast.error("Please provide a valid stage address");
-        } else if (err.message.includes("user rejected transaction")) {
-          toast.error("Transaction rejected");
-        } else {
-          toast.error(
-            "An error occurred while processing the transaction. Please try again"
-          );
-        }
-      } else {
-        toast.error(
-          "An error occurred while processing the request. Please try again"
-        );
-      }
-    }
-    toast.dismiss(loading);
-    setBtnDisable(false);
-  };
-
-  const submitUserVote = async () => {
-    if (!stageData) {
-      toast.error("No stage found. Please provide a valid stage");
-      return;
-    }
-    if (
-      !stageAddress ||
-      constants.AddressZero === stageAddress ||
-      !utils.isAddress(stageAddress)
-    ) {
-      toast.error("Please enter a valid stage address");
-      return;
-    }
-    if (!signer) {
-      toast.error("Please connect you wallet");
-      return;
-    }
-
-    if (!showVotingBtn) {
-      toast.error(
-        "The stage is still active. You can only vote when the stage is completed"
-      );
-      return;
-    }
-
-    setVoteBtnDisable(true);
-    const loading = toast.loading("Loading...");
-    try {
-      const stageContract = await getSmartContractWithSigner(
-        stageAddress,
-        signer,
-        JSON.stringify(StageContract.abi)
-      );
-      const tx = await stageContract.vote(userVote);
-      await tx.wait();
-      toast.success("Your transaction was successful");
-    } catch (err) {
-      if (err instanceof Error) {
-        if (err.message && err.message.includes("Active()")) {
-          toast.error("The stage is still active. You can not add vote");
-        } else {
-          toast.error(
-            "An error occurred while processing the transaction. Please try again"
-          );
-        }
-      } else {
-        toast.error(
-          "An error occurred while processing the request. Please try again"
-        );
-      }
-      setVoteBtnDisable(false);
-    }
-    toast.dismiss(loading);
-    closeModal();
   };
 
   const completeStage = async () => {
@@ -777,18 +646,11 @@ export const useSingleStageHandler = () => {
 
   return {
     stageData,
-    handleInputChange,
-    transferAmount,
-    donationAmount,
-    btnDisable,
-    setUserVote,
-    submitUserVote,
     voteBtnDisable,
     isOpen,
-    closeModal,
+    setIsOpen,
     openModal,
     isDonateOpen,
-    closeDonateModal,
     donateNowDialog,
     balance,
     address,
@@ -823,5 +685,8 @@ export const useSingleStageHandler = () => {
     maxVoteWeight,
     campaignId,
     copyLink,
+    stageAddress,
+    setIsDonateOpen,
+    setStageData,
   };
 };

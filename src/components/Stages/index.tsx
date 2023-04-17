@@ -11,15 +11,11 @@ import { BiArrowBack } from "react-icons/bi";
 const Stage = () => {
   const {
     stageData,
-    transferAmount,
-    handleInputChange,
-    donationAmount,
-    btnDisable,
+    voteBtnDisable,
     isOpen,
-    closeModal,
+    setIsOpen,
     openModal,
     isDonateOpen,
-    closeDonateModal,
     donateNowDialog,
     balance,
     address,
@@ -44,9 +40,6 @@ const Stage = () => {
     voteEndDate,
     currBlockTime,
     showCommitBtn,
-    submitUserVote,
-    setUserVote,
-    voteBtnDisable,
     openERC20Modal,
     closeERC20Modal,
     openERCModal,
@@ -57,6 +50,9 @@ const Stage = () => {
     maxVoteWeight,
     campaignId,
     copyLink,
+    stageAddress,
+    setIsDonateOpen,
+    setStageData,
   } = useSingleStageHandler();
   const style = {
     campaignDiv:
@@ -107,19 +103,17 @@ const Stage = () => {
     <>
       <StageAddVote
         isOpen={isOpen}
-        closeModal={closeModal}
-        submitUserVote={submitUserVote}
-        setUserVote={setUserVote}
-        voteBtnDisable={voteBtnDisable}
+        setIsOpen={setIsOpen}
         maxVoteWeight={maxVoteWeight}
+        stageAddress={stageAddress}
+        showVotingBtn={showVotingBtn}
       />
       <StageDonate
         isOpen={isDonateOpen}
-        closeModal={closeDonateModal}
-        handleInputChange={handleInputChange}
-        donationAmount={donationAmount}
-        sendTransaction={transferAmount}
-        btnDisable={btnDisable}
+        stageAddress={stageAddress}
+        setIsDonateOpen={setIsDonateOpen}
+        stageData={stageData}
+        setStageData={setStageData}
       />
       <CommitERCTokenModal
         isOpen={openERCModal}

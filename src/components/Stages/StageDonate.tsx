@@ -1,23 +1,35 @@
-import React, { Fragment } from "react";
+import React, { Dispatch, Fragment, SetStateAction } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import { IStage } from "../../interfaces/IStage";
+import { useStageDonateHandler } from "../../hooks/useStageDonateHandler";
 
 type StageDonatePorps = {
   isOpen: boolean;
-  closeModal: (value?: boolean) => void;
-  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  donationAmount: number;
-  sendTransaction: () => void;
-  btnDisable: boolean;
+  stageAddress: string;
+  setIsDonateOpen: Dispatch<SetStateAction<boolean>>;
+  stageData: IStage | null;
+  setStageData: Dispatch<SetStateAction<IStage | null>>;
 };
 
 const StageDonate = ({
   isOpen,
-  closeModal,
-  handleInputChange,
-  donationAmount,
-  sendTransaction,
-  btnDisable,
+  stageAddress,
+  setIsDonateOpen,
+  stageData,
+  setStageData,
 }: StageDonatePorps) => {
+  const {
+    transferAmount,
+    btnDisable,
+    handleInputChange,
+    donationAmount,
+    closeDonateModal,
+  } = useStageDonateHandler(
+    stageAddress,
+    setIsDonateOpen,
+    stageData,
+    setStageData
+  );
   const style = {
     dialog: "z-[1000] relative",
     overlay: "fixed inset-0 bg-black/50",
@@ -50,7 +62,7 @@ const StageDonate = ({
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
-      <Dialog as="div" onClose={closeModal} className={style.dialog}>
+      <Dialog as="div" onClose={closeDonateModal} className={style.dialog}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -104,7 +116,7 @@ const StageDonate = ({
                           btnDisable ? style.disableBtn : ""
                         }`}
                         onClick={() => {
-                          sendTransaction();
+                          transferAmount();
                         }}
                       >
                         <div className={style.btnCategoriesContainerActive}>

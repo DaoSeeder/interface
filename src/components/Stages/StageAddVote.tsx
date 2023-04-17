@@ -1,23 +1,24 @@
-import React, { Dispatch, SetStateAction, Fragment } from "react";
+import React, { Dispatch, Fragment, SetStateAction } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import { useStageAddVoteHandler } from "../../hooks/useStageAddVoteHandler";
 
 type ConnectorModalProps = {
   isOpen: boolean;
-  closeModal: (value?: boolean) => void;
-  submitUserVote: () => Promise<void>;
-  setUserVote: Dispatch<SetStateAction<boolean>>;
-  voteBtnDisable: boolean;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
   maxVoteWeight: number | undefined;
+  stageAddress: string;
+  showVotingBtn: boolean;
 };
 
 const StageAddVote = ({
   isOpen,
-  closeModal,
-  submitUserVote,
-  setUserVote,
-  voteBtnDisable,
+  setIsOpen,
   maxVoteWeight,
+  stageAddress,
+  showVotingBtn,
 }: ConnectorModalProps) => {
+  const { submitUserVote, setUserVote, voteBtnDisable, closeModal } =
+    useStageAddVoteHandler(stageAddress, showVotingBtn, setIsOpen);
   const style = {
     dialog: "z-[1000] relative",
     overlay: "fixed inset-0 bg-black/50",
