@@ -1,7 +1,10 @@
 import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
 import "@nomiclabs/hardhat-ethers";
-import secrets = require("./secrets.json");
+let secrets = { mnemonic: "", path: "" };
+try {
+  secrets = require("./secrets.json");
+} catch (ex) {}
 
 const config: HardhatUserConfig = {
   solidity: "0.8.17",
