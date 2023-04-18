@@ -41,11 +41,7 @@ const Stage = () => {
     currBlockTime,
     showCommitBtn,
     openERC20Modal,
-    closeERC20Modal,
     openERCModal,
-    setERCAmount,
-    ercBtnDisable,
-    commitERCAmount,
     tokensCommittedEth,
     maxVoteWeight,
     campaignId,
@@ -53,6 +49,7 @@ const Stage = () => {
     stageAddress,
     setIsDonateOpen,
     setStageData,
+    setOpenERCModal,
   } = useSingleStageHandler();
   const style = {
     campaignDiv:
@@ -117,10 +114,8 @@ const Stage = () => {
       />
       <CommitERCTokenModal
         isOpen={openERCModal}
-        closeModal={closeERC20Modal}
-        commitERCAmount={commitERCAmount}
-        setERCAmount={setERCAmount}
-        ercBtnDisable={ercBtnDisable}
+        setIsOpen={setOpenERCModal}
+        stageAddress={stageAddress}
       />
       <div className={style.campaignDiv}>
         <div className={style.mainCampaign}>

@@ -3,7 +3,6 @@ import { IStage } from "./../interfaces/IStage";
 import { getStageData } from "./../utils/ipfsUtils";
 import {
   fetchCurrentBlock,
-  getCampaign,
   getDateFromBlockNumber,
   getSmartContractWithProvider,
   getSmartContractWithSigner,
@@ -55,8 +54,6 @@ export const useSingleStageHandler = () => {
   const [currBlockTime, setCurrBlockTime] = useState<string>();
   const [showCommitBtn, setShowCommitBtn] = useState<boolean>(true);
   const [openERCModal, setOpenERCModal] = useState<boolean>(false);
-  const [ercAmount, setERCAmount] = useState<number>(0);
-  const [ercBtnDisable, setErcBtnDisable] = useState<boolean>(false);
   const [tokensCommittedEth, setTokensCommittedEth] = useState<string>();
   const [maxVoteWeight, setMaxVoteWeight] = useState<number>();
 
@@ -589,56 +586,6 @@ export const useSingleStageHandler = () => {
     setOpenERCModal(true);
   };
 
-  const closeERC20Modal = () => {
-    setOpenERCModal(false);
-  };
-
-  const commitERCAmount = async () => {
-    if (!signer) {
-      toast.error("Please connect you wallet");
-      return;
-    }
-
-    if (!DAOSEEDER_FACTORY_ADDRESS) {
-      toast.error("No factory address found");
-      return;
-    }
-
-    if (!campaignId) {
-      toast.error("No campaign id found");
-      return;
-    }
-
-    const contract = getSmartContractWithProvider(
-      DAOSEEDER_FACTORY_ADDRESS,
-      provider,
-      JSON.stringify(DaoSeederFactory.abi)
-    );
-    const data = await getCampaign(campaignId, contract);
-    const loading = toast.loading("Loading...");
-    if (data) {
-      try {
-        setErcBtnDisable(true);
-        const erc20Contract = await getSmartContractWithSigner(
-          data.tokenAddress,
-          signer,
-          JSON.stringify(IERC20.abi)
-        );
-        const decimals = await erc20Contract.decimals();
-        const amount = ethers.utils.parseUnits(ercAmount.toString(), decimals);
-        await erc20Contract.transfer(stageAddress, amount);
-        toast.success("Your transaction was successful");
-      } catch (err) {
-        toast.error("An error occurred while processing the request");
-      }
-    } else {
-      toast.error("No campaign found");
-    }
-    setErcBtnDisable(false);
-    toast.dismiss(loading);
-    closeERC20Modal();
-  };
-
   const copyLink = () => {
     window.navigator.clipboard.writeText(window.location.href);
     toast.success("Link Copied Successfully");
@@ -676,11 +623,8 @@ export const useSingleStageHandler = () => {
     currBlockTime,
     showCommitBtn,
     openERC20Modal,
-    closeERC20Modal,
+    setOpenERCModal,
     openERCModal,
-    setERCAmount,
-    ercBtnDisable,
-    commitERCAmount,
     tokensCommittedEth,
     maxVoteWeight,
     campaignId,

@@ -1,6 +1,6 @@
 import { ethers } from "ethers";
 import toast from "react-hot-toast";
-import IERC20 from "@openzeppelin/contracts/build/contracts/IERC20.json";
+import IERC20 from "@daoseeder/core/artifacts/contracts/test/TestERC20.sol/TestERC20.json";
 import DaoSeederFactory from "@daoseeder/core/artifacts/contracts/DaoSeederFactory.sol/DaoSeederFactory.json";
 import {
   getCampaign,
@@ -8,18 +8,20 @@ import {
   getSmartContractWithSigner,
 } from "../utils/ContractUtils";
 import { useProvider, useSigner } from "wagmi";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
+import { useParams } from "react-router";
 
 export const useCommitERCTokenModalHandler = (
   stageAddress: string,
-  campaignId: string
+  setIsOpen: Dispatch<SetStateAction<boolean>>
 ) => {
   const DAOSEEDER_FACTORY_ADDRESS =
     process.env.REACT_APP_DAOSEEDER_FACTORY_ADDRESS;
+  const { id: campaignId } = useParams();
   const { data: signer } = useSigner();
   const provider = useProvider();
   const [ercBtnDisable, setErcBtnDisable] = useState<boolean>(false);
-  const [ercAmount, setErcAmount] = useState<number>(0);
+  const [ERCAmount, setERCAmount] = useState<number>(0);
   const commitERCAmount = async () => {
     if (!signer) {
       toast.error("Please connect you wallet");
@@ -52,10 +54,11 @@ export const useCommitERCTokenModalHandler = (
           JSON.stringify(IERC20.abi)
         );
         const decimals = await erc20Contract.decimals();
-        const amount = ethers.utils.parseUnits(ercAmount.toString(), decimals);
+        const amount = ethers.utils.parseUnits(ERCAmount.toString(), decimals);
         await erc20Contract.transfer(stageAddress, amount);
         toast.success("Your transaction was successful");
       } catch (err) {
+        console.log(err);
         toast.error("An error occurred while processing the request");
       }
     } else {
@@ -63,7 +66,11 @@ export const useCommitERCTokenModalHandler = (
     }
     setErcBtnDisable(false);
     toast.dismiss(loading);
-    // closeERC20Modal();
+    closeModal();
   };
-  return { ercBtnDisable, commitERCAmount, setErcAmount };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+  return { ercBtnDisable, commitERCAmount, setERCAmount, closeModal };
 };

@@ -1,21 +1,20 @@
 import React, { Dispatch, SetStateAction, Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import { useCommitERCTokenModalHandler } from "../../hooks/useCommitERCTokenHandler";
 
 type ConnectorModalProps = {
   isOpen: boolean;
-  closeModal: (value?: boolean) => void;
-  commitERCAmount: () => Promise<void>;
-  setERCAmount: Dispatch<SetStateAction<number>>;
-  ercBtnDisable: boolean;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  stageAddress: string;
 };
 
 const CommitERCTokenModal = ({
   isOpen,
-  closeModal,
-  commitERCAmount,
-  setERCAmount,
-  ercBtnDisable,
+  setIsOpen,
+  stageAddress,
 }: ConnectorModalProps) => {
+  const { ercBtnDisable, commitERCAmount, setERCAmount, closeModal } =
+    useCommitERCTokenModalHandler(stageAddress, setIsOpen);
   const style = {
     dialog: "z-[1000] relative",
     overlay: "fixed inset-0 bg-black/50",
