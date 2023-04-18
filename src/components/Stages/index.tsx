@@ -7,6 +7,7 @@ import StageDonate from "./StageDonate";
 import CommitERCTokenModal from "./CommitERCTokenModal";
 import { Link } from "react-router-dom";
 import { BiArrowBack } from "react-icons/bi";
+import { commonStyles } from "../../styles/commonStyles";
 
 const Stage = () => {
   const {
@@ -21,7 +22,7 @@ const Stage = () => {
     isDonateOpen,
     closeDonateModal,
     donateNowDialog,
-    address,
+    userAddress,
     showCompleteBtn,
     completeStage,
     completeBtnDisable,
@@ -57,6 +58,7 @@ const Stage = () => {
     campaignId,
     copyLink,
     currencySymbol,
+    campaignTitle,
   } = useSingleStageHandler();
   const style = {
     campaignDiv:
@@ -146,10 +148,11 @@ const Stage = () => {
                     className={style.userImage}
                     src={Avatar}
                     alt={"userIcon"}
+                    title={"Owner: " + stageData?.stageContract?.projectOwner}
                   />
                 </div>
                 <div className={style.userData}>
-                  <div>{stageData?.stageContract?.projectOwner}</div>
+                  <div className={commonStyles.heading}>{campaignTitle}</div>
                 </div>
               </div>
               <div className={style.stageProgress}>
@@ -235,7 +238,7 @@ const Stage = () => {
                 </div>
               </div>
               <div>
-                {stageData?.stageContract?.projectOwner !== address &&
+                {stageData?.stageContract?.projectOwner !== userAddress &&
                 showVotingBtn ? (
                   <div
                     className={`${style.stageDonateNow} ${
@@ -297,7 +300,7 @@ const Stage = () => {
                   </div>
                 ) : null}
               </div>
-              {stageData?.stageContract?.projectOwner === address ? (
+              {stageData?.stageContract?.projectOwner === userAddress ? (
                 <div
                   className={`${style.stageDonateNow}`}
                   onClick={openERC20Modal}

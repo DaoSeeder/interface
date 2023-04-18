@@ -8,6 +8,7 @@ import {
   getCurrencySymbol,
   getSmartContractWithProvider,
   getSmartContractWithSigner,
+  getStageKey,
 } from "./../utils/ContractUtils";
 import toast from "react-hot-toast";
 import StageContract from "@daoseeder/core/artifacts/contracts/Stage.sol/Stage.json";
@@ -20,7 +21,7 @@ import { constants, ethers, utils } from "ethers";
 export const useSingleStageHandler = () => {
   const { state } = useLocation();
   const { id: campaignId, stageId } = useParams();
-  const { address, isConnected } = useAccount();
+  const { address: userAddress, isConnected } = useAccount();
 
   const DAOSEEDER_FACTORY_ADDRESS =
     process.env.REACT_APP_DAOSEEDER_FACTORY_ADDRESS;
@@ -79,6 +80,7 @@ export const useSingleStageHandler = () => {
       getSymbol();
     }
   }, [isConnected]);
+  const [campaignTitle, setCampaignTitle] = useState<string>("");
 
   useEffect(() => {
     const fetchFactoryData = async () => {
@@ -160,7 +162,10 @@ export const useSingleStageHandler = () => {
           );
           const votingPeriodBn = await stageContract.votingPeriod();
           votingPeriod = parseInt(votingPeriodBn.toString());
-          voted = await stageContract.voted(address);
+          voted = false;
+          if (userAddress) {
+            voted = await stageContract.voted(userAddress);
+          }
           const projectToken = await stageContract.projectToken();
           const tokenContract = getSmartContractWithProvider(
             projectToken,
@@ -254,7 +259,7 @@ export const useSingleStageHandler = () => {
         }
 
         if (
-          address === obj.stageContract.projectOwner &&
+          userAddress === obj.stageContract.projectOwner &&
           obj.stageContract.isComplete &&
           obj.stageContract.isSuccess
         ) {
@@ -262,7 +267,7 @@ export const useSingleStageHandler = () => {
         }
 
         if (
-          address === obj.stageContract.projectOwner &&
+          userAddress === obj.stageContract.projectOwner &&
           obj.stageContract.isComplete &&
           !obj.stageContract.isSuccess
         ) {
@@ -273,7 +278,33 @@ export const useSingleStageHandler = () => {
     if (stageAddress) {
       fetchStage();
     }
-  }, [address, provider, stageAddress, state]);
+  }, [userAddress, provider, stageAddress, state]);
+
+  useEffect(() => {
+    const fetchStageData = async () => {
+      if (DAOSEEDER_FACTORY_ADDRESS && campaignId) {
+        const contract = await getSmartContractWithProvider(
+          DAOSEEDER_FACTORY_ADDRESS,
+          provider,
+          JSON.stringify(DaoSeederFactory.abi)
+        );
+        const data = await getCampaign(campaignId, contract);
+        if (data && parseInt(data.stageCount.toString()) > 0) {
+          for (let i = 1; i <= parseInt(data.stageCount.toString()); i++) {
+            const stageKey = await getStageKey(data.tokenAddress, i);
+            if (stageKey === stageId) {
+              setCampaignTitle(data.name + " - Stage (" + i + ")");
+              break;
+            }
+          }
+        }
+      }
+    };
+
+    if (DAOSEEDER_FACTORY_ADDRESS && campaignId && stageId) {
+      fetchStageData();
+    }
+  }, [DAOSEEDER_FACTORY_ADDRESS, campaignId, provider, stageId]);
 
   const closeModal = () => {
     setIsOpen(false);
@@ -624,7 +655,7 @@ export const useSingleStageHandler = () => {
       toast.error("Can not collect funds on an unsuccessful stage");
       return;
     }
-    if (stageData.stageContract.projectOwner !== address) {
+    if (stageData.stageContract.projectOwner !== userAddress) {
       toast.error("Only owner can collect the funds");
       return;
     }
@@ -692,7 +723,7 @@ export const useSingleStageHandler = () => {
       toast.error("Can not withdraw funds on a successful stage");
       return;
     }
-    if (stageData.stageContract.projectOwner !== address) {
+    if (stageData.stageContract.projectOwner !== userAddress) {
       toast.error("Only owner can withdraw the funds");
       return;
     }
@@ -807,7 +838,7 @@ export const useSingleStageHandler = () => {
     isDonateOpen,
     closeDonateModal,
     donateNowDialog,
-    address,
+    userAddress,
     showCompleteBtn,
     completeStage,
     completeBtnDisable,
@@ -840,5 +871,6 @@ export const useSingleStageHandler = () => {
     campaignId,
     copyLink,
     currencySymbol,
+    campaignTitle,
   };
 };
