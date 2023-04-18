@@ -143,7 +143,10 @@ export const useSingleStageHandler = () => {
           );
           const votingPeriodBn = await stageContract.votingPeriod();
           votingPeriod = parseInt(votingPeriodBn.toString());
-          voted = await stageContract.voted(address);
+          voted = false;
+          if (address) {
+            voted = await stageContract.voted(address);
+          }
           const projectToken = await stageContract.projectToken();
           const tokenContract = getSmartContractWithProvider(
             projectToken,
