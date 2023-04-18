@@ -13,6 +13,7 @@ import { getStageKey } from "../src/utils/ContractUtils";
 import { BigNumber } from "ethers";
 
 export const main = async () => {
+  const gasPrice = 50000000000;
   const [owner] = await ethers.getSigners();
   console.log(`user with address ${owner.address} logged in`);
   const DaoSeederFactory = new ethers.ContractFactory(
@@ -31,7 +32,7 @@ export const main = async () => {
   );
   const stage = await Stage.deploy(daoSeederFactory.address);
   await stage.deployed();
-  console.log("stageAddress: ", stage.address);
+  console.log("implementation stageAddress: ", stage.address);
 
   await daoSeederFactory.setStage(stage.address);
 
@@ -41,7 +42,8 @@ export const main = async () => {
     owner
   );
   const campaignManager = await CampaignManager.deploy(
-    daoSeederFactory.address
+    daoSeederFactory.address,
+    { gasPrice: gasPrice }
   );
   const campaignManagerAddress = campaignManager.address;
   console.log("campaignManagerAddress: ", campaignManagerAddress);
@@ -55,13 +57,17 @@ export const main = async () => {
     owner
   );
   for (let i = 0; i < campaigns.length; i++) {
-    const testERC20 = await TestERC20.deploy("Test Token", "TOK" + i);
+    const testERC20 = await TestERC20.deploy("Test Token", "TOK" + i, {
+      gasPrice: gasPrice * 100,
+    });
     console.log("TOK" + i + " Address: ", testERC20.address);
     campaigns[i].tokenAddress = testERC20.address;
     const cid = await addCampaignToIpfs(campaigns[i]);
     if (cid) {
       console.log("ipfs cid", cid);
-      const tx = await daoSeederFactory.createCampaign(testERC20.address, cid);
+      const tx = await daoSeederFactory.createCampaign(testERC20.address, cid, {
+        gasPrice: gasPrice * 10000,
+      });
       await tx.wait();
 
       const date = new Date();
@@ -78,7 +84,8 @@ export const main = async () => {
         testERC20.address,
         stages[i].goal,
         blockExpiry,
-        cidStage
+        cidStage,
+        { gasPrice: gasPrice }
       );
       await txStage.wait();
       const key = getStageKey(testERC20.address, 1);
@@ -88,8 +95,7 @@ export const main = async () => {
       const amt = BigNumber.from(5000).mul(
         BigNumber.from(10).pow(BigNumber.from(18))
       );
-      await testERC20.approve(owner.address, amt);
-      await testERC20.transferFrom(owner.address, stageAddress, amt);
+      await testERC20.transfer(stageAddress, amt);
     }
   }
 };
