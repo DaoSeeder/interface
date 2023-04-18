@@ -18,8 +18,8 @@ const AddStage = () => {
     addStage,
     disableBtn,
     expiryBlock,
-    balance,
     deliverable,
+    currencySymbol,
   } = useStageHandler();
   const style = {
     campaignDiv: "text-light-font-lightV1 mt-4 w-full",
@@ -98,9 +98,7 @@ const AddStage = () => {
                   className={style.inputLabel}
                 >
                   Target Amount{" "}
-                  <span className={style.inputSpan}>
-                    (in {balance?.symbol})
-                  </span>
+                  <span className={style.inputSpan}>(in {currencySymbol})</span>
                 </label>
               </div>
               <div className={style.inputMargin}>

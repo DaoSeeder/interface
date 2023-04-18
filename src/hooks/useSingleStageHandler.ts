@@ -5,6 +5,7 @@ import {
   fetchCurrentBlock,
   getCampaign,
   getDateFromBlockNumber,
+  getCurrencySymbol,
   getSmartContractWithProvider,
   getSmartContractWithSigner,
   getStageKey,
@@ -14,17 +15,14 @@ import StageContract from "@daoseeder/core/artifacts/contracts/Stage.sol/Stage.j
 import IERC20 from "@openzeppelin/contracts/build/contracts/IERC20.json";
 import { useParams, useLocation } from "react-router-dom";
 import DaoSeederFactory from "@daoseeder/core/artifacts/contracts/DaoSeederFactory.sol/DaoSeederFactory.json";
-import { useProvider, useSigner, useBalance, useAccount } from "wagmi";
+import { useProvider, useSigner, useAccount } from "wagmi";
 import { constants, ethers, utils } from "ethers";
 
 export const useSingleStageHandler = () => {
   const { state } = useLocation();
   const { id: campaignId, stageId } = useParams();
-  const { address: userAddress } = useAccount();
+  const { address: userAddress, isConnected } = useAccount();
 
-  const { data: balance } = useBalance({
-    address: userAddress,
-  });
   const DAOSEEDER_FACTORY_ADDRESS =
     process.env.REACT_APP_DAOSEEDER_FACTORY_ADDRESS;
   const provider = useProvider();
@@ -63,6 +61,25 @@ export const useSingleStageHandler = () => {
   const [ercBtnDisable, setErcBtnDisable] = useState<boolean>(false);
   const [tokensCommittedEth, setTokensCommittedEth] = useState<string>();
   const [maxVoteWeight, setMaxVoteWeight] = useState<number>();
+  const [currencySymbol, setCurrencySymbol] = useState<string>();
+
+  useEffect(() => {
+    async function getSymbol() {
+      try {
+        if (isConnected && window.ethereum) {
+          const symbol = await getCurrencySymbol();
+          setCurrencySymbol(symbol);
+        }
+      } catch (err) {
+        console.error(err);
+        setCurrencySymbol("ETH");
+      }
+    }
+
+    if (isConnected) {
+      getSymbol();
+    }
+  }, [isConnected]);
   const [campaignTitle, setCampaignTitle] = useState<string>("");
 
   useEffect(() => {
@@ -821,7 +838,6 @@ export const useSingleStageHandler = () => {
     isDonateOpen,
     closeDonateModal,
     donateNowDialog,
-    balance,
     userAddress,
     showCompleteBtn,
     completeStage,
@@ -854,6 +870,7 @@ export const useSingleStageHandler = () => {
     maxVoteWeight,
     campaignId,
     copyLink,
+    currencySymbol,
     campaignTitle,
   };
 };
