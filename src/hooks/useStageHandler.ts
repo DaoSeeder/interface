@@ -5,7 +5,7 @@ import { useAccount, useSigner } from "wagmi";
 import {
   getCampaign,
   getContractCampaign,
-  getNetworkName,
+  getCurrencySymbol,
   getStageKey,
 } from "./../utils/ContractUtils";
 import { IStage, IStageIPFSData } from "../interfaces/IStage";
@@ -66,13 +66,11 @@ export const useStageHandler = () => {
   }, [DAOSEEDER_FACTORY_ADDRESS, id, provider]);
 
   useEffect(() => {
-    async function getCurrencySymbol() {
+    async function getSymbol() {
       try {
         if (isConnected && window.ethereum) {
-          const chainId = await window.ethereum.request({
-            method: "eth_chainId",
-          });
-          setCurrencySymbol(getNetworkName(parseInt(chainId).toString()));
+          const symbol = await getCurrencySymbol();
+          setCurrencySymbol(symbol);
         }
       } catch (err) {
         console.error(err);
@@ -81,7 +79,7 @@ export const useStageHandler = () => {
     }
 
     if (isConnected) {
-      getCurrencySymbol();
+      getSymbol();
     }
   }, [isConnected]);
 

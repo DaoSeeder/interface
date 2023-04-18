@@ -5,7 +5,7 @@ import {
   fetchCurrentBlock,
   getCampaign,
   getDateFromBlockNumber,
-  getNetworkName,
+  getCurrencySymbol,
   getSmartContractWithProvider,
   getSmartContractWithSigner,
 } from "./../utils/ContractUtils";
@@ -63,13 +63,11 @@ export const useSingleStageHandler = () => {
   const [currencySymbol, setCurrencySymbol] = useState<string>();
 
   useEffect(() => {
-    async function getCurrencySymbol() {
+    async function getSymbol() {
       try {
         if (isConnected && window.ethereum) {
-          const chainId = await window.ethereum.request({
-            method: "eth_chainId",
-          });
-          setCurrencySymbol(getNetworkName(parseInt(chainId).toString()));
+          const symbol = await getCurrencySymbol();
+          setCurrencySymbol(symbol);
         }
       } catch (err) {
         console.error(err);
@@ -78,7 +76,7 @@ export const useSingleStageHandler = () => {
     }
 
     if (isConnected) {
-      getCurrencySymbol();
+      getSymbol();
     }
   }, [isConnected]);
 

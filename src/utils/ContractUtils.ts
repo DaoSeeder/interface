@@ -110,10 +110,16 @@ export const checkLinkValidity = (link: string): boolean => {
   return pattern.test(link);
 };
 
-export const getNetworkName = (networkId: string): string => {
+export const getCurrencySymbol = async (): Promise<string> => {
+  if (!window.ethereum) {
+    return "";
+  }
+  const chainId = await window.ethereum.request({
+    method: "eth_chainId",
+  });
   const chainList: IChainList = ChainData;
-  if (!chainList[networkId]) {
+  if (!chainList[parseInt(chainId).toString()]) {
     return "ETH";
   }
-  return chainList[networkId];
+  return chainList[parseInt(chainId).toString()];
 };
