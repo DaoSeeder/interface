@@ -14,8 +14,6 @@ import { BigNumber } from "ethers";
 
 export const main = async () => {
   const gasPrice = 50000000000;
-  const num = await ethers.provider.getNetwork();
-  console.log("num", num);
   const [owner] = await ethers.getSigners();
   console.log(`user with address ${owner.address} logged in`);
   const DaoSeederFactory = new ethers.ContractFactory(
@@ -97,8 +95,7 @@ export const main = async () => {
       const amt = BigNumber.from(5000).mul(
         BigNumber.from(10).pow(BigNumber.from(18))
       );
-      await testERC20.approve(owner.address, amt);
-      await testERC20.transferFrom(owner.address, stageAddress, amt);
+      await testERC20.transfer(stageAddress, amt);
     }
   }
 };
