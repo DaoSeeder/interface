@@ -112,5 +112,8 @@ export const checkLinkValidity = (link: string): boolean => {
 
 export const getNetworkName = (networkId: string): string => {
   const chainList: IChainList = ChainData;
+  if (!chainList[networkId]) {
+    return "ETH";
+  }
   return chainList[networkId];
 };

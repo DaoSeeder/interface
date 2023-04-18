@@ -1,10 +1,11 @@
 import { getDateDifferenceInSeconds } from "./../utils/dateTimeUtils";
 import { toast } from "react-hot-toast";
 import { useCallback, useEffect, useState } from "react";
-import { useAccount, useBalance, useSigner } from "wagmi";
+import { useAccount, useSigner } from "wagmi";
 import {
   getCampaign,
   getContractCampaign,
+  getNetworkName,
   getStageKey,
 } from "./../utils/ContractUtils";
 import { IStage, IStageIPFSData } from "../interfaces/IStage";
@@ -18,11 +19,8 @@ import DaoSeederFactory from "@daoseeder/core/artifacts/contracts/DaoSeederFacto
 export const useStageHandler = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { address } = useAccount();
+  const { address, isConnected } = useAccount();
 
-  const { data: balance } = useBalance({
-    address,
-  });
   const DAOSEEDER_FACTORY_ADDRESS =
     process.env.REACT_APP_DAOSEEDER_FACTORY_ADDRESS;
   const BLOCK_TIME = process.env.REACT_APP_ETHEREUM_BLOCK_TIME;
@@ -37,6 +35,7 @@ export const useStageHandler = () => {
   const [tokenAddress, setTokenAddress] = useState<string>("");
   const [disableBtn, setDisableBtn] = useState<boolean>(false);
   const [expiryBlock, setExpiryBlock] = useState<number>(0);
+  const [currencySymbol, setCurrencySymbol] = useState<string>();
 
   const fetchCampaign = useCallback(async () => {
     try {
@@ -65,6 +64,26 @@ export const useStageHandler = () => {
       }
     }
   }, [DAOSEEDER_FACTORY_ADDRESS, id, provider]);
+
+  useEffect(() => {
+    async function getCurrencySymbol() {
+      try {
+        if (isConnected && window.ethereum) {
+          const chainId = await window.ethereum.request({
+            method: "eth_chainId",
+          });
+          setCurrencySymbol(getNetworkName(parseInt(chainId).toString()));
+        }
+      } catch (err) {
+        console.error(err);
+        setCurrencySymbol("ETH");
+      }
+    }
+
+    if (isConnected) {
+      getCurrencySymbol();
+    }
+  }, [isConnected]);
 
   useEffect(() => {
     if (id && fetchFirstTime && DAOSEEDER_FACTORY_ADDRESS && provider) {
@@ -195,7 +214,7 @@ export const useStageHandler = () => {
     expiryDate,
     disableBtn,
     expiryBlock,
-    balance,
     deliverable,
+    currencySymbol,
   };
 };

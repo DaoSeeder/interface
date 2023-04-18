@@ -21,7 +21,6 @@ const Stage = () => {
     isDonateOpen,
     closeDonateModal,
     donateNowDialog,
-    balance,
     address,
     showCompleteBtn,
     completeStage,
@@ -57,6 +56,7 @@ const Stage = () => {
     maxVoteWeight,
     campaignId,
     copyLink,
+    currencySymbol,
   } = useSingleStageHandler();
   const style = {
     campaignDiv:
@@ -170,8 +170,8 @@ const Stage = () => {
               <div className={style.stageData}>
                 <div className={style.stageTotalMoney}>
                   <div>
-                    {stageData?.stageContract?.totalCommitted} {balance?.symbol}{" "}
-                    raised of {stageData?.stage?.goal} {balance?.symbol} goal
+                    {stageData?.stageContract?.totalCommitted} {currencySymbol}{" "}
+                    raised of {stageData?.stage?.goal} {currencySymbol} goal
                   </div>
                   <div>
                     Token reward committed: {tokensCommittedEth} (

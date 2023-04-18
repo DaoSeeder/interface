@@ -14,7 +14,7 @@ import StageContract from "@daoseeder/core/artifacts/contracts/Stage.sol/Stage.j
 import IERC20 from "@openzeppelin/contracts/build/contracts/IERC20.json";
 import { useParams, useLocation } from "react-router-dom";
 import DaoSeederFactory from "@daoseeder/core/artifacts/contracts/DaoSeederFactory.sol/DaoSeederFactory.json";
-import { useProvider, useSigner, useBalance, useAccount } from "wagmi";
+import { useProvider, useSigner, useAccount } from "wagmi";
 import { constants, ethers, utils } from "ethers";
 
 export const useSingleStageHandler = () => {
@@ -22,9 +22,6 @@ export const useSingleStageHandler = () => {
   const { id: campaignId, stageId } = useParams();
   const { address, isConnected } = useAccount();
 
-  const { data: balance } = useBalance({
-    address,
-  });
   const DAOSEEDER_FACTORY_ADDRESS =
     process.env.REACT_APP_DAOSEEDER_FACTORY_ADDRESS;
   const provider = useProvider();
@@ -63,6 +60,7 @@ export const useSingleStageHandler = () => {
   const [ercBtnDisable, setErcBtnDisable] = useState<boolean>(false);
   const [tokensCommittedEth, setTokensCommittedEth] = useState<string>();
   const [maxVoteWeight, setMaxVoteWeight] = useState<number>();
+  const [currencySymbol, setCurrencySymbol] = useState<string>();
 
   useEffect(() => {
     async function getCurrencySymbol() {
@@ -71,12 +69,11 @@ export const useSingleStageHandler = () => {
           const chainId = await window.ethereum.request({
             method: "eth_chainId",
           });
-          console.log(parseInt(chainId));
-          console.log(getNetworkName(parseInt(chainId).toString()));
+          setCurrencySymbol(getNetworkName(parseInt(chainId).toString()));
         }
       } catch (err) {
         console.error(err);
-        console.log("ERROR");
+        setCurrencySymbol("ETH");
       }
     }
 
@@ -812,7 +809,6 @@ export const useSingleStageHandler = () => {
     isDonateOpen,
     closeDonateModal,
     donateNowDialog,
-    balance,
     address,
     showCompleteBtn,
     completeStage,
@@ -845,5 +841,6 @@ export const useSingleStageHandler = () => {
     maxVoteWeight,
     campaignId,
     copyLink,
+    currencySymbol,
   };
 };
