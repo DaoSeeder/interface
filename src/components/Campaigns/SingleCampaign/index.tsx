@@ -17,6 +17,7 @@ const SingleCampaign = () => {
     campaigns,
     allStages,
     copyLink,
+    address,
   } = useSingleCampaignHandler();
   const style = {
     campaignDiv:
@@ -63,10 +64,11 @@ const SingleCampaign = () => {
     btnShareContainer:
       "flex h-full w-full items-center justify-center bg-[#FFFFFF] dark:bg-dark-background dark:text-dark-font-lightV1 rounded-full px-8 py-2",
     shareNow: "text-light-font-lightV1 dark:text-dark-font-lightV1 p-0 m-0",
+    heading: "mt-12",
   };
   return (
     <>
-      <div className={commonStyles.heading}>
+      <div className={`${commonStyles.heading} ${style.heading}`}>
         <p>{campaign?.name}</p>
       </div>
       <div className={style.campaignDiv}>
@@ -128,7 +130,7 @@ const SingleCampaign = () => {
           }}
         />
       </div>
-      <div className={commonStyles.heading}>
+      <div className={`${commonStyles.heading} ${style.heading}`}>
         <p>Token Address</p>
       </div>
       <div className={commonStyles.paragraph}>
@@ -137,11 +139,13 @@ const SingleCampaign = () => {
       </div>
       <div className={`${style.stageDetails} ${style.allStages}`}>
         <p>Stages</p>
-        <Link to="stage/add" className={style.linkBtn}>
-          <div className={style.addCampaignBtn}>
-            <MdAdd />
-          </div>
-        </Link>
+        {address === campaign?.owner && (
+          <Link to="stage/add" className={style.linkBtn}>
+            <div className={style.addCampaignBtn}>
+              <MdAdd />
+            </div>
+          </Link>
+        )}
       </div>
       <div className={style.stages}>
         {allStages && allStages.length > 0
@@ -176,6 +180,7 @@ const SingleCampaign = () => {
                 tokenAddress={item.tokenAddress}
                 campaignKey={item.campaignKey}
                 stageCount={item.stageCount}
+                owner={item.owner}
                 category={item.category}
               />
             );
