@@ -17,6 +17,9 @@ const AddCampaign = () => {
     addCampaign,
     disableBtn,
     campaignLink,
+    campaignCategory,
+    setCampaignCategory,
+    categories,
   } = useCampaignsHandler();
   const style = {
     campaignDiv: "text-light-font-lightV1 mt-4 w-full",
@@ -45,7 +48,12 @@ const AddCampaign = () => {
     singleMedia: "flex justify-between w-full dark:text-dark-font-lightV1 mb-2",
     eachMedia: "border-b-2 w-full mr-4",
     disableBtn: "pointer-events-none",
+    categoryLabel: "dark:text-dark-font-lightV1 mb-2",
+    selectCategory:
+      "dark:text-dark-font-lightV1 dark:bg-dark-box border-2 border-[#E5E7EB] bg-transparent p-0 m-0 outline-none relative inline-block w-full",
+    selectBox: "flex flex-col w-full",
   };
+
   return (
     <>
       <div className={"createCampaignMainContainer"}>
@@ -126,6 +134,34 @@ const AddCampaign = () => {
                 >
                   Logo Link
                 </label>
+              </div>
+              <div className={`${style.selectBox} ${style.inputMargin}`}>
+                <label
+                  id="inputLabel"
+                  htmlFor="campaignCategory"
+                  className={style.categoryLabel}
+                >
+                  Category
+                </label>
+                <select
+                  className={style.selectCategory}
+                  name="campaignCategory"
+                  id="campaignCategory"
+                  value={campaignCategory}
+                  onChange={(e) => setCampaignCategory(e.target.value)}
+                >
+                  <option value="" disabled>
+                    Select a category
+                  </option>
+                  {categories &&
+                    categories.map((category, idx) => {
+                      return (
+                        <option key={idx} value={category.value}>
+                          {category.label}
+                        </option>
+                      );
+                    })}
+                </select>
               </div>
               <div className={style.mediaLinksHeading}>
                 <p>Media Links</p>

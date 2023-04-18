@@ -33,6 +33,7 @@ const Campaigns = () => {
                 campaignKey={item.campaignKey}
                 stageCount={item.stageCount}
                 owner={item.owner}
+                category={item.category}
               />
             );
           })}

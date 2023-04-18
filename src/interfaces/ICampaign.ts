@@ -8,4 +8,5 @@ export interface ICampaign {
   campaignKey: string;
   stageCount: number;
   owner: string;
+  category: string;
 }

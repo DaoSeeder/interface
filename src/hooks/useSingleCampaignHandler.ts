@@ -40,6 +40,7 @@ export const useSingleCampaignHandler = () => {
         campaignKey: "",
         stageCount: 0,
         owner: state.owner,
+        category: state.category,
       };
       setCampaign(data);
       toast.dismiss(loading);
