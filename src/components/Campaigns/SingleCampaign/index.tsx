@@ -63,10 +63,11 @@ const SingleCampaign = () => {
     btnShareContainer:
       "flex h-full w-full items-center justify-center bg-[#FFFFFF] dark:bg-dark-background dark:text-dark-font-lightV1 rounded-full px-8 py-2",
     shareNow: "text-light-font-lightV1 dark:text-dark-font-lightV1 p-0 m-0",
+    heading: "mt-12",
   };
   return (
     <>
-      <div className={commonStyles.heading}>
+      <div className={`${commonStyles.heading} ${style.heading}`}>
         <p>{campaign?.name}</p>
       </div>
       <div className={style.campaignDiv}>
@@ -123,7 +124,7 @@ const SingleCampaign = () => {
           }}
         />
       </div>
-      <div className={commonStyles.heading}>
+      <div className={`${commonStyles.heading} ${style.heading}`}>
         <p>Token Address</p>
       </div>
       <div className={commonStyles.paragraph}>

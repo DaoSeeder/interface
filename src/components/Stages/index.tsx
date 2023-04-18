@@ -7,6 +7,7 @@ import StageDonate from "./StageDonate";
 import CommitERCTokenModal from "./CommitERCTokenModal";
 import { Link } from "react-router-dom";
 import { BiArrowBack } from "react-icons/bi";
+import { commonStyles } from "../../styles/commonStyles";
 
 const Stage = () => {
   const {
@@ -151,7 +152,7 @@ const Stage = () => {
                   />
                 </div>
                 <div className={style.userData}>
-                  <div>{campaignTitle}</div>
+                  <div className={commonStyles.heading}>{campaignTitle}</div>
                 </div>
               </div>
               <div className={style.stageProgress}>
