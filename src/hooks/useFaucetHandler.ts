@@ -13,7 +13,7 @@ export const useFauctHandler = () => {
     }
     setDisableBtn(true);
     try {
-      fetch("http://localhost:3001/getETH", {
+      fetch("http://127.0.0.1:3001/getETH", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
