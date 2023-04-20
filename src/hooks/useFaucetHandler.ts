@@ -17,7 +17,7 @@ export const useFauctHandler = () => {
       const urlToUse =
         env == "development"
           ? "http://localhost:3001/getETH"
-          : "https://faucet.daoseeder.com/getETH";
+          : "https://app.daoseeder.com/getETH";
       fetch(urlToUse, {
         method: "POST",
         headers: {
