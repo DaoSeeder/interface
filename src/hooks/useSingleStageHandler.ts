@@ -3,12 +3,12 @@ import { IStage } from "./../interfaces/IStage";
 import { getStageData } from "./../utils/ipfsUtils";
 import {
   fetchCurrentBlock,
-  getCampaign,
   getDateFromBlockNumber,
   getCurrencySymbol,
   getSmartContractWithProvider,
   getSmartContractWithSigner,
   getStageKey,
+  getCampaign,
 } from "./../utils/ContractUtils";
 import toast from "react-hot-toast";
 import StageContract from "@daoseeder/core/artifacts/contracts/Stage.sol/Stage.json";
@@ -28,10 +28,7 @@ export const useSingleStageHandler = () => {
   const provider = useProvider();
   const { data: signer } = useSigner();
   const [stageData, setStageData] = useState<IStage | null>(null);
-  const [userVote, setUserVote] = useState<boolean>(false);
   const [voteBtnDisable, setVoteBtnDisable] = useState<boolean>(false);
-  const [donationAmount, setDonationAmount] = useState<number>(0);
-  const [btnDisable, setBtnDisable] = useState<boolean>(false);
   const [stageAddress, setStageAddress] = useState<string>("");
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isDonateOpen, setIsDonateOpen] = useState<boolean>(false);
@@ -57,8 +54,6 @@ export const useSingleStageHandler = () => {
   const [currBlockTime, setCurrBlockTime] = useState<string>();
   const [showCommitBtn, setShowCommitBtn] = useState<boolean>(true);
   const [openERCModal, setOpenERCModal] = useState<boolean>(false);
-  const [ercAmount, setERCAmount] = useState<number>(0);
-  const [ercBtnDisable, setErcBtnDisable] = useState<boolean>(false);
   const [tokensCommittedEth, setTokensCommittedEth] = useState<string>();
   const [maxVoteWeight, setMaxVoteWeight] = useState<number>();
   const [currencySymbol, setCurrencySymbol] = useState<string>();
@@ -306,140 +301,12 @@ export const useSingleStageHandler = () => {
     }
   }, [DAOSEEDER_FACTORY_ADDRESS, campaignId, provider, stageId]);
 
-  const closeModal = () => {
-    setIsOpen(false);
-  };
-
   const openModal = () => {
     setIsOpen(true);
   };
 
   const donateNowDialog = () => {
     setIsDonateOpen(true);
-  };
-
-  const closeDonateModal = () => {
-    setIsDonateOpen(false);
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = e.target.value;
-    setDonationAmount(parseFloat(newValue));
-  };
-
-  const transferAmount = async () => {
-    if (donationAmount <= 0) {
-      toast.error("Please enter a valid amount");
-      return;
-    }
-    if (
-      !stageAddress ||
-      constants.AddressZero === stageAddress ||
-      !utils.isAddress(stageAddress)
-    ) {
-      toast.error("Please enter a valid stage address");
-      return;
-    }
-    if (!signer) {
-      toast.error("Please connect you wallet");
-      return;
-    }
-    setBtnDisable(true);
-    const loading = toast.loading("Loading...");
-    try {
-      const stageContract = await getSmartContractWithSigner(
-        stageAddress,
-        signer,
-        JSON.stringify(StageContract.abi)
-      );
-      const tx = await stageContract.commitFunds({
-        value: ethers.utils.parseEther(donationAmount.toString()),
-      });
-      await tx.wait();
-      toast.success("Your transaction was successful");
-      const obj = stageData;
-      if (obj?.stageContract.totalCommitted) {
-        obj.stageContract.totalCommitted += donationAmount;
-      } else if (obj) {
-        obj.stageContract.totalCommitted = donationAmount;
-      }
-      setStageData(obj);
-      closeDonateModal();
-    } catch (err) {
-      if (err instanceof Error) {
-        if (err.message.includes("invalid address")) {
-          toast.error("Please provide a valid stage address");
-        } else if (err.message.includes("user rejected transaction")) {
-          toast.error("Transaction rejected");
-        } else {
-          toast.error(
-            "An error occurred while processing the transaction. Please try again"
-          );
-        }
-      } else {
-        toast.error(
-          "An error occurred while processing the request. Please try again"
-        );
-      }
-    }
-    toast.dismiss(loading);
-    setBtnDisable(false);
-  };
-
-  const submitUserVote = async () => {
-    if (!stageData) {
-      toast.error("No stage found. Please provide a valid stage");
-      return;
-    }
-    if (
-      !stageAddress ||
-      constants.AddressZero === stageAddress ||
-      !utils.isAddress(stageAddress)
-    ) {
-      toast.error("Please enter a valid stage address");
-      return;
-    }
-    if (!signer) {
-      toast.error("Please connect you wallet");
-      return;
-    }
-
-    if (!showVotingBtn) {
-      toast.error(
-        "The stage is still active. You can only vote when the stage is completed"
-      );
-      return;
-    }
-
-    setVoteBtnDisable(true);
-    const loading = toast.loading("Loading...");
-    try {
-      const stageContract = await getSmartContractWithSigner(
-        stageAddress,
-        signer,
-        JSON.stringify(StageContract.abi)
-      );
-      const tx = await stageContract.vote(userVote);
-      await tx.wait();
-      toast.success("Your transaction was successful");
-    } catch (err) {
-      if (err instanceof Error) {
-        if (err.message && err.message.includes("Active()")) {
-          toast.error("The stage is still active. You can not add vote");
-        } else {
-          toast.error(
-            "An error occurred while processing the transaction. Please try again"
-          );
-        }
-      } else {
-        toast.error(
-          "An error occurred while processing the request. Please try again"
-        );
-      }
-      setVoteBtnDisable(false);
-    }
-    toast.dismiss(loading);
-    closeModal();
   };
 
   const completeStage = async () => {
@@ -768,56 +635,6 @@ export const useSingleStageHandler = () => {
     setOpenERCModal(true);
   };
 
-  const closeERC20Modal = () => {
-    setOpenERCModal(false);
-  };
-
-  const commitERCAmount = async () => {
-    if (!signer) {
-      toast.error("Please connect you wallet");
-      return;
-    }
-
-    if (!DAOSEEDER_FACTORY_ADDRESS) {
-      toast.error("No factory address found");
-      return;
-    }
-
-    if (!campaignId) {
-      toast.error("No campaign id found");
-      return;
-    }
-
-    const contract = getSmartContractWithProvider(
-      DAOSEEDER_FACTORY_ADDRESS,
-      provider,
-      JSON.stringify(DaoSeederFactory.abi)
-    );
-    const data = await getCampaign(campaignId, contract);
-    const loading = toast.loading("Loading...");
-    if (data) {
-      try {
-        setErcBtnDisable(true);
-        const erc20Contract = await getSmartContractWithSigner(
-          data.tokenAddress,
-          signer,
-          JSON.stringify(IERC20.abi)
-        );
-        const decimals = await erc20Contract.decimals();
-        const amount = ethers.utils.parseUnits(ercAmount.toString(), decimals);
-        await erc20Contract.transfer(stageAddress, amount);
-        toast.success("Your transaction was successful");
-      } catch (err) {
-        toast.error("An error occurred while processing the request");
-      }
-    } else {
-      toast.error("No campaign found");
-    }
-    setErcBtnDisable(false);
-    toast.dismiss(loading);
-    closeERC20Modal();
-  };
-
   const copyLink = () => {
     window.navigator.clipboard.writeText(window.location.href);
     toast.success("Link Copied Successfully");
@@ -825,18 +642,11 @@ export const useSingleStageHandler = () => {
 
   return {
     stageData,
-    handleInputChange,
-    transferAmount,
-    donationAmount,
-    btnDisable,
-    setUserVote,
-    submitUserVote,
     voteBtnDisable,
     isOpen,
-    closeModal,
+    setIsOpen,
     openModal,
     isDonateOpen,
-    closeDonateModal,
     donateNowDialog,
     userAddress,
     showCompleteBtn,
@@ -861,15 +671,15 @@ export const useSingleStageHandler = () => {
     currBlockTime,
     showCommitBtn,
     openERC20Modal,
-    closeERC20Modal,
+    setOpenERCModal,
     openERCModal,
-    setERCAmount,
-    ercBtnDisable,
-    commitERCAmount,
     tokensCommittedEth,
     maxVoteWeight,
     campaignId,
     copyLink,
+    stageAddress,
+    setIsDonateOpen,
+    setStageData,
     currencySymbol,
     campaignTitle,
   };

@@ -12,15 +12,11 @@ import { commonStyles } from "../../styles/commonStyles";
 const Stage = () => {
   const {
     stageData,
-    transferAmount,
-    handleInputChange,
-    donationAmount,
-    btnDisable,
+    voteBtnDisable,
     isOpen,
-    closeModal,
+    setIsOpen,
     openModal,
     isDonateOpen,
-    closeDonateModal,
     donateNowDialog,
     userAddress,
     showCompleteBtn,
@@ -44,19 +40,16 @@ const Stage = () => {
     voteEndDate,
     currBlockTime,
     showCommitBtn,
-    submitUserVote,
-    setUserVote,
-    voteBtnDisable,
     openERC20Modal,
-    closeERC20Modal,
     openERCModal,
-    setERCAmount,
-    ercBtnDisable,
-    commitERCAmount,
     tokensCommittedEth,
     maxVoteWeight,
     campaignId,
     copyLink,
+    stageAddress,
+    setIsDonateOpen,
+    setStageData,
+    setOpenERCModal,
     currencySymbol,
     campaignTitle,
   } = useSingleStageHandler();
@@ -109,26 +102,22 @@ const Stage = () => {
     <>
       <StageAddVote
         isOpen={isOpen}
-        closeModal={closeModal}
-        submitUserVote={submitUserVote}
-        setUserVote={setUserVote}
-        voteBtnDisable={voteBtnDisable}
+        setIsOpen={setIsOpen}
         maxVoteWeight={maxVoteWeight}
+        stageAddress={stageAddress}
+        showVotingBtn={showVotingBtn}
       />
       <StageDonate
         isOpen={isDonateOpen}
-        closeModal={closeDonateModal}
-        handleInputChange={handleInputChange}
-        donationAmount={donationAmount}
-        sendTransaction={transferAmount}
-        btnDisable={btnDisable}
+        stageAddress={stageAddress}
+        setIsDonateOpen={setIsDonateOpen}
+        stageData={stageData}
+        setStageData={setStageData}
       />
       <CommitERCTokenModal
         isOpen={openERCModal}
-        closeModal={closeERC20Modal}
-        commitERCAmount={commitERCAmount}
-        setERCAmount={setERCAmount}
-        ercBtnDisable={ercBtnDisable}
+        setIsOpen={setOpenERCModal}
+        stageAddress={stageAddress}
       />
       <div className={style.campaignDiv}>
         <div className={style.mainCampaign}>
