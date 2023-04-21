@@ -13,7 +13,12 @@ export const useFauctHandler = () => {
     }
     setDisableBtn(true);
     try {
-      fetch("http://localhost:3001/getETH", {
+      const env = process.env.NODE_ENV; // = 'production' when deployed
+      const urlToUse =
+        env == "development"
+          ? "http://localhost:3001/getETH"
+          : "https://app.daoseeder.com/getETH";
+      fetch(urlToUse, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

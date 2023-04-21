@@ -7,6 +7,7 @@ import StageDonate from "./StageDonate";
 import CommitERCTokenModal from "./CommitERCTokenModal";
 import { Link } from "react-router-dom";
 import { BiArrowBack } from "react-icons/bi";
+import { commonStyles } from "../../styles/commonStyles";
 
 const Stage = () => {
   const {
@@ -17,8 +18,7 @@ const Stage = () => {
     openModal,
     isDonateOpen,
     donateNowDialog,
-    balance,
-    address,
+    userAddress,
     showCompleteBtn,
     completeStage,
     completeBtnDisable,
@@ -50,6 +50,8 @@ const Stage = () => {
     setIsDonateOpen,
     setStageData,
     setOpenERCModal,
+    currencySymbol,
+    campaignTitle,
   } = useSingleStageHandler();
   const style = {
     campaignDiv:
@@ -135,10 +137,11 @@ const Stage = () => {
                     className={style.userImage}
                     src={Avatar}
                     alt={"userIcon"}
+                    title={"Owner: " + stageData?.stageContract?.projectOwner}
                   />
                 </div>
                 <div className={style.userData}>
-                  <div>{stageData?.stageContract?.projectOwner}</div>
+                  <div className={commonStyles.heading}>{campaignTitle}</div>
                 </div>
               </div>
               <div className={style.stageProgress}>
@@ -159,8 +162,8 @@ const Stage = () => {
               <div className={style.stageData}>
                 <div className={style.stageTotalMoney}>
                   <div>
-                    {stageData?.stageContract?.totalCommitted} {balance?.symbol}{" "}
-                    raised of {stageData?.stage?.goal} {balance?.symbol} goal
+                    {stageData?.stageContract?.totalCommitted} {currencySymbol}{" "}
+                    raised of {stageData?.stage?.goal} {currencySymbol} goal
                   </div>
                   <div>
                     Token reward committed: {tokensCommittedEth} (
@@ -224,7 +227,7 @@ const Stage = () => {
                 </div>
               </div>
               <div>
-                {stageData?.stageContract?.projectOwner !== address &&
+                {stageData?.stageContract?.projectOwner !== userAddress &&
                 showVotingBtn ? (
                   <div
                     className={`${style.stageDonateNow} ${
@@ -286,7 +289,7 @@ const Stage = () => {
                   </div>
                 ) : null}
               </div>
-              {stageData?.stageContract?.projectOwner === address ? (
+              {stageData?.stageContract?.projectOwner === userAddress ? (
                 <div
                   className={`${style.stageDonateNow}`}
                   onClick={openERC20Modal}
